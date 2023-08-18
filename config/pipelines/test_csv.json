@@ -1,0 +1,27 @@
+{
+    "extract" : {
+        "metadata": "files/test_csv.json",
+        "filename": "test.csv",
+        "path": "/tests/data/test.csv"
+    },
+    "load" : {
+        "metadata": "files/test_csv.json",
+        "filename": "test.csv",
+        "path": "/tests/data/test.csv"
+    },
+    "transform": {
+        "classes": "pipelines.transformers.eventMappingTransformer"
+    },
+    "parameters":{
+        "mode": "full"
+    },
+    "config": {
+        "logger" : {
+            "level": "DEBUG",
+            "format" : "%(asctime)s|%(name)s|%(levelname)s|%(message)s",
+            "path": "logs/",
+            "filename" : "pipe_csv2csv.log",
+            "maxbytes" : 1000000
+        }
+    }
+} 

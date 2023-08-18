@@ -1,0 +1,25 @@
+{
+    "type": "CSVFileDS",
+    "classname": "pipelines.datasources.CSVFileDS",
+    "characteristics": {
+        "separator": ","
+    },   
+    "medadata": {
+        "columns": ["id",
+                    "concept:name",
+                    "lifecycle:transition",
+                    "org:resource",
+                    "time:timestamp",
+                    "RESOURCE",
+                    "ROUND",
+                    "EVENTID",
+                    "ACTIVITY",
+                    "STAGE",
+                    "VIDEOSTART",
+                    "VIDEOEND",
+                    "case:concept:name",
+                    "case:variant",
+                    "case:variant-index",
+                    "case:creator"]
+    }
+}

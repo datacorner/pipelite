@@ -1,0 +1,44 @@
+[project]
+name = "DataPlumber"
+version = "0.1.0"
+authors = [
+  { name="ExyPro", email="admin@exypro.org" },
+]
+description = "This solution builds a bridge between two different data sources"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+classifiers = [
+  # How mature is this project? Common values are
+  #   3 - Alpha
+  #   4 - Beta
+  #   5 - Production/Stable
+    "Development Status :: 4 - Beta",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+"pandas==2.0.3",
+"openpyxl==3.1.2",
+"pyodbc==4.0.39",
+"pyrfc==3.1",
+"requests==2.31.0",
+"xmltodict==0.13.0",
+]
+
+[project.urls]
+"Bug Tracker" = "https://exypro.org/Discussions/forum/"
+Homepage = "https://exypro.org/"
+
+[project.scripts]
+pidg = "dataplumbing:main"
+
+[tool.setuptools]
+package-data = { pidg = ["config-samples/bplogs.sql" ] }
+
+[build-system]
+# These are the assumed default build requirements from pip:
+# https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
