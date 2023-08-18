@@ -1,5 +1,5 @@
 # Data Plumber
-This solution builds a bridge between two different data sources. Its purpose is first to access these external datasources. Then its collect the needed data to automate their importation into an another data source.
+This solution builds a bridge between two different data sources. It's using a Data Pipeline to make it and respects the 3 steps: Extract, Transform and Load.
 
 🚀 Currently this Data Bridge provides data access and load from these data sources :  
 
