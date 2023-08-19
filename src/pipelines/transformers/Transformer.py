@@ -4,19 +4,10 @@ __license__ = "MIT"
 
 import pandas as pd
 from utils.log import log
-from pipelines.dpInstantiableObj import dpInstantiableObj
+from pipelines.etlObject import etlObject
 
-class Transformer(dpInstantiableObj):
+class Transformer(etlObject):
 
-    def initialize(self) -> bool:
-        """Sets all the needed parameters comong from the configuration ()
-        Args:
-            config (_type_): COnfiguration focused on the parameters needed for this datasource
-        Returns:
-            bool: False if error
-        """
-        return True
-    
     def transform(self, dfSource) -> pd.DataFrame:
         """ Returns all the data in a DataFrame format
         Returns:

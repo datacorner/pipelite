@@ -12,15 +12,27 @@ class CSVFileDS(DataSource):
         super().__init__(config, log)
         self.separator = C.DEFCSVSEP
         self.filename = C.EMPTY
+        self.path = C.EMPTY
         self.encoding = C.ENCODING
 
-    def initialize(self) -> bool:
-        """Sets all the needed parameters comong from the configuration ()
+    def initialize(self, params) -> bool:
+        """ initialize and check all the needed configuration parameters
+            A CSV Extractor/Loader must have:
+                * A filename
+                * A separator
+                * A path name
+                * An Encoding type
+                params['separator']
         Args:
-            config (_type_): COnfiguration focused on the parameters needed for this datasource
+            params (json list) : params for the data source.
+                example: {'separator': ',', 'filename': 'test2.csv', 'path': '/tests/data/', 'encoding': 'utf-8'}
         Returns:
             bool: False if error
         """
+        self.separator = params['separator']
+        self.filename = params['filename']
+        self.path  = params['path'] 
+        self.encoding = params['encoding']
         return True
 
     def extract(self) -> pd.DataFrame():

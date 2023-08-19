@@ -5,11 +5,20 @@ __license__ = "MIT"
 import importlib
 import utils.constants as C
 
-class dpInstantiableObj:
+class etlObject:
     def __init__(self, config, log):
         self.log = log
         self.config = config
 
+    def initialize(self, params) -> bool:
+        """ initialize and check all the needed configuration parameters
+        Args:
+            params: set of json parameters for the object initialisation
+        Returns:
+            bool: False if error
+        """
+        return True
+    
     @staticmethod
     def instantiate(fullClassPath, config, log):
         """ This function dynamically instanciate the right data Class to create a pipeline object. Note: the class must inherit from the dpInstantiableObj class.

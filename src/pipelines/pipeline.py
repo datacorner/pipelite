@@ -7,33 +7,49 @@ from utils.log import log
 import pandas as pd
 from pipelines.datasources.DataSource import DataSource
 import importlib
-from .dpInstantiableObj import dpInstantiableObj
+from .etlObject import etlObject
 
-class pipeline(dpInstantiableObj):
+class pipeline(etlObject):
     def __init__(self, config, log):
         super().__init__(config, log)
         self.extractors = []
         self.loaders = []
         self.transformers = []
 
-    def initETLObjects(self, classList) -> list:
+    def initETLObjects(self, etlObjParams) -> list:
+        """ Initialize an set of similar etl object (can be a extractor, loader or transformer)
+        Args:
+            etlObjParams (JSON): Parameters for the etl Object. Look like something like this (below)
+                [{
+                    "classname": "pipelines.datasources.CSVFileDS",
+                    "parameters": {
+                        "separator": ",",
+                        "filename": "test2.csv",
+                        "path": "/tests/data/",
+                        "encoding": "utf-8"
+                }, { ... } ]
+        Returns:
+            list: list of etl objects initialized
+        """
         objectList = []
         try:
             # Extractors init
-            self.log.info("There is/are {} Class(es)".format(len(classList)))
-            if (len(classList) < 1):
+            self.log.info("There is/are {} Class(es)".format(len(etlObjParams)))
+            if (len(etlObjParams) < 1):
                 raise ("At least one Object is needed for processing the pipeline.")
             # Initialize the Extractors
-            for ds in classList:
+            for ds in etlObjParams:
                 dsClassName = ds["classname"]
                 self.log.info("Instantiate Object: {}".format(dsClassName))
-                dsObj = dpInstantiableObj.instantiate(dsClassName, self.config, self.log)
+                dsObj = etlObject.instantiate(dsClassName, self.config, self.log)
                 # Initialize Extractor
                 self.log.debug("Initialize Object: {}".format(dsClassName))
-                dsObj.initialize()
-                # Add the extractor in the pipeline list
-                self.log.debug("Object {} initialized sucecssfully".format(dsClassName))
-                objectList.append(dsObj)
+                if (dsObj.initialize(ds['parameters'])):
+                    # Add the extractor in the pipeline list
+                    self.log.debug("Object {} initialized successfully".format(dsClassName))
+                    objectList.append(dsObj)
+                else:
+                    raise ("Object {} cannot be initialized properly".format(dsClassName))
             return objectList
         
         except Exception as e:
@@ -41,16 +57,11 @@ class pipeline(dpInstantiableObj):
             return objectList
     
     def initialize(self) -> bool:
-        """Initialize the Class instance by gathering the Pipeline infos.
-            * set Extractor, Loader and Transformer(s)
-            * initialize the logger
-            * check the mandatory parameters
-            * init the API (get the Pipeline infos)
+        """Initialize the pipeline object by gathering the Pipeline infos and initializing the etl objects
         Returns:
             bool: False if error
         """
         try:
-            # Get Pipeline Configuration
             self.log.info("*** Starting pipeline processing ***")
             # init Extractors
             self.log.info("Initializing Extractor(s) ...")
