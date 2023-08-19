@@ -2,71 +2,43 @@ __author__ = "ExyPro Community"
 __email__ = "admin@exypro.org"
 __license__ = "MIT"
 
-from config.pipelineConfig import pipelineConfig
 import utils.constants as C
 from utils.log import log
 import pandas as pd
 from pipelines.datasources.DataSource import DataSource
-MANDATORY_PARAM_LIST = []
+import importlib
+from .dpInstantiableObj import dpInstantiableObj
 
-class pipeline:
+class pipeline(dpInstantiableObj):
     def __init__(self, config, log):
-        self.__config = config          # All the configuration parameters
-        self.__log = log                # Logger
+        super().__init__(config, log)
+        self.extractors = []
+        self.loaders = []
+        self.transformers = []
 
-    # Contain the Extractor
-    @property
-    def extractor(self) -> DataSource:
-        return self.__extractor
-    @extractor.setter   
-    def extractor(self, value):
-        self.__extractor = value
-
-    # Contain the Loader
-    @property
-    def loader(self) -> DataSource:
-        return self.__loader
-    @loader.setter   
-    def loader(self, value):
-        self.__loader = value
-
-    # Contains all the config parameters (from the INI file)
-    @property
-    def config(self) -> pipelineConfig:
-        return self.__config
-    @config.setter   
-    def config(self, value):
-        self.__config = value
-    
-    # Contains the logger
-    @property
-    def log(self) -> log:
-        return self.__log
-    @log.setter   
-    def log(self, value):
-        self.__log = value
-
-    def __checkIntegrity(self) -> bool:
-        """ Checking stuff like:
-            * parameters
-            * metadata
-            * datasource integrity
-        Returns:
-            bool: False si at least one mandatory param is missing
-        """
+    def initETLObjects(self, classList) -> list:
+        objectList = []
         try:
-            self.log.info("Check Extractor integrity ...")
-            if (not self.extractor.checkIntegrity()):
-                self.log.info("The Extractor is not available for extraction")
-            self.log.info("Check Loader integrity ...")
-            if (not self.loader.checkIntegrity()):
-                self.log.info("The Loader is not available for loading")
-            self.log.info("Both Extractor and Loader integrity checks are successful")
-            return True
+            # Extractors init
+            self.log.info("There is/are {} Class(es)".format(len(classList)))
+            if (len(classList) < 1):
+                raise ("At least one Object is needed for processing the pipeline.")
+            # Initialize the Extractors
+            for ds in classList:
+                dsClassName = ds["classname"]
+                self.log.info("Instantiate Object: {}".format(dsClassName))
+                dsObj = dpInstantiableObj.instantiate(dsClassName, self.config, self.log)
+                # Initialize Extractor
+                self.log.debug("Initialize Object: {}".format(dsClassName))
+                dsObj.initialize()
+                # Add the extractor in the pipeline list
+                self.log.debug("Object {} initialized sucecssfully".format(dsClassName))
+                objectList.append(dsObj)
+            return objectList
         
         except Exception as e:
-            self.log.error("pipeline.__checkIntegrity() -> {}".format(e))
-            return False
+            self.log.error("pipeline.initETLObjects() -> {}".format(e))
+            return objectList
     
     def initialize(self) -> bool:
         """Initialize the Class instance by gathering the Pipeline infos.
@@ -78,10 +50,29 @@ class pipeline:
             bool: False if error
         """
         try:
-            # Checking parameters
+            # Get Pipeline Configuration
             self.log.info("*** Starting pipeline processing ***")
-            if (not self.__checkIntegrity()):
-                raise Exception("Integrity checks for Data Sources has failed")
+            # init Extractors
+            self.log.info("Initializing Extractor(s) ...")
+            self.extractors = self.initETLObjects(self.config.getParameter("$.extractors", C.EMPTY))
+            if (len(self.extractors) == 0):
+                raise Exception("Extractor(s) has/have not been initialized properly")
+            self.log.info("There is/are {} extractor(s)".format(len(self.extractors)))
+
+            # init Loaders
+            self.log.info("Initializing Loaders(s) ...")
+            self.loaders = self.initETLObjects(self.config.getParameter("$.loaders", C.EMPTY))
+            if (len(self.loaders) == 0):
+                raise Exception("Loader(s) has/have not been initialized properly")
+            self.log.info("There is/are {} loader(s)".format(len(self.loaders)))
+
+            # init Transformers
+            self.log.info("Initializing Transformer(s) ...")
+            self.transformers = self.initETLObjects(self.config.getParameter("$.transformers", C.EMPTY))
+            if (len(self.transformers) == 0):
+                raise Exception("Transformers(s) has/have not been initialized properly")
+            self.log.info("There is/are {} Transformers(s)".format(len(self.transformers)))
+
             return True
         except Exception as e:
             self.log.error("pipeline.initialize() Error -> {}".format(e))

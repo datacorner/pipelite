@@ -8,16 +8,20 @@ import utils.constants as C
 
 class CSVFileDS(DataSource):
 
-    def __init__(self, log = None):
-        super().__init__(log)
+    def __init__(self, config, log):
+        super().__init__(config, log)
         self.separator = C.DEFCSVSEP
+        self.filename = C.EMPTY
+        self.encoding = C.ENCODING
 
-    @property
-    def filename(self):
-        return self.__filename
-    @filename.setter   
-    def filename(self, value):
-        self.__filename = value
+    def initialize(self) -> bool:
+        """Sets all the needed parameters comong from the configuration ()
+        Args:
+            config (_type_): COnfiguration focused on the parameters needed for this datasource
+        Returns:
+            bool: False if error
+        """
+        return True
 
     def extract(self) -> pd.DataFrame():
         """ Returns all the data in a DataFrame format
@@ -26,8 +30,8 @@ class CSVFileDS(DataSource):
         """
         try:
             content = pd.read_csv(self.filename, 
-                                    encoding=C.ENCODING, 
-                                    delimiter=self.separator)
+                                  encoding=self.encoding, 
+                                  delimiter=self.separator)
             return content
         except Exception as e:
             self.log.error("CSVFileDS.extract() Error: " + str(e))

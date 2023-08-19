@@ -14,6 +14,7 @@ DEFCSVSEP = ","
 PARAM_PIPELINE_CONFIGFILE = "cfg"                         # pipeline configuration file (json)
 
 # Configuration paths (pipeline configuration / JSON)
+PLJSONCFG_PL_CLASSNAME = "$.classname"
 PLJSONCFG_LOGGER_LEVEL = "$.config.logger.level"
 PLJSONCFG_LOGGER_FORMAT = "$.config.logger.format"
 PLJSONCFG_LOGGER_PATH = "$.config.logger.path"

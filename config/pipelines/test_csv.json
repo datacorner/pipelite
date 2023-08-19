@@ -1,17 +1,29 @@
 {
-    "extract" : {
-        "metadata": "files/test_csv.json",
-        "filename": "test.csv",
-        "path": "/tests/data/test.csv"
-    },
-    "load" : {
-        "metadata": "files/test_csv.json",
-        "filename": "test.csv",
-        "path": "/tests/data/test.csv"
-    },
-    "transform": {
-        "classes": "pipelines.transformers.eventMappingTransformer"
-    },
+    "classname" : "pipelines.category.directPipeline",
+    "extractors" : [ {
+        "classname": "pipelines.datasources.CSVFileDS",
+        "parameters": {
+            "separator": ",",
+            "filename": "test2.csv",
+            "path": "/tests/data/",
+            "encoding": "utf-8"
+        }   
+    } ],
+    "loaders" : [ {
+        "classname": "pipelines.datasources.CSVFileDS",
+        "parameters": {
+            "separator": ",",
+            "filename": "test.csv",
+            "path": "/tests/data/",
+            "encoding": "utf-8"
+        }   
+    } ],
+    "transformers":  [ { 
+        "classname": "pipelines.transformers.eventMappingTransformer", 
+        "parameters" : {
+            "maptable" : "./test/chorus-evtmap.csv", 
+            "mapcolumn" : "FLOWOBJECTNAME"}
+    } ],
     "parameters":{
         "mode": "full"
     },

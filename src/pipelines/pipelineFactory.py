@@ -3,9 +3,9 @@ __email__ = "admin@exypro.org"
 __license__ = "MIT"
 
 import utils.constants as C
-import importlib
 from .pipeline import pipeline
 from utils.log import log
+from .dpInstantiableObj import dpInstantiableObj
 
 class pipelineFactory:
 	def __init__(self, config, log):
@@ -105,19 +105,8 @@ class pipelineFactory:
 		"""
 		try:
 			# Get the pipeline class to instantiate from the config
-			pipelinePath = self.config.getParameter(C.PARAM_PIPELINE_PATH, C.PIPELINE_FOLDER)
-			pipelineClass = self.config.getParameter(C.PARAM_PIPELINE_CLASSNAME, C.EMPTY)
-			if (pipelineClass == C.EMPTY):
-				raise Exception("The {} parameter is mandatory, and currently missing.".format(C.PARAM_PIPELINE_CLASSNAME))
-			fullClassPath = pipelinePath + "." + pipelineClass
-
-			# Instantiate the pipeline object
-			self.log.debug("pipelineFactory.create(): Import module -> {}".format(fullClassPath))
-			datasourceObject = importlib.import_module(name=fullClassPath)
-			self.log.debug("pipelineFactory.create(): Module {} imported, instantiate the class".format(fullClassPath))
-			pipelineClass = getattr(datasourceObject, pipelineClass)
-			pipelineObject = pipelineClass(self.config, self.log)
-			self.log.info("Pipeline created successfully")
+			fullClassPath = self.config.getParameter(C.PLJSONCFG_PL_CLASSNAME, C.EMPTY)
+			pipelineObject = dpInstantiableObj.instantiate(fullClassPath, self.config, self.log)
 			return pipelineObject
 
 		except Exception as e:

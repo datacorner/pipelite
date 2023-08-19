@@ -4,14 +4,20 @@ __license__ = "MIT"
 
 import pandas as pd
 from utils.log import log
+from pipelines.dpInstantiableObj import dpInstantiableObj
 
-class DataSource:
-    def __init__(self, log = None):
-        self.__log = log
+class DataSource(dpInstantiableObj):
+    def __init__(self, config, log):
+        super().__init__(config, log)
 
-    @property
-    def log(self) -> log:
-        return self.__log
+    def initialize(self) -> bool:
+        """Sets all the needed parameters comong from the configuration ()
+        Args:
+            config (_type_): COnfiguration focused on the parameters needed for this datasource
+        Returns:
+            bool: False if error
+        """
+        return True
 
     def checkIntegrity(self) -> bool:
         """ check if the Data source is readable and is correct
