@@ -11,7 +11,7 @@
             "program": "src/dataplumbing.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["-cfg" , "./config/pipelines/test_csv.json"]
+            "args": ["-cfg" , "./config/pipelines/csv2csv_direct.json"]
         }
     ]
 }

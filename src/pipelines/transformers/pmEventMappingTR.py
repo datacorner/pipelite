@@ -6,7 +6,7 @@ import pandas as pd
 import utils.constants as C
 from .Transformer import Transformer
 
-class eventMappingTransformer(Transformer):
+class pmEventMappingTR(Transformer):
 
     def transform(self, df) -> pd.DataFrame:
         """ Map the events with the dataset (in parameter df). 

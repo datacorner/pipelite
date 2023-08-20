@@ -63,26 +63,21 @@ class pipelineFactory:
 			if (pipeline.initialize()): # init logs here ...
 				pipeline.log.info("Data Plumber has been initialized successfully")
 				pipeline.log.info("Extract data from Data Source ...")
-				df = pipeline.extract()	# EXTRACT (E of ETL)
-				E_counts = df.shape[0]
-				pipeline.log.info("Data extracted successfully, {} rows to import into the Data Source".format(E_counts))
-				if (df.shape[0] == 0):
+				E_counts = pipeline.extract()	# EXTRACT (E of ETL)
+				pipeline.log.info("Data extracted successfully: {} rows extracted".format(E_counts))
+				if (E_counts == 0):
 					pipeline.log.info("** There are no data to process, terminate here **")
 				else:
 					pipeline.log.info("Transform imported data ...")
-					df = pipeline.transform(df)	# TRANSFORM (T of ETL)
-					T_counts = df.shape[0]
+					dfDataSet, T_counts = pipeline.transform()	# TRANSFORM (T of ETL)
 					pipeline.log.info("Data transformed successfully, {} rows - after transformation - to import into the Data Source".format(T_counts))
-					if (df.empty != True): 
+					if (dfDataSet[0].empty != True): 
 						# LOAD (L of ETL)
 						pipeline.log.info("Load data into the Data Source ...")
-						if pipeline.load(df): # LOAD (L of ETL)
+						if (pipeline.load(dfDataSet)): # LOAD (L of ETL)
 							L_counts = T_counts
 							pipeline.log.info("Data loaded successfully")
-							if (self.config.getParameter(C.PARAM_xx, C.NO) == C.YES):
-								pipeline.log.info("After loading")
-								pipeline.afterLoad()
-				pipeline.log.info("Data Counts -> E:{} T:{} L:{}".format(E_counts, T_counts, L_counts))
+					pipeline.log.info("Pipeline Stats -> E:{} T:{} L:{}".format(E_counts, T_counts, L_counts))
 			else:
 				self.log.error("pipelineFactory.createAndExecute(): The Data pipeline has not been initialized properly")
 			

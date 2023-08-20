@@ -5,6 +5,7 @@ __license__ = "MIT"
 import pandas as pd
 from .DataSource import DataSource 
 import utils.constants as C
+import os
 
 class CSVFileDS(DataSource):
 
@@ -12,7 +13,6 @@ class CSVFileDS(DataSource):
         super().__init__(config, log)
         self.separator = C.DEFCSVSEP
         self.filename = C.EMPTY
-        self.path = C.EMPTY
         self.encoding = C.ENCODING
 
     def initialize(self, params) -> bool:
@@ -29,29 +29,43 @@ class CSVFileDS(DataSource):
         Returns:
             bool: False if error
         """
-        self.separator = params['separator']
-        self.filename = params['filename']
-        self.path  = params['path'] 
-        self.encoding = params['encoding']
-        return True
+        try:
+            self.separator = str(params['separator'])
+            self.filename = os.path.join(params['path'], params['filename'])
+            self.encoding = str(params['encoding'])
 
-    def extract(self) -> pd.DataFrame():
+            # Checks ...
+            if (self.ojbType == C.PLJSONCFG_LOADER):
+                if (not os.path.isfile(self.filename)):
+                    raise Exception("The file {} does not exist or is not accessible.".format(self.filename))
+            
+            return (self.filename)
+        except Exception as e:
+            self.log.error("CSVFileDS.initialize() Error: {}".format(e))
+            return False
+    
+    def extract(self) -> bool:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read
         """
         try:
-            content = pd.read_csv(self.filename, 
-                                  encoding=self.encoding, 
-                                  delimiter=self.separator)
-            return content
+            self.content = pd.read_csv(self.filename, 
+                                       encoding=self.encoding, 
+                                       delimiter=self.separator)
+            return True
         except Exception as e:
-            self.log.error("CSVFileDS.extract() Error: " + str(e))
-            return super().extract()
+            self.log.error("CSVFileDS.extract() Error while reading the file: ".format(e))
+            return False
 
-    def load(self, dfDataSet) -> bool:
+    def load(self) -> int:
         """ write the dataset in the datasource
         Returns:
-            bool: False is any trouble when loading
+            int: Number of data rows loaded
         """
-        return True
+        try:
+            self.content.to_csv(self.filename, encoding=C.ENCODING, index=False)
+            return self.count
+        except Exception as e:
+            self.log.error("CSVFileDS.extract() Error while writing the file: ".format(e))
+            return 0

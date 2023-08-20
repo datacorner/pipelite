@@ -8,18 +8,26 @@ from pipelines.etlObject import etlObject
 
 class DataSource(etlObject):
     def __init__(self, config, log):
+        self.content = pd.DataFrame()
         super().__init__(config, log)
 
-    def extract(self) -> pd.DataFrame():
+    @property
+    def count(self):
+        try:
+            return self.content.shape[0]
+        except:
+            return 0
+
+    def extract(self) -> bool:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read
         """
         return True
 
-    def load(self, dfDataSet) -> bool:
+    def load(self) -> int:
         """ write the dataset in the datasource
         Returns:
-            bool: False is any trouble when loading
+            int: Number of data rows loaded
         """
-        return True
+        return 0

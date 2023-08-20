@@ -9,6 +9,8 @@ class etlObject:
     def __init__(self, config, log):
         self.log = log
         self.config = config
+        self.name = ""
+        self.ojbType = None
 
     def initialize(self, params) -> bool:
         """ initialize and check all the needed configuration parameters

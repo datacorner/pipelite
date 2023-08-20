@@ -20,6 +20,12 @@ PLJSONCFG_LOGGER_FORMAT = "$.config.logger.format"
 PLJSONCFG_LOGGER_PATH = "$.config.logger.path"
 PLJSONCFG_LOGGER_FILENAME = "$.config.logger.filename"
 PLJSONCFG_LOGGER_MAXBYTES = "$.config.logger.maxbytes"
+PLJSONCFG_EXTRACTOR = "$.extractors"
+PLJSONCFG_LOADER = "$.loaders"
+PLJSONCFG_TRANSFORMER = "$.transformers"
+PLJSONCFG_PROP_CLASSNAME = "classname"
+PLJSONCFG_PROP_NAME = "name"
+PLJSONCFG_PROP_PARAMETERS = "parameters"
 
 # Logger configuration
 TRACE_DEFAULT_LEVEL = logging.DEBUG
