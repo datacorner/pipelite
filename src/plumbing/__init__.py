@@ -3,7 +3,7 @@ __email__ = "admin@exypro.org"
 __license__ = "MIT"
 
 import argparse
-from pipelines.pipelineFactory import pipelineFactory
+from pipelines.pipelineProcess import pipelineProcess
 from config.cmdLineConfig import cmdLineConfig
 import utils.constants as C
 
@@ -13,6 +13,6 @@ def main() -> None:
 	# Get configuration from cmdline & ini file
 	config = cmdLineConfig.readConfig(argparse.ArgumentParser())
 	# Get the logger
-	log = pipelineFactory.getLogger(config)
+	log = pipelineProcess.getLogger(config)
 	# Execute the pipeline 
-	pipelineFactory(config, log).process()
+	pipelineProcess(config, log).process()

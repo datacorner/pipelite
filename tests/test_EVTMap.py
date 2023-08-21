@@ -5,7 +5,7 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
 
-from pipelines.pipelineFactory import pipelineFactory
+from pipelines.pipelineProcess import pipelineProcess
 from config.cmdLineConfig import cmdLineConfig
 
 class testEventMap(unittest.TestCase):
@@ -20,8 +20,8 @@ class testEventMap(unittest.TestCase):
         print("Process Test")
 	    # Get configuration from cmdline & ini file
         config = cmdLineConfig.emulate_readIni(configfile=config) 
-        log = pipelineFactory.getLogger(config) 
-        return pipelineFactory(config, log).process()
+        log = pipelineProcess.getLogger(config) 
+        return pipelineProcess(config, log).process()
 
     def test_csv_Generate_Map(self):
         evtmapfile = "tests/data/evtmap-gen.csv"

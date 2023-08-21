@@ -7,7 +7,7 @@ from .pipeline import pipeline
 from utils.log import log
 from .etlObject import etlObject
 
-class pipelineFactory:
+class pipelineProcess:
 	def __init__(self, config, log):
 		self.__config = config
 		self.__log = log

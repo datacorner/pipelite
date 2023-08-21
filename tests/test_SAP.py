@@ -4,7 +4,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
 
-from pipelines.pipelineFactory import pipelineFactory
+from pipelines.pipelineProcess import pipelineProcess
 from config.cmdLineConfig import cmdLineConfig
 
 class testSAP(unittest.TestCase):
@@ -19,8 +19,8 @@ class testSAP(unittest.TestCase):
         print("Process Test")
 	    # Get configuration from cmdline & ini file
         config = cmdLineConfig.emulate_readIni(configfile="./tests/config/config-sap.ini") 
-        log = pipelineFactory.getLogger(config)
-        return pipelineFactory(config, log).process()
+        log = pipelineProcess.getLogger(config)
+        return pipelineProcess(config, log).process()
 
     def test_sap_1(self):
         self.e, self.t, self.l = self.processTest()
