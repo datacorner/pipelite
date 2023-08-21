@@ -5,7 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Load CSV 2 CSV",
+            "name": "Load CSV 2 - CSV",
+            "type": "python",
+            "request": "launch",
+            "program": "src/dataplumbing.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["-cfg" , "./config/pipelines/csv2csv_direct.json"]
+        },
+        {
+            "name": "Load 2 CSV - CSV",
             "type": "python",
             "request": "launch",
             "program": "src/dataplumbing.py",
