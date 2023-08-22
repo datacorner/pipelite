@@ -2,28 +2,27 @@ __author__ = "ExyPro Community"
 __email__ = "admin@exypro.org"
 __license__ = "MIT"
 
-import pandas as pd
-from utils.log import log
 from pipelines.etlObject import etlObject
+from pipelines.etlDataset import etlDataset
 
 class DataSource(etlObject):
     def __init__(self, config, log):
-        self.content = pd.DataFrame()
+        self.content = etlDataset()
         super().__init__(config, log)
 
     @property
     def count(self):
         try:
-            return self.content.shape[0]
+            return self.content.count
         except:
             return 0
 
-    def extract(self) -> bool:
+    def extract(self) -> int:
         """ Returns all the data in a DataFrame format
         Returns:
-            pd.DataFrame(): dataset read
+            int: Number of data read
         """
-        return True
+        return 0
 
     def load(self) -> int:
         """ write the dataset in the datasource

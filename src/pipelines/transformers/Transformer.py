@@ -2,8 +2,7 @@ __author__ = "ExyPro Community"
 __email__ = "admin@exypro.org"
 __license__ = "MIT"
 
-import pandas as pd
-from utils.log import log
+from pipelines.etlDataset import etlDataset
 from pipelines.etlObject import etlObject
 
 class Transformer(etlObject):
@@ -19,7 +18,7 @@ class Transformer(etlObject):
 
     @property
     def dsMaxEntryCount(self):
-        """ Number Max of Data Sources supported in entry. By default 1.
+        """ Number Max of Data Sources supported by this transformer in entry. By default it's 1.
             Note: The first Transformer can support more than 1 ds in entry
         Returns:
             _type_: _description_
@@ -29,9 +28,9 @@ class Transformer(etlObject):
     def transform(self, inputDataFrames):
         """ Returns all the data in a DataFrame format
         Args:
-            inputDataFrames (pd.DataFrame() []): multiple dataframes
+            inputDataFrames (etlDataset []): multiple dataframes
         Returns:
-            pd.DataFrame: Output Dataframe [] of the transformer(s)
+            pd.DataFrame: Output etlDataset [] of the transformer(s)
             int: Number of rows transformed
         """
-        return [ pd.DataFrame() ], 0
+        return [ etlDataset() ], 0

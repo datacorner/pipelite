@@ -24,7 +24,7 @@ class pipeline(etlObject):
         self.loaders = []
         self.transformers = []
 
-    def initETLObjects(self, paramJSONPath) -> list:
+    def __initETLObjects(self, paramJSONPath) -> list:
         """ Initialize an set of similar etl object (can be a extractor, loader or transformer)
         Args:
             etlObjParams (JSON): "$.extractors"
@@ -66,7 +66,7 @@ class pipeline(etlObject):
             return objectList
         
         except Exception as e:
-            self.log.error("pipeline.initETLObjects() -> {}".format(e))
+            self.log.error("pipeline.__initETLObjects() -> {}".format(e))
             return objectList
     
     def initialize(self) -> bool:
@@ -78,21 +78,21 @@ class pipeline(etlObject):
             self.log.info("*** Starting pipeline processing ***")
             # init Extractors
             self.log.info("Initializing Extractor(s) ...")
-            self.extractors = self.initETLObjects(C.PLJSONCFG_EXTRACTOR)
+            self.extractors = self.__initETLObjects(C.PLJSONCFG_EXTRACTOR)
             if (len(self.extractors) == 0):
                 raise Exception("Extractor(s) has/have not been initialized properly")
             self.log.info("There is/are {} extractor(s)".format(len(self.extractors)))
 
             # init Loaders
             self.log.info("Initializing Loaders(s) ...")
-            self.loaders = self.initETLObjects(C.PLJSONCFG_LOADER)
+            self.loaders = self.__initETLObjects(C.PLJSONCFG_LOADER)
             if (len(self.loaders) == 0):
                 raise Exception("Loader(s) has/have not been initialized properly")
             self.log.info("There is/are {} loader(s)".format(len(self.loaders)))
 
             # init Transformers
             self.log.info("Initializing Transformer(s) ...")
-            self.transformers = self.initETLObjects(C.PLJSONCFG_TRANSFORMER)
+            self.transformers = self.__initETLObjects(C.PLJSONCFG_TRANSFORMER)
             if (len(self.transformers) == 0):
                 raise Exception("Transformers(s) has/have not been initialized properly")
             self.log.info("There is/are {} Transformers(s)".format(len(self.transformers)))

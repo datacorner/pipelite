@@ -5,7 +5,7 @@ __license__ = "MIT"
 import argparse
 from pipelines.pipelineProcess import pipelineProcess
 from config.cmdLineConfig import cmdLineConfig
-import utils.constants as C
+
 
 def main() -> None:
 	"""Entry point for the application script"""

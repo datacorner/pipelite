@@ -2,7 +2,6 @@ __author__ = "ExyPro Community"
 __email__ = "admin@exypro.org"
 __license__ = "MIT"
 
-import pandas as pd
 from .DataSource import DataSource 
 import utils.constants as C
 import os
@@ -44,16 +43,17 @@ class CSVFileDS(DataSource):
             self.log.error("CSVFileDS.initialize() Error: {}".format(e))
             return False
     
-    def extract(self) -> bool:
+    def extract(self) -> int:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read
         """
         try:
-            self.content = pd.read_csv(self.filename, 
-                                       encoding=self.encoding, 
-                                       delimiter=self.separator)
-            return True
+            
+            self.content.readCSV(filename=self.filename, 
+                                 encoding=self.encoding, 
+                                 separator=self.separator)
+            return self.content.count
         except Exception as e:
             self.log.error("CSVFileDS.extract() Error while reading the file: ".format(e))
             return False
@@ -64,8 +64,10 @@ class CSVFileDS(DataSource):
             int: Number of data rows loaded
         """
         try:
-            self.content.to_csv(self.filename, encoding=C.ENCODING, index=False)
-            return self.count
+            self.content.writeCSV(filename=self.filename, 
+                                  encoding=C.ENCODING,
+                                  separator=self.separator)
+            return self.content.count
         except Exception as e:
             self.log.error("CSVFileDS.extract() Error while writing the file: ".format(e))
             return 0

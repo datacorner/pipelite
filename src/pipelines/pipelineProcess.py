@@ -71,11 +71,11 @@ class pipelineProcess:
 					pipeline.log.info("Transform imported data ...")
 					dfDataSet, T_counts = pipeline.transform()	# TRANSFORM (T of ETL)
 					pipeline.log.info("Data transformed successfully, {} rows - after transformation - to import into the Data Source".format(T_counts))
-					if (dfDataSet[0].empty != True): 
+					if (dfDataSet[0].count > 0): 
 						# LOAD (L of ETL)
 						pipeline.log.info("Load data into the Data Source ...")
-						if (pipeline.load(dfDataSet)): # LOAD (L of ETL)
-							L_counts = T_counts
+						L_counts = pipeline.load(dfDataSet) # LOAD (L of ETL)
+						if (L_counts > 0):
 							pipeline.log.info("Data loaded successfully")
 					pipeline.log.info("Pipeline Stats -> E:{} T:{} L:{}".format(E_counts, T_counts, L_counts))
 			else:
