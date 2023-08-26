@@ -6,7 +6,7 @@ from .DataSource import DataSource
 import utils.constants as C
 import os
 
-class CSVFileDS(DataSource):
+class csvFileDS(DataSource):
 
     def __init__(self, config, log):
         super().__init__(config, log)
@@ -38,7 +38,7 @@ class CSVFileDS(DataSource):
                 if (not os.path.isfile(self.filename)):
                     raise Exception("The file {} does not exist or is not accessible.".format(self.filename))
             
-            return (self.filename)
+            return True
         except Exception as e:
             self.log.error("CSVFileDS.initialize() Error: {}".format(e))
             return False

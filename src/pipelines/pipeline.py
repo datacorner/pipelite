@@ -99,9 +99,9 @@ class pipeline(etlObject):
                 raise Exception("Transformers(s) has/have not been initialized properly")
             self.log.info("There is/are {} Transformers(s)".format(len(self.transformers)))
 
-            # The first transfomer must have a Nb of ds equal to the number of extractors
-            if (self.transformers[0].dsMaxEntryCount != len(self.extractors)):
-                raise Exception("The first transfomer must have a number of Data Sources equal to the number of extractors")
+            # The first transfomer must support the number of extractors configured
+            if (self.transformers[0].dsMaxEntryCount < len(self.extractors)):
+                raise Exception("The first transfomer must support the number of extractors configured (Nb of extractor <= Transformer support Max)")
 
             return True
         except Exception as e:

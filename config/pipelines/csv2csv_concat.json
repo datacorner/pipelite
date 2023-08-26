@@ -2,7 +2,7 @@
     "classname" : "pipelines.category.directPipeline",
     "extractors" : [ {
         "name": "E1",
-        "classname": "pipelines.datasources.CSVFileDS",
+        "classname": "pipelines.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "test.csv",
@@ -12,7 +12,7 @@
     },
     {
         "name": "E2",
-        "classname": "pipelines.datasources.CSVFileDS",
+        "classname": "pipelines.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "test.csv",
@@ -22,7 +22,7 @@
     } ],
     "loaders" : [ {
         "name": "L1",
-        "classname": "pipelines.datasources.CSVFileDS",
+        "classname": "pipelines.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "test2.csv",

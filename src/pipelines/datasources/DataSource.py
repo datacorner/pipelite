@@ -22,6 +22,7 @@ class DataSource(etlObject):
         Returns:
             int: Number of data read
         """
+        self.log.error("DataSource.extract() -> This Data sources does not support reading/extracting")
         return 0
 
     def load(self) -> int:
@@ -29,4 +30,5 @@ class DataSource(etlObject):
         Returns:
             int: Number of data rows loaded
         """
+        self.log.error("DataSource.load() -> This Data sources does not support writing/loading")
         return 0

@@ -2,12 +2,10 @@
     "classname" : "pipelines.category.directPipeline",
     "extractors" : [ {
         "name": "E1",
-        "classname": "pipelines.datasources.csvFileDS",
+        "classname": "pipelines.datasources.odbcDS",
         "parameters": {
-            "separator": ",",
-            "filename": "test.csv",
-            "path": "tests/data/",
-            "encoding": "utf-8"
+            "connectionstring": "DRIVER={SQLite3};Database=tests/data/dbsample.sqlite",
+            "query": "SELECT * FROM Customers"
         }   
     } ],
     "loaders" : [ {

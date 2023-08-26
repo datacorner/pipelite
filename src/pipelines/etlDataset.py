@@ -5,7 +5,8 @@ __license__ = "MIT"
 import pandas as pd
 
 class etlDataset:
-    """ This class encapsulate the data set (here it's currently managed by using Pandas DataFrame)
+    """ This class encapsulate the data set management 
+        (here it's currently managed by using Pandas DataFrame)
     """
     def __init__(self):
         self.content = pd.DataFrame()
@@ -17,7 +18,16 @@ class etlDataset:
             int: row count
         """
         return self.content.shape[0]
-        
+
+    def readSQL(self, odbcConnection, query):
+        """ Launch a SQL statement and get the resultset
+
+        Args:
+            odbcConnection (ODBC connection): ODBC connection via pyodbc
+            query (str): SQL statement
+        """
+        self.content = pd.read_sql(query, odbcConnection)
+
     def readCSV(self, filename, separator, encoding):
         """ Read the Data from a CSV file by using Pandas
         Args:
