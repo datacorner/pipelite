@@ -40,7 +40,11 @@ class etlDataset:
                             encoding=encoding, 
                             index=False, 
                             sep=separator)
-        
+    
+    def concatWith(self, etlDatasetB, keys=None):
+        self.content = pd.concat([self.content, etlDatasetB], 
+                                 keys=keys)
+    
     def __getitem__(self, item):
         """ Makes the Data column accessible via [] array
             example: df['colName']

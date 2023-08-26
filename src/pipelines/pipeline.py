@@ -3,8 +3,6 @@ __email__ = "admin@exypro.org"
 __license__ = "MIT"
 
 import utils.constants as C
-from utils.log import log
-import pandas as pd
 from .etlObject import etlObject
 
 """ Pipeline Management rules:
@@ -55,7 +53,11 @@ class pipeline(etlObject):
                 dsObj = etlObject.instantiate(dsClassName, self.config, self.log)
                 # Initialize Extractor
                 self.log.debug("Initialize Object: {}".format(dsClassName))
-                if (dsObj.initialize(ds[C.PLJSONCFG_PROP_PARAMETERS])):
+                try:
+                    objParams = ds[C.PLJSONCFG_PROP_PARAMETERS] 
+                except:
+                    objParams = None
+                if (dsObj.initialize(objParams)):
                     # Add the extractor in the pipeline list
                     self.log.debug("Object {} initialized successfully".format(dsClassName))
                     dsObj.name = ds[C.PLJSONCFG_PROP_NAME]

@@ -2319,3 +2319,640 @@
 2023-08-22 12:17:24,286|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
 2023-08-22 12:17:24,286|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
 2023-08-22 12:17:24,286|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:39:30,081|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:39:30,097|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:39:30,695|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:39:30,695|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:39:30,696|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:39:30,696|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:39:30,713|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:39:30,713|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:39:30,713|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:39:30,716|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:39:30,719|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:39:30,719|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:39:30,719|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:39:30,720|pipelines.pipelineProcess|INFO|There is/are 1 extractor(s)
+2023-08-26 08:39:30,720|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:39:30,733|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:39:30,734|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:39:30,734|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:39:30,734|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:39:30,735|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:39:30,735|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:39:30,735|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:39:30,736|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:39:30,736|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:39:30,749|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:39:30,749|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:39:30,750|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:39:30,751|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:39:30,751|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:39:30,752|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:42:53,641|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:42:53,656|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:42:54,082|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:42:54,083|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:42:54,083|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:42:54,083|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:42:54,096|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:42:54,097|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:42:54,097|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:42:54,098|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:42:54,101|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:42:54,101|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:42:54,102|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:42:54,102|pipelines.pipelineProcess|INFO|There is/are 1 extractor(s)
+2023-08-26 08:42:54,102|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:42:54,116|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:42:54,116|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:42:54,116|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:42:54,117|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:42:54,118|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:42:54,118|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:42:54,119|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:42:54,119|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:42:54,119|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:42:54,137|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:42:54,137|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:42:54,138|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:42:54,139|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:42:54,140|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:42:54,140|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:43:11,261|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:43:16,277|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:43:16,277|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:43:16,280|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:43:16,281|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:43:16,281|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:43:16,281|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:43:16,281|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:43:16,281|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:43:16,281|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:43:16,282|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:43:16,282|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:43:16,294|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:43:16,295|pipelines.pipelineProcess|INFO|Data extracted successfully: 1394 rows extracted
+2023-08-26 08:43:16,295|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:43:16,295|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:43:16,295|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:43:16,296|pipelines.pipelineProcess|INFO|mergeTR.transform() -> 
+2023-08-26 08:43:16,296|pipelines.pipelineProcess|INFO|Number of rows transformed 0 / 0
+2023-08-26 08:43:16,296|pipelines.pipelineProcess|INFO|Transforming data via transformer T2
+2023-08-26 08:43:16,296|pipelines.pipelineProcess|INFO|Number of rows transformed 0 / 0
+2023-08-26 08:43:16,297|pipelines.pipelineProcess|INFO|Data transformed successfully, 0 rows - after transformation - to import into the Data Source
+2023-08-26 08:43:16,297|pipelines.pipelineProcess|ERROR|pipelineFactory.createAndExecute(): Error when processing the data: '>' not supported between instances of 'builtin_function_or_method' and 'int'
+2023-08-26 08:43:55,408|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:43:55,421|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:43:55,834|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:43:55,835|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:43:55,835|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:43:55,835|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:43:55,848|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:43:55,849|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:43:55,849|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:43:55,850|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:43:55,853|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:43:55,853|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:43:55,853|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:43:55,853|pipelines.pipelineProcess|INFO|There is/are 1 extractor(s)
+2023-08-26 08:43:55,853|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:43:55,866|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:43:55,866|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:43:55,866|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:43:55,866|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:43:55,867|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:43:55,867|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:43:55,868|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:43:55,868|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:43:55,868|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:43:55,881|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:43:55,881|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:43:55,882|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:43:55,883|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:43:55,883|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:43:55,883|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:43:55,883|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:43:55,883|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:43:55,884|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:43:55,884|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:43:55,884|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:43:55,884|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:43:55,885|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:43:55,885|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:43:55,885|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:43:55,885|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:43:55,885|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:43:55,885|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:43:55,895|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:43:55,895|pipelines.pipelineProcess|INFO|Data extracted successfully: 1394 rows extracted
+2023-08-26 08:43:55,895|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:43:55,895|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:43:55,895|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:49:14,579|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:49:14,592|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:49:15,019|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:49:15,020|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:49:15,020|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:49:15,020|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:49:15,034|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:49:15,034|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:49:15,034|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:49:15,036|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:49:15,038|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:49:15,038|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:49:15,039|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:49:15,039|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:49:15,039|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:49:15,039|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:49:15,040|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:49:15,040|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:49:15,040|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:49:15,040|pipelines.pipelineProcess|INFO|There is/are 2 extractor(s)
+2023-08-26 08:49:15,040|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:49:15,057|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:49:15,057|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:49:15,057|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:49:15,058|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:49:15,059|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:49:15,059|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:49:15,059|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:49:15,059|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:49:15,059|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:49:15,076|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:49:15,077|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:49:15,077|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:49:15,079|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:49:15,079|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:49:15,079|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:49:15,079|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:49:15,080|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:49:15,080|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:49:15,080|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:49:15,080|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:49:15,081|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:49:15,081|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:49:15,081|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:49:15,081|pipelines.pipelineProcess|ERROR|pipeline.initialize() Error -> The first transfomer must have a number of Data Sources equal to the number of extractors
+2023-08-26 08:49:15,081|pipelines.pipelineProcess|ERROR|pipelineFactory.createAndExecute(): The Data pipeline has not been initialized properly
+2023-08-26 08:49:15,081|pipelines.pipelineProcess|INFO|*** End of Job treatment ***
+2023-08-26 08:50:06,861|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:50:06,874|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:50:07,286|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:50:07,286|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:50:07,286|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:50:07,286|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:50:07,300|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:50:07,300|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:50:07,300|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:50:07,301|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:50:07,304|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:50:07,304|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:50:07,304|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:50:07,304|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:50:07,304|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:50:07,304|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:50:07,305|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:50:07,305|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:50:07,305|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:50:07,306|pipelines.pipelineProcess|INFO|There is/are 2 extractor(s)
+2023-08-26 08:50:07,306|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:50:07,323|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:50:07,323|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:50:07,323|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:50:07,323|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:50:07,324|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:50:07,324|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:50:07,324|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:50:07,325|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:50:07,325|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:50:07,339|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:50:07,339|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:50:07,339|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:50:07,341|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:50:07,341|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:50:07,341|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:50:07,342|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:50:07,342|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:50:07,342|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:50:07,342|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:50:07,343|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:50:07,343|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:50:07,343|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:50:07,343|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:50:07,343|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:50:07,343|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:50:07,344|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:50:07,344|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:50:07,354|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:50:07,354|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E2
+2023-08-26 08:50:07,362|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:50:07,362|pipelines.pipelineProcess|INFO|Data extracted successfully: 2788 rows extracted
+2023-08-26 08:50:07,362|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:50:07,363|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:50:07,363|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:50:13,589|pipelines.pipelineProcess|INFO|There are 2 datasets to merge
+2023-08-26 08:51:36,218|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:51:36,231|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:51:36,646|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:51:36,646|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:51:36,646|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:51:36,646|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:51:36,661|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:51:36,661|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:51:36,661|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:51:36,663|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:51:36,665|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:51:36,666|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:51:36,666|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:51:36,666|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:51:36,666|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:51:36,666|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:51:36,667|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:51:36,667|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:51:36,667|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:51:36,667|pipelines.pipelineProcess|INFO|There is/are 2 extractor(s)
+2023-08-26 08:51:36,667|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:51:36,680|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:51:36,680|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:51:36,680|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:51:36,681|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:51:36,682|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:51:36,682|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:51:36,682|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:51:36,682|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:51:36,682|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:51:36,695|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:51:36,695|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:51:36,695|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:51:36,697|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:51:36,697|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:51:36,698|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:51:36,698|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:51:36,698|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:51:36,698|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:51:36,698|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:51:36,698|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:51:36,699|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:51:36,699|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:51:36,699|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:51:36,699|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:51:36,699|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:51:36,699|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:51:36,699|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:51:36,709|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:51:36,710|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E2
+2023-08-26 08:51:36,718|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:51:36,718|pipelines.pipelineProcess|INFO|Data extracted successfully: 2788 rows extracted
+2023-08-26 08:51:36,718|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:51:36,719|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:51:36,719|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:51:36,719|pipelines.pipelineProcess|INFO|There are 2 datasets to merge
+2023-08-26 08:52:23,494|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:52:23,507|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:52:23,943|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:52:23,943|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:23,943|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:52:23,943|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:52:23,957|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:52:23,957|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:23,958|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:52:23,960|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:52:23,964|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:23,965|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:23,965|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:52:23,965|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:23,965|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:52:23,966|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:52:23,967|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:23,967|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:23,967|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:52:23,967|pipelines.pipelineProcess|INFO|There is/are 2 extractor(s)
+2023-08-26 08:52:23,967|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:52:23,985|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:52:23,985|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:23,985|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:52:23,986|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:52:23,986|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:23,987|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:23,987|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:52:23,987|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:52:23,987|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:52:24,000|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:52:24,000|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:52:24,001|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:52:24,002|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:52:24,002|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:24,002|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:52:24,003|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:52:24,003|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:52:24,003|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:52:24,003|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:52:24,003|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:24,003|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:52:24,004|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:52:24,004|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:52:24,004|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:52:24,004|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:52:24,004|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:52:24,004|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:52:24,014|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:52:24,015|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E2
+2023-08-26 08:52:24,023|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:52:24,024|pipelines.pipelineProcess|INFO|Data extracted successfully: 2788 rows extracted
+2023-08-26 08:52:24,024|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:52:24,024|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:52:24,024|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:52:24,025|pipelines.pipelineProcess|INFO|There are 2 datasets to merge
+2023-08-26 08:52:52,801|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:52:52,815|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:52:53,246|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:52:53,246|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:53,246|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:52:53,246|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:52:53,260|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:52:53,260|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:53,260|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:52:53,262|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:52:53,265|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:53,265|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:53,265|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:52:53,265|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:53,265|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:52:53,265|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:52:53,266|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:53,266|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:53,266|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:52:53,266|pipelines.pipelineProcess|INFO|There is/are 2 extractor(s)
+2023-08-26 08:52:53,267|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:52:53,280|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:52:53,280|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:53,280|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:52:53,280|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:52:53,281|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:53,281|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:52:53,281|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:52:53,281|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:52:53,281|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:52:53,294|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:52:53,294|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:52:53,295|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:52:53,296|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:52:53,296|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:53,296|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:52:53,296|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:52:53,296|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:52:53,297|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:52:53,297|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:52:53,297|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:52:53,297|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:52:53,297|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:52:53,297|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:52:53,298|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:52:53,298|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:52:53,298|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:52:53,298|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:52:53,308|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:52:53,308|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E2
+2023-08-26 08:52:53,316|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:52:53,316|pipelines.pipelineProcess|INFO|Data extracted successfully: 2788 rows extracted
+2023-08-26 08:52:53,316|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:52:53,316|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:52:53,316|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:52:53,317|pipelines.pipelineProcess|INFO|There are 2 datasets to merge
+2023-08-26 08:54:14,694|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:54:14,708|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:54:15,130|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:54:15,130|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:54:15,130|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:54:15,130|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:54:15,147|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:54:15,148|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:54:15,148|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:54:15,150|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:54:15,152|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:54:15,153|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:54:15,153|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:54:15,153|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:54:15,153|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:54:15,153|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:54:15,154|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:54:15,155|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:54:15,155|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:54:15,155|pipelines.pipelineProcess|INFO|There is/are 2 extractor(s)
+2023-08-26 08:54:15,155|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:54:15,168|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:54:15,168|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:54:15,168|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:54:15,169|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:54:15,169|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:54:15,170|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:54:15,170|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:54:15,170|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:54:15,170|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:54:15,184|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:54:15,184|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:54:15,184|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:54:15,186|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:54:15,186|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:54:15,186|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:54:15,186|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:54:15,186|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:54:15,187|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:54:15,187|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:54:15,187|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:54:15,188|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:54:15,188|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:54:15,188|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:54:15,188|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:54:15,188|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:54:15,188|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:54:15,188|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:54:15,198|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:54:15,198|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E2
+2023-08-26 08:54:15,206|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:54:15,206|pipelines.pipelineProcess|INFO|Data extracted successfully: 2788 rows extracted
+2023-08-26 08:54:15,206|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:54:15,207|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:54:15,207|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:54:15,208|pipelines.pipelineProcess|INFO|There are 2 datasets to merge
+2023-08-26 08:55:13,052|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:55:13,068|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:55:13,497|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:55:13,497|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:13,498|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:55:13,498|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:55:13,512|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:55:13,512|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:13,512|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:55:13,514|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:55:13,516|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:13,516|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:13,516|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:55:13,517|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:13,517|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:55:13,517|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:55:13,518|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:13,518|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:13,518|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:55:13,518|pipelines.pipelineProcess|INFO|There is/are 2 extractor(s)
+2023-08-26 08:55:13,518|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:55:13,532|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:55:13,533|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:13,533|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:55:13,533|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:55:13,534|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:13,534|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:13,534|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:55:13,534|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:55:13,535|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:55:13,549|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:55:13,549|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:55:13,549|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:55:13,551|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:55:13,551|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:13,551|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:55:13,551|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:55:13,551|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:55:13,552|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:55:13,552|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:55:13,552|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:13,552|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:55:13,553|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:55:13,553|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:55:13,553|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:55:13,553|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:55:13,553|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:55:13,553|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:55:13,564|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:55:13,565|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E2
+2023-08-26 08:55:13,573|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:55:13,573|pipelines.pipelineProcess|INFO|Data extracted successfully: 2788 rows extracted
+2023-08-26 08:55:13,573|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:55:13,573|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:55:13,573|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:55:13,574|pipelines.pipelineProcess|INFO|There are 2 datasets to merge
+2023-08-26 08:55:21,775|pipelines.pipelineProcess|INFO|Number of rows transformed 4182 / 4182
+2023-08-26 08:55:45,198|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:55:45,212|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:55:45,625|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:55:45,625|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:45,625|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:55:45,625|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:55:45,643|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:55:45,643|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:45,643|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:55:45,645|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:55:45,647|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:45,647|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:45,648|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:55:45,648|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:45,648|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:55:45,648|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:55:45,649|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:45,649|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:45,649|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:55:45,649|pipelines.pipelineProcess|INFO|There is/are 2 extractor(s)
+2023-08-26 08:55:45,649|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:55:45,663|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:55:45,663|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:45,664|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:55:45,664|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:55:45,665|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:45,665|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:55:45,665|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:55:45,665|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:55:45,665|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:55:45,679|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:55:45,679|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:55:45,680|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:55:45,681|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:55:45,682|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:45,682|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:55:45,682|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:55:45,682|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:55:45,682|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:55:45,683|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:55:45,683|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:55:45,683|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:55:45,683|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:55:45,683|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:55:45,683|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:55:45,683|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:55:45,684|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:55:45,684|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:55:45,695|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:55:45,695|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E2
+2023-08-26 08:55:45,704|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:55:45,704|pipelines.pipelineProcess|INFO|Data extracted successfully: 2788 rows extracted
+2023-08-26 08:55:45,704|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:55:45,705|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:55:45,705|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:55:45,706|pipelines.pipelineProcess|INFO|There are 2 datasets to concatenate
+2023-08-26 08:56:16,134|pipelines.pipelineProcess|INFO|Data Plumber initialisation ...
+2023-08-26 08:56:16,148|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.category.directPipeline
+2023-08-26 08:56:16,597|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.category.directPipeline imported, instantiate the class
+2023-08-26 08:56:16,597|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:56:16,598|pipelines.pipelineProcess|INFO|*** Starting pipeline processing ***
+2023-08-26 08:56:16,598|pipelines.pipelineProcess|INFO|Initializing Extractor(s) ...
+2023-08-26 08:56:16,612|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:56:16,612|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:56:16,612|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:56:16,614|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:56:16,616|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:56:16,617|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:56:16,617|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:56:16,617|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:56:16,617|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:56:16,617|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:56:16,618|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:56:16,618|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:56:16,618|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:56:16,619|pipelines.pipelineProcess|INFO|There is/are 2 extractor(s)
+2023-08-26 08:56:16,619|pipelines.pipelineProcess|INFO|Initializing Loaders(s) ...
+2023-08-26 08:56:16,631|pipelines.pipelineProcess|INFO|There is/are 1 Class(es)
+2023-08-26 08:56:16,632|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:56:16,632|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.datasources.CSVFileDS
+2023-08-26 08:56:16,632|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.datasources.CSVFileDS imported, instantiate the class
+2023-08-26 08:56:16,633|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:56:16,633|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.datasources.CSVFileDS
+2023-08-26 08:56:16,634|pipelines.pipelineProcess|DEBUG|Object pipelines.datasources.CSVFileDS initialized successfully
+2023-08-26 08:56:16,634|pipelines.pipelineProcess|INFO|There is/are 1 loader(s)
+2023-08-26 08:56:16,634|pipelines.pipelineProcess|INFO|Initializing Transformer(s) ...
+2023-08-26 08:56:16,647|pipelines.pipelineProcess|INFO|There is/are 2 Class(es)
+2023-08-26 08:56:16,647|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.concatTR
+2023-08-26 08:56:16,647|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.concatTR
+2023-08-26 08:56:16,649|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.concatTR imported, instantiate the class
+2023-08-26 08:56:16,650|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:56:16,650|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.concatTR
+2023-08-26 08:56:16,650|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.concatTR initialized successfully
+2023-08-26 08:56:16,650|pipelines.pipelineProcess|INFO|Instantiate Object: pipelines.transformers.doNothingTR
+2023-08-26 08:56:16,650|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Import module -> pipelines.transformers.doNothingTR
+2023-08-26 08:56:16,651|pipelines.pipelineProcess|DEBUG|pipelineFactory.instantiate(): Module pipelines.transformers.doNothingTR imported, instantiate the class
+2023-08-26 08:56:16,651|pipelines.pipelineProcess|INFO|Class instantiated successfully
+2023-08-26 08:56:16,651|pipelines.pipelineProcess|DEBUG|Initialize Object: pipelines.transformers.doNothingTR
+2023-08-26 08:56:16,651|pipelines.pipelineProcess|DEBUG|Object pipelines.transformers.doNothingTR initialized successfully
+2023-08-26 08:56:16,651|pipelines.pipelineProcess|INFO|There is/are 2 Transformers(s)
+2023-08-26 08:56:16,652|pipelines.pipelineProcess|INFO|Data Plumber has been initialized successfully
+2023-08-26 08:56:16,652|pipelines.pipelineProcess|INFO|Extract data from Data Source ...
+2023-08-26 08:56:16,652|pipelines.pipelineProcess|INFO|*** Extraction treatment ***
+2023-08-26 08:56:16,652|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E1
+2023-08-26 08:56:16,662|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:56:16,662|pipelines.pipelineProcess|INFO|Extracting data from the Data Source E2
+2023-08-26 08:56:16,670|pipelines.pipelineProcess|INFO|Number of rows extracted 1394
+2023-08-26 08:56:16,671|pipelines.pipelineProcess|INFO|Data extracted successfully: 2788 rows extracted
+2023-08-26 08:56:16,671|pipelines.pipelineProcess|INFO|Transform imported data ...
+2023-08-26 08:56:16,671|pipelines.pipelineProcess|INFO|*** Data Transformation treatment ***
+2023-08-26 08:56:16,671|pipelines.pipelineProcess|INFO|Transforming data via transformer T1
+2023-08-26 08:56:17,568|pipelines.pipelineProcess|INFO|There are 2 datasets to concatenate
+2023-08-26 08:56:24,358|pipelines.pipelineProcess|INFO|Number of rows transformed 2788 / 2788
+2023-08-26 08:56:27,930|pipelines.pipelineProcess|INFO|Transforming data via transformer T2
+2023-08-26 08:56:31,819|pipelines.pipelineProcess|INFO|Number of rows transformed 0 / 2788
+2023-08-26 08:56:31,820|pipelines.pipelineProcess|INFO|Data transformed successfully, 2788 rows - after transformation - to import into the Data Source
+2023-08-26 08:56:31,820|pipelines.pipelineProcess|INFO|Load data into the Data Source ...
+2023-08-26 08:56:31,820|pipelines.pipelineProcess|INFO|*** Loading treatment ***
+2023-08-26 08:56:31,821|pipelines.pipelineProcess|INFO|Loading content to the Data Source L1
+2023-08-26 08:56:31,845|pipelines.pipelineProcess|INFO|Number of rows extracted 2788
+2023-08-26 08:56:31,845|pipelines.pipelineProcess|INFO|Data loaded successfully
+2023-08-26 08:56:31,845|pipelines.pipelineProcess|INFO|Pipeline Stats -> E:2788 T:2788 L:2788
+2023-08-26 08:56:31,845|pipelines.pipelineProcess|INFO|*** End of Job treatment ***
