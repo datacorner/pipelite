@@ -1,3 +1,4 @@
 *.pyc
 .venvDataPlumber/*
 .vscode/*
+logs/*.log
