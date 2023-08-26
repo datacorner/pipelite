@@ -2,7 +2,7 @@
 name = "DataPlumber"
 version = "0.1.0"
 authors = [
-  { name="ExyPro", email="admin@exypro.org" },
+  { name="ExyPro", email="admin@datacorner.fr" },
 ]
 description = "This solution builds a bridge between two different data sources"
 readme = "README.md"

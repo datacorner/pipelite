@@ -1,5 +1,5 @@
-__author__ = "ExyPro Community"
-__email__ = "admin@exypro.org"
+__author__ = "datacorner.fr"
+__email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import argparse

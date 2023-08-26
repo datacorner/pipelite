@@ -1,5 +1,5 @@
-__ = "ExyPro Community"
-__email__ = "admin@exypro.org"
+__ = "datacorner.fr"
+__email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 class cursorByField(object):
