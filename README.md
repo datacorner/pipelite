@@ -1,6 +1,7 @@
 # Data Plumber
-This solution builds a bridge between two different data sources. It's using a Data Pipeline to make it and respects the 3 steps: Extract, Transform and Load.
-
+The purpose of this solution is to build and execute Data Pipelines. Nothing new under the sun of course, however it aims to make this task very simple and by just using the configuration to build those pipelines. 
+*So in short ... dataplumber is a Data Pipeline solution by design !*
+The way this solution is built is also totally extensible and enables all developers to extend its capabilities by addin new Data connectors and/or data transformers.
 🚀 Currently this Data Bridge provides data access and load from these data sources :  
 
 ✅  External file (csv)  
