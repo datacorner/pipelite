@@ -103,6 +103,9 @@ class pipeline(etlObject):
             if (self.transformers[0].dsMaxEntryCount < len(self.extractors)):
                 raise Exception("The first transfomer must support the number of extractors configured (Nb of extractor <= Transformer support Max)")
 
+            # Check names and unicity for all DS and TR
+            
+
             return True
         except Exception as e:
             self.log.error("pipeline.initialize() Error -> {}".format(e))
