@@ -4,6 +4,7 @@ __license__ = "MIT"
 
 from pipelines.etlObject import etlObject
 from pipelines.etlDataset import etlDataset
+from abc import abstractmethod
 
 class DataSource(etlObject):
     def __init__(self, config, log):
@@ -17,16 +18,20 @@ class DataSource(etlObject):
         except:
             return 0
 
+    @abstractmethod
     def extract(self) -> int:
-        """ Returns all the data in a DataFrame format
+        """ MUST BE OVERRIDED !
+            Returns all the data in a DataFrame format
         Returns:
             int: Number of data read
         """
         self.log.error("DataSource.extract() -> This Data sources does not support reading/extracting")
         return 0
 
+    @abstractmethod
     def load(self) -> int:
-        """ write the dataset in the datasource
+        """ MUST BE OVERRIDED !
+            write the dataset in the datasource
         Returns:
             int: Number of data rows loaded
         """

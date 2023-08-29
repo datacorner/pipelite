@@ -66,7 +66,7 @@ class pipeline(etlObject):
                 else:
                     raise ("Object {} cannot be initialized properly".format(dsClassName))
             return objectList
-        
+
         except Exception as e:
             self.log.error("pipeline.__initETLObjects() -> {}".format(e))
             return objectList
@@ -103,8 +103,7 @@ class pipeline(etlObject):
             if (self.transformers[0].dsMaxEntryCount < len(self.extractors)):
                 raise Exception("The first transfomer must support the number of extractors configured (Nb of extractor <= Transformer support Max)")
 
-            # Check names and unicity for all DS and TR
-            
+            # TODO Check names and unicity for all DS and TR
 
             return True
         except Exception as e:
@@ -141,6 +140,8 @@ class pipeline(etlObject):
         inputdf = []
         totalCountTransformed = 0
         for extractorItem in self.extractors:
+            self.log.debug("Adding dataset {} in the transformation stack".format(extractorItem.name))
+            extractorItem.content.name = extractorItem.name
             inputdf.append(extractorItem.content)
         # Execute the Transformers stack on the inputs/extractors
         # 1st transformer can manage several inputs, not the nexts

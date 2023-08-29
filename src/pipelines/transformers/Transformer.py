@@ -2,6 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
+from abc import abstractmethod
 from pipelines.etlDataset import etlDataset
 from pipelines.etlObject import etlObject
 
@@ -25,8 +26,10 @@ class Transformer(etlObject):
         """
         return 1
 
+    @abstractmethod
     def transform(self, inputDataFrames):
-        """ Returns all the data in a DataFrame format
+        """ MUST BE OVERRIDED !
+            Returns all the data in a DataFrame format
         Args:
             inputDataFrames (etlDataset []): multiple dataframes
         Returns:

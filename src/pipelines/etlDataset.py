@@ -3,12 +3,14 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pandas as pd
+import utils.constants as C
 
 class etlDataset:
     """ This class encapsulate the data set management 
         (here it's currently managed by using Pandas DataFrame)
     """
     def __init__(self):
+        self.name = C.EMPTY
         self.content = pd.DataFrame()
 
     @property

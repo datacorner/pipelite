@@ -15,9 +15,9 @@ class concatTR(Transformer):
     def transform(self, inputDataFrames):
         """ Do absolutemy nothing !
         Args:
-            inputDataFrames (etlDataset() []): multiple dataframes
+            inputDataFrames (etlDataset []): multiple datasets in a list
         Returns:
-            etlDataset: Output etlDataset [] of the transformer(s)
+            etlDataset []: Output etlDataset[] of the transformer(s). Only One item in the list
             int: Number of rows transformed
         """
         try:
@@ -27,6 +27,7 @@ class concatTR(Transformer):
                 raise Exception("At least 2 datasets are needed for a concatenation transformation.")
             self.log.info("There are {} datasets to concatenate".format(nbDataSetsInInput))
             for obj in inputDataFrames:
+                self.log.debug("Adding {} rows from the dataset {}".format(obj.count, obj.name))
                 output.concatWith(obj)
             return [ output ], output.count
         
