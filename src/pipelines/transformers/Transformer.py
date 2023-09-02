@@ -17,12 +17,22 @@ class Transformer(etlObject):
         self.extractors = None
         super().__init__(config, log)
 
+    @abstractmethod
+    def initialize(self, params) -> bool:
+        """ Initialize and makes some checks (params) for that transformer
+        Args:
+            params (json): parameters
+        Returns:
+            bool: False if error
+        """
+        return True
+
     @property
     def dsMaxEntryCount(self):
         """ Number Max of Data Sources supported by this transformer in entry. By default it's 1.
             Note: The first Transformer can support more than 1 ds in entry
         Returns:
-            _type_: _description_
+            int: Number max of datasources
         """
         return 1
 

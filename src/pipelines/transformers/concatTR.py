@@ -11,6 +11,15 @@ class concatTR(Transformer):
     @property
     def dsMaxEntryCount(self):
         return NB_OF_DATASOURCES_MAX
+
+    def initialize(self, params) -> bool:
+        """ Initialize and makes some checks (params) for that transformer
+        Args:
+            params (json): parameters
+        Returns:
+            bool: False if error
+        """
+        return True
     
     def transform(self, inputDataFrames):
         """ Do absolutemy nothing !

@@ -15,7 +15,7 @@
         "classname": "pipelines.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
-            "filename": "b.csv",
+            "filename": "t.csv",
             "path": "tests/data/",
             "encoding": "utf-8"
         }
@@ -25,14 +25,21 @@
         "classname": "pipelines.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
-            "filename": "ab.csv",
+            "filename": "ta.csv",
             "path": "tests/data/out/",
             "encoding": "utf-8"
         }   
     } ],
     "transformers":  [ { 
         "name": "T1",
-        "classname": "pipelines.transformers.concatTR"
+        "classname": "pipelines.transformers.transcodeTR", 
+        "parameters" : {
+            "main-datasource" : "E1",
+            "main-column-key" : "col2",
+            "lookup-datasource" : "E2",
+            "lookup-column-key" : "tcol1",
+            "lookup-column-keep" : "tcol2"
+            }
     },
     { 
         "name": "T2",
@@ -46,7 +53,7 @@
             "level": "DEBUG",
             "format" : "%(asctime)s|%(name)s|%(levelname)s|%(message)s",
             "path": "logs/",
-            "filename" : "pipe_csv2csv_concat.log",
+            "filename" : "pipe_csv2csv_transcode.log",
             "maxbytes" : 1000000
         }
     }

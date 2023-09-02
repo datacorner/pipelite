@@ -54,9 +54,31 @@ class etlDataset:
                             sep=separator)
     
     def concatWith(self, etlDatasetB, keys=None):
+        """Concatenate the current dataset with the one in arg
+        Args:
+            etlDatasetB (etlDataset): other dataset to concat
+            keys (str, optional): key to concat. Defaults to None.
+        """
         self.content = pd.concat([self.content, etlDatasetB], 
                                  keys=keys)
     
+    def lookupWith(self, dsLookup, mapColName):
+        self.content = pd.merge(self.content, dsLookup, on=mapColName, how ="inner")
+
+    def dropLineNaN(self, column):
+        self.content = self.content.dropna(subset=[column])
+
+    def dropColumn(self, column):
+        del self.content[column]
+
+    def renameColumn(self, oldName, newName):
+        """rename a column inside the dataset
+        Args:
+            oldName (str): Old column name
+            newName (str): New column name
+        """
+        self.content.rename(columns={oldName:newName}, inplace=True)
+
     def __getitem__(self, item):
         """ Makes the Data column accessible via [] array
             example: df['colName']

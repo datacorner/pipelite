@@ -6,7 +6,7 @@ import utils.constants as C
 from .Transformer import Transformer
 
 class doNothingTR(Transformer):
-        
+
     def transform(self, inputDataFrames):
         """ Returns all the data in a etlDataset format
         Args:

@@ -19,6 +19,16 @@ class DataSource(etlObject):
             return 0
 
     @abstractmethod
+    def initialize(self, params) -> bool:
+        """ Initialize and makes some checks (params) for that datasource
+        Args:
+            params (json): parameters
+        Returns:
+            bool: False if error
+        """
+        return True
+
+    @abstractmethod
     def extract(self) -> int:
         """ MUST BE OVERRIDED !
             Returns all the data in a DataFrame format
