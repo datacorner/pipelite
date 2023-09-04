@@ -50,7 +50,7 @@ class pipeline(etlObject):
                 raise ("At least one Object is needed for processing the pipeline.")
             # Initialize the Extractors
             for ds in etlObjParams:
-                dsClassName = ds[C.PLJSONCFG_PROP_CLASSNAME]
+                dsClassName = pc.GETPARAM(ds, C.PLJSONCFG_PROP_CLASSNAME, C.EMPTY)
                 self.log.info("Instantiate Object: {}".format(dsClassName))
                 dsObj = etlObject.instantiate(dsClassName, self.config, self.log)
                 # Initialize Extractor
@@ -58,12 +58,12 @@ class pipeline(etlObject):
                 objParams = pc.GETPARAM(ds, C.PLJSONCFG_PROP_PARAMETERS)
                 if (paramJSONPath == C.PLJSONCFG_TRANSFORMER):
                     # Only for transformers ...
-                    dsObj.dsInputs = pc.GETPARAM(ds, "inputs", [])
-                    dsObj.dsOutputs = pc.GETPARAM(ds, "outputs", [])
+                    dsObj.dsInputs = pc.GETPARAM(ds, C.PLJSONCFG_TRANSF_IN, [])
+                    dsObj.dsOutputs = pc.GETPARAM(ds, C.PLJSONCFG_TRANSF_OUT, [])
                 if (dsObj.initialize(objParams)):
                     # Add the extractor in the pipeline list
                     self.log.debug("Object {} initialized successfully".format(dsClassName))
-                    dsObj.name = ds[C.PLJSONCFG_PROP_NAME]
+                    dsObj.name = pc.GETPARAM(ds, C.PLJSONCFG_PROP_NAME, C.EMPTY)
                     dsObj.objtype = paramJSONPath
                     objectList.append(dsObj)
                 else:

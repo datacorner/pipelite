@@ -20,7 +20,7 @@
     } ],
     "transformers":  [
     { 
-        "name": "T2",
+        "name": "T1",
         "classname": "pipelines.transformers.doNothingTR",
         "inputs" : [ "S1" ],
         "outputs" : [ "S1" ]

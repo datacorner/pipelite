@@ -49,7 +49,7 @@ class csvFileDS(DataSource):
             pd.DataFrame(): dataset read
         """
         try:
-            self.log.error("Extract the Dataset from the file: {}".format(self.filename))
+            self.log.info("Extract the Dataset from the file: {}".format(self.filename))
             self.content.readCSV(filename=self.filename, 
                                  encoding=self.encoding, 
                                  separator=self.separator)
@@ -64,7 +64,7 @@ class csvFileDS(DataSource):
             int: Number of data rows loaded
         """
         try:
-            self.log.error("Load  the Dataset into the file: {}".format(self.filename))
+            self.log.info("Load  the Dataset into the file: {}".format(self.filename))
             self.content.writeCSV(filename=self.filename, 
                                   encoding=C.ENCODING,
                                   separator=self.separator)

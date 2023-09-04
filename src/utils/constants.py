@@ -26,6 +26,8 @@ PLJSONCFG_TRANSFORMER = "$.transformers"
 PLJSONCFG_PROP_CLASSNAME = "classname"
 PLJSONCFG_PROP_NAME = "name"
 PLJSONCFG_PROP_PARAMETERS = "parameters"
+PLJSONCFG_TRANSF_IN = "inputs"
+PLJSONCFG_TRANSF_OUT = "outputs"
 
 # Logger configuration
 TRACE_DEFAULT_LEVEL = logging.DEBUG
