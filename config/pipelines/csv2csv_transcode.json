@@ -32,13 +32,15 @@
     } ],
     "transformers":  [ { 
         "name": "T1",
-        "classname": "pipelines.transformers.transcodeTR", 
+        "classname": "pipelines.transformers.transcodeTR",
+        "inputs" : [ "E1", "E2" ],
+        "outputs" : [ "L1" ],
         "parameters" : {
-            "main-datasource" : "E1",
-            "main-column-key" : "col2",
-            "lookup-datasource" : "E2",
-            "lookup-column-key" : "tcol1",
-            "lookup-column-keep" : "tcol2"
+            "main" : { "ds-name" : "E1", 
+                       "key" : "col2"},
+            "lookup" :  { "ds-name" : "E2", 
+                          "key" : "tcol1", 
+                          "keep" : "tcol2"}
             }
     },
     { 

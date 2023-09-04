@@ -16,6 +16,13 @@ class pipelineConfig():
         self.__pipelineConfig = None
         return
 
+    @staticmethod
+    def GETPARAM(params, name):
+        try:
+            return params[name] 
+        except:
+            return None
+
     def addParameter(self, name, value):
         """Add a new parameter in the list
         Args:

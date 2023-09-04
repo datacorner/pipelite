@@ -13,6 +13,12 @@ class etlDataset:
         self.name = C.EMPTY
         self.content = pd.DataFrame()
 
+    def copy(self):
+        newDS = etlDataset()
+        newDS.name = self.name
+        newDS.content = self.content.copy(deep=True)
+        return newDS
+
     @property
     def count(self):
         """Return the Data rows count

@@ -4,6 +4,8 @@ __license__ = "MIT"
 
 import utils.constants as C
 from .etlObject import etlObject
+from .etlDatasets import etlDatasets
+from config.pipelineConfig import pipelineConfig as pc
 
 """ Pipeline Management rules:
     1) a pipeline can have 
@@ -53,10 +55,11 @@ class pipeline(etlObject):
                 dsObj = etlObject.instantiate(dsClassName, self.config, self.log)
                 # Initialize Extractor
                 self.log.debug("Initialize Object: {}".format(dsClassName))
-                try:
-                    objParams = ds[C.PLJSONCFG_PROP_PARAMETERS] 
-                except:
-                    objParams = None
+                objParams = pc.GETPARAM(ds, C.PLJSONCFG_PROP_PARAMETERS)
+                if (paramJSONPath == C.PLJSONCFG_TRANSFORMER):
+                    # Only for transformers ...
+                    dsObj.dsInputs = pc.GETPARAM(ds, "inputs")
+                    dsObj.dsOutputs = pc.GETPARAM(ds, "outputs")
                 if (dsObj.initialize(objParams)):
                     # Add the extractor in the pipeline list
                     self.log.debug("Object {} initialized successfully".format(dsClassName))
@@ -78,21 +81,21 @@ class pipeline(etlObject):
         """
         try:
             self.log.info("*** Starting pipeline processing ***")
-            # init Extractors
+            # 1) init Extractors
             self.log.info("Initializing Extractor(s) ...")
             self.extractors = self.__initETLObjects(C.PLJSONCFG_EXTRACTOR)
             if (len(self.extractors) == 0):
                 raise Exception("Extractor(s) has/have not been initialized properly")
             self.log.info("There is/are {} extractor(s)".format(len(self.extractors)))
 
-            # init Loaders
+            # 2) init Loaders
             self.log.info("Initializing Loaders(s) ...")
             self.loaders = self.__initETLObjects(C.PLJSONCFG_LOADER)
             if (len(self.loaders) == 0):
                 raise Exception("Loader(s) has/have not been initialized properly")
             self.log.info("There is/are {} loader(s)".format(len(self.loaders)))
 
-            # init Transformers
+            # 3) init Transformers
             self.log.info("Initializing Transformer(s) ...")
             self.transformers = self.__initETLObjects(C.PLJSONCFG_TRANSFORMER)
             if (len(self.transformers) == 0):
@@ -100,8 +103,8 @@ class pipeline(etlObject):
             self.log.info("There is/are {} Transformers(s)".format(len(self.transformers)))
 
             # The first transfomer must support the number of extractors configured
-            if (self.transformers[0].dsMaxEntryCount < len(self.extractors)):
-                raise Exception("The first transfomer must support the number of extractors configured (Nb of extractor <= Transformer support Max)")
+            #if (self.transformers[0].dsInputNbSupported != len(self.extractors)):
+            #    raise Exception("The first transfomer must support the number of extractors configured (Nb of extractor == Transformer extractors needs)")
 
             # TODO Check names and unicity for all DS and TR
 
@@ -136,21 +139,28 @@ class pipeline(etlObject):
             int: Total Number of transformed rows
         """
         self.log.info("*** Data Transformation treatment ***")
-        # Create a list with all the extractors
-        inputdf = []
-        totalCountTransformed = 0
-        for extractorItem in self.extractors:
-            self.log.debug("Adding dataset {} in the transformation stack".format(extractorItem.name))
+        # Select only the Inputs needed for the transformer, initialize the data source stack with all extractors first
+        dsPipelineStack = etlDatasets()
+        for extractorItem in self.extractors:   
+            self.log.debug("Adding dataset {} in the Global stack".format(extractorItem.name))
             extractorItem.content.name = extractorItem.name
-            inputdf.append(extractorItem.content)
+            dsPipelineStack.add(extractorItem.content)
+        totalCountTransformed = 0
+
         # Execute the Transformers stack on the inputs/extractors
-        # 1st transformer can manage several inputs, not the nexts
-        for item in self.transformers:
-            self.log.info("Transforming data via transformer {}".format(item.name))
-            inputdf, tfCount = item.transform(inputdf)
+        for transformerItem in self.transformers:   # Pass through all the Tranformers ...
+            dsInputs = etlDatasets()
+            for dsItem in dsPipelineStack:
+                if (dsItem.name in transformerItem.dsInputs):
+                    self.log.debug("Adding dataset {} in the transformation stack".format(dsItem.name))
+                    dsInputs.add(dsItem.copy())
+            self.log.info("Transforming data via transformer {}".format(transformerItem.name))
+            dsOutputs, tfCount = transformerItem.transform(dsInputs)
+            dsPipelineStack.merge(dsOutputs)
             totalCountTransformed += tfCount
             self.log.info("Number of rows transformed {} / {}".format(tfCount, totalCountTransformed))
-        return inputdf[0], totalCountTransformed
+
+        return dsPipelineStack, totalCountTransformed
 
     def load(self, dfDataset) -> int:
         """ Load the dataset transformed in one or more loaders

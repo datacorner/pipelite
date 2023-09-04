@@ -23,10 +23,9 @@
     "transformers":  [
     { 
         "name": "T2",
-        "classname": "pipelines.transformers.doNothingTR", 
-        "parameters" : {
-            "maptable" : "./test/chorus-evtmap.csv", 
-            "mapcolumn" : "FLOWOBJECTNAME"}
+        "classname": "pipelines.transformers.doNothingTR",
+        "extractors" : [ "E1" ],
+        "loaders" : [ "L1" ]
     } ],
     "parameters":{
         "mode": "full"

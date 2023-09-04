@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from abc import abstractmethod
-from pipelines.etlDataset import etlDataset
+from pipelines.etlDatasets import etlDatasets
 from pipelines.etlObject import etlObject
 
 class Transformer(etlObject):
@@ -13,8 +13,8 @@ class Transformer(etlObject):
         etlObject: Basic ETL object interface
     """
     def __init__(self, config, log):
-        self.datasources = 1    # Number of Datasource to apply the transformer with
-        self.extractors = None
+        self.dsInputs = None    # Input Dataset name List
+        self.dsOutputs = None   # Output Dataset name List
         super().__init__(config, log)
 
     @abstractmethod
@@ -27,23 +27,17 @@ class Transformer(etlObject):
         """
         return True
 
-    @property
-    def dsMaxEntryCount(self):
-        """ Number Max of Data Sources supported by this transformer in entry. By default it's 1.
-            Note: The first Transformer can support more than 1 ds in entry
-        Returns:
-            int: Number max of datasources
-        """
-        return 1
-
     @abstractmethod
-    def transform(self, inputDataFrames):
+    def transform(self, dsStack):
         """ MUST BE OVERRIDED !
             Returns all the data in a DataFrame format
+            This must:
+                1) get from the dsStack list the input datasets
+                2) return the datasets (with the right name)
         Args:
-            inputDataFrames (etlDataset []): multiple dataframes
+            inputDataStack (etlDatasets): multiple dataframes in source
         Returns:
-            pd.DataFrame: Output etlDataset [] of the transformer(s)
+            etlDatasets: Output etlDatasets of the transformer(s)
             int: Number of rows transformed
         """
-        return [ etlDataset() ], 0
+        return etlDatasets(), 0

@@ -2,9 +2,9 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import pandas as pd
 import utils.constants as C
 from .Transformer import Transformer
+from pipelines.etlDatasets import etlDatasets
 
 class transcodeTR(Transformer):
     """ Transcode a column from a main dataset with data from the lookup table.
@@ -31,11 +31,11 @@ class transcodeTR(Transformer):
             bool: False if error
         """
         try:
-            self.lookupDatasetName = params['lookup-datasource']
-            self.lookupDatasetColKey = params['lookup-column-key']
-            self.mainDatasetName = params['main-datasource']
-            self.mainColKey = params['main-column-key']
-            self.lookupDatasetColKeep = params['lookup-column-keep']
+            self.lookupDatasetName = params["lookup"]["ds-name"]
+            self.lookupDatasetColKey = params["lookup"]["key"]
+            self.mainDatasetName = params["main"]["ds-name"]
+            self.mainColKey = params["main"]["key"]
+            self.lookupDatasetColKeep = params["lookup"]["keep"]
             return (len(self.lookupDatasetName) != 0 and 
                     len(self.lookupDatasetColKey) != 0 and 
                     len(self.mainDatasetName) != 0 and 
@@ -46,31 +46,20 @@ class transcodeTR(Transformer):
             self.log.error("transcoderTR.initialize() Error -> {}".format(str(e)))
             return False
     
-    @property
-    def dsMaxEntryCount(self):
-        """ Number Max of Data Sources supported by this transformer in entry. By default it's 1.
-            Here we need 2 datasources: the main flow and the lookup table
-        Returns:
-            int: Number max of datasources
-        """
-        return 2
-    
-    def transform(self, inputDataFrames):
+    def transform(self, dsStack):
         """ Returns all the data in a etlDataset format
         Args:
-            inputDataFrames (etlDataset() []): multiple dataframes
+            inputDataFrames (etlDatasets): multiple datasets (inputs)
         Returns:
-            etlDataset: Output etlDataset [] of the transformer(s)
+            etlDatasets: Output etlDatasets of the transformer(s)
             int: Number of rows transformed
         """
 
         # identify the main & the lookup dataset first
-        if (inputDataFrames[0].name == self.mainDatasetName):
-            dsMain = inputDataFrames[0]
-            dsLookup = inputDataFrames[1]
+        if (dsStack[0].name == self.mainDatasetName):
+            dsMain, dsLookup = dsStack[0], dsStack[1]
         else:
-            dsMain = inputDataFrames[1]
-            dsLookup = inputDataFrames[0]
+            dsMain, dsLookup = dsStack[1],dsStack[0]
 
         # Change the lookup column name to the main one for the lookup itself
         dsLookup.renameColumn(self.lookupDatasetColKey, self.mainColKey)
@@ -86,6 +75,10 @@ class transcodeTR(Transformer):
         if (iNbRemoved != 0):
             self.log.warning("{} records have been removed ".format(iNbRemoved))
 
-        inputDataFrames = dsMain
+        # Return the output as a collection with only one item with the excepted name
+        dsOutputs = etlDatasets()
+        # Create from the source another instance of the data
+        dsMain.name = self.dsOutputs[0]
+        dsOutputs.add(dsMain)
         
-        return [ inputDataFrames ], 0
+        return dsOutputs, iNbRemoved

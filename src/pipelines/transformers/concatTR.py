@@ -5,13 +5,15 @@ __license__ = "MIT"
 from .Transformer import Transformer
 from pipelines.etlDataset import etlDataset
 
-NB_OF_DATASOURCES_MAX = 10
-
 class concatTR(Transformer):
     @property
-    def dsMaxEntryCount(self):
-        return NB_OF_DATASOURCES_MAX
-
+    def dsInputNbSupported(self):
+        return 2
+    
+    @property
+    def dsOutputNbSupported(self):
+        return 1
+    
     def initialize(self, params) -> bool:
         """ Initialize and makes some checks (params) for that transformer
         Args:
