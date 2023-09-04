@@ -4,6 +4,6 @@ __license__ = "MIT"
 
 from plumbing import main
 
-# main program
+# main call
 if __name__ == "__main__":
 	main()
