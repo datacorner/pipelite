@@ -1,22 +1,22 @@
 {
     "classname" : "pipelines.category.directPipeline",
     "extractors" : [ {
-        "name": "E1",
+        "name": "S1",
         "classname": "pipelines.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
-            "filename": "test.csv",
+            "filename": "a.csv",
             "path": "tests/data/",
             "encoding": "utf-8"
         }   
     } ],
     "loaders" : [ {
-        "name": "L1",
+        "name": "S1",
         "classname": "pipelines.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
-            "filename": "test2.csv",
-            "path": "tests/data/",
+            "filename": "a-d.csv",
+            "path": "tests/data/out",
             "encoding": "utf-8"
         }   
     } ],
@@ -24,8 +24,8 @@
     { 
         "name": "T2",
         "classname": "pipelines.transformers.doNothingTR",
-        "extractors" : [ "E1" ],
-        "loaders" : [ "L1" ]
+        "inputs" : [ "S1" ],
+        "outputs" : [ "S1" ]
     } ],
     "parameters":{
         "mode": "full"

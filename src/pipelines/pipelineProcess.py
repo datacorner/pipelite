@@ -69,12 +69,12 @@ class pipelineProcess:
 					pipeline.log.info("** There are no data to process, terminate here **")
 				else:
 					pipeline.log.info("Transform imported data ...")
-					dfDataSet, T_counts = pipeline.transform()	# TRANSFORM (T of ETL)
+					dsStack, T_counts = pipeline.transform()	# TRANSFORM (T of ETL)
 					pipeline.log.info("Data transformed successfully, {} rows - after transformation - to import into the Data Source".format(T_counts))
-					if (dfDataSet[0].count > 0): 
+					if (dsStack[0].count > 0): 
 						# LOAD (L of ETL)
 						pipeline.log.info("Load data into the Data Source ...")
-						L_counts = pipeline.load(dfDataSet) # LOAD (L of ETL)
+						L_counts = pipeline.load(dsStack) # LOAD (L of ETL)
 						if (L_counts > 0):
 							pipeline.log.info("Data loaded successfully")
 					pipeline.log.info("Pipeline Stats -> E:{} T:{} L:{}".format(E_counts, T_counts, L_counts))

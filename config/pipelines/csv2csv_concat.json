@@ -25,13 +25,15 @@
         "classname": "pipelines.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
-            "filename": "ab.csv",
+            "filename": "ab-concat.csv",
             "path": "tests/data/out/",
             "encoding": "utf-8"
         }   
     } ],
     "transformers":  [ { 
         "name": "T1",
+        "inputs" : [ "E1", "E2" ],
+        "outputs" : [ "L1" ],
         "classname": "pipelines.transformers.concatTR"
     },
     { 

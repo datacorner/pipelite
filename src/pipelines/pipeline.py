@@ -58,8 +58,8 @@ class pipeline(etlObject):
                 objParams = pc.GETPARAM(ds, C.PLJSONCFG_PROP_PARAMETERS)
                 if (paramJSONPath == C.PLJSONCFG_TRANSFORMER):
                     # Only for transformers ...
-                    dsObj.dsInputs = pc.GETPARAM(ds, "inputs")
-                    dsObj.dsOutputs = pc.GETPARAM(ds, "outputs")
+                    dsObj.dsInputs = pc.GETPARAM(ds, "inputs", [])
+                    dsObj.dsOutputs = pc.GETPARAM(ds, "outputs", [])
                 if (dsObj.initialize(objParams)):
                     # Add the extractor in the pipeline list
                     self.log.debug("Object {} initialized successfully".format(dsClassName))
@@ -140,6 +140,7 @@ class pipeline(etlObject):
         """
         self.log.info("*** Data Transformation treatment ***")
         # Select only the Inputs needed for the transformer, initialize the data source stack with all extractors first
+        # this dsPipelineStack object will store all the initial datasets (extractors) but also the transformation results.
         dsPipelineStack = etlDatasets()
         for extractorItem in self.extractors:   
             self.log.debug("Adding dataset {} in the Global stack".format(extractorItem.name))
@@ -155,15 +156,23 @@ class pipeline(etlObject):
                     self.log.debug("Adding dataset {} in the transformation stack".format(dsItem.name))
                     dsInputs.add(dsItem.copy())
             self.log.info("Transforming data via transformer {}".format(transformerItem.name))
-            dsOutputs, tfCount = transformerItem.transform(dsInputs)
-            dsPipelineStack.merge(dsOutputs)
-            totalCountTransformed += tfCount
-            self.log.info("Number of rows transformed {} / {}".format(tfCount, totalCountTransformed))
+            if (not dsInputs.empty):
+                dsOutputs, tfCount = transformerItem.transform(dsInputs)
+                dsPipelineStack.merge(dsOutputs)
+                totalCountTransformed += tfCount
+                self.log.info("Number of rows transformed {} / {}".format(tfCount, totalCountTransformed))
+            else:
+                self.log.warning("The Tranformer {} has no input, by pass it !".format(transformerItem.name))
 
         return dsPipelineStack, totalCountTransformed
 
-    def load(self, dfDataset) -> int:
-        """ Load the dataset transformed in one or more loaders
+    def load(self, dsPipelineStack) -> int:
+        """ Load the dataset transformed in one or more loaders.
+            Only load the datasets which are referenced as Data Source Load and are in the Stack.
+            Be Careful: the loaders are not in the stack by default (because they don't still have data)
+            so To load, 2 options:
+                1) Use a name which exists in the extractors
+                2) Use a Tranformer to create a new dataset
         Args:
             dfDataset (pd.DataFrame): DataFrame with the Data to load in one or several data sources
         Returns:
@@ -172,8 +181,13 @@ class pipeline(etlObject):
         totalCountLoaded = 0
         self.log.info("*** Loading treatment ***")
         for item in self.loaders:
-            item.content = dfDataset[0]
-            self.log.info("Loading content to the Data Source {}".format(item.name))
-            totalCountLoaded += item.load()
-            self.log.info("Number of rows extracted {}".format(totalCountLoaded))
+            # Load only the dataset which have a loader
+            dsToLoad = dsPipelineStack.getFromName(item.name)
+            if (dsToLoad == None):
+                self.log.warning("There are no data to load into the Data Source {}".format(item.name))
+            else:
+                self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
+                item.content = dsToLoad
+                totalCountLoaded += item.load()
+                self.log.info("Number of rows loaded {}".format(totalCountLoaded))
         return totalCountLoaded

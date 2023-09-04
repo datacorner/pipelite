@@ -13,8 +13,8 @@ class Transformer(etlObject):
         etlObject: Basic ETL object interface
     """
     def __init__(self, config, log):
-        self.dsInputs = None    # Input Dataset name List
-        self.dsOutputs = None   # Output Dataset name List
+        self.dsInputs = []    # Input Dataset name List
+        self.dsOutputs = []   # Output Dataset name List
         super().__init__(config, log)
 
     @abstractmethod

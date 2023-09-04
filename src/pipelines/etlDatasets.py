@@ -4,14 +4,20 @@ __license__ = "MIT"
 
 import utils.constants as C
 from .etlObject import etlObject
+from .etlDataset import etlDataset
 
 class etlDatasets(etlObject):
     def __init__(self):
         self.dataset = [] # Array of etlDataset
 
-    def count(self):
+    @property
+    def count(self) -> int:
         return len(self.dataset)
     
+    @property
+    def empty(self) -> bool:
+        return (len(self.dataset) == 0)
+
     def add(self, dataset):
         self.dataset.append(dataset)
 
@@ -21,15 +27,13 @@ class etlDatasets(etlObject):
 
     def merge(self, etlOtherDatasets):
         for dsItem in etlOtherDatasets:
-            if (dsItem.name in self.names): # replace the Dataset
-                self.add(dsItem)
-            else: # Add the dataset
+            if (not dsItem.name in self.names): 
                 self.add(dsItem)
 
-    def getFromName(self, name):
+    def getFromName(self, name) -> etlDataset:
         for ds in self.dataset:
-            if (self.dataset.name == name):
-                return self.dataset
+            if (ds.name == name):
+                return ds
         return None
 
     def __getitem__(self, item):

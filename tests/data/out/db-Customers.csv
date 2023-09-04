@@ -1,0 +1,7 @@
+customer_id,first_name,last_name,gender,household_income,birthdate,phone_number,email
+1,Jeremy,Jacobs,Male,120000,1990-12-12,587619723,Jeremy@Gmail.com
+2,Maria,Swabota,Female,60000,1980-06-15,-1012185205,Maria@Gmail.com
+3,Jacob,Wong,Male,24000,1992-02-20,2129990234,WonTon@hotmail.com
+4,Pitbull,Perez,Male,1200000,1985-12-01,-697592765,Pitbull@ymail.com
+5,Minnie,Mouse,Female,200000,1950-03-01,-1047043605,MinnieMe@gmail.com
+6,Jessica,Parker,Female,120000,1989-06-29,-49288296,JennyFromThePark@mymail.com

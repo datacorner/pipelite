@@ -17,11 +17,11 @@ class pipelineConfig():
         return
 
     @staticmethod
-    def GETPARAM(params, name):
+    def GETPARAM(params, name, default=None):
         try:
             return params[name] 
         except:
-            return None
+            return default
 
     def addParameter(self, name, value):
         """Add a new parameter in the list
