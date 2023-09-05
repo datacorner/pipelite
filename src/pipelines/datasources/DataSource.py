@@ -13,6 +13,10 @@ class DataSource(etlObject):
 
     @property
     def count(self):
+        """Returns the number of rows
+        Returns:
+            int: rows count
+        """
         try:
             return self.content.count
         except:

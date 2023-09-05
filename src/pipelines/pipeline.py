@@ -5,7 +5,7 @@ __license__ = "MIT"
 import utils.constants as C
 from .etlObject import etlObject
 from .etlDatasets import etlDatasets
-from config.pipelineConfig import pipelineConfig as pc
+from config.dpConfig import dpConfig as pc
 
 """ Pipeline Management rules:
     1) a pipeline can have 
@@ -102,11 +102,9 @@ class pipeline(etlObject):
                 raise Exception("Transformers(s) has/have not been initialized properly")
             self.log.info("There is/are {} Transformers(s)".format(len(self.transformers)))
 
-            # The first transfomer must support the number of extractors configured
-            #if (self.transformers[0].dsInputNbSupported != len(self.extractors)):
-            #    raise Exception("The first transfomer must support the number of extractors configured (Nb of extractor == Transformer extractors needs)")
-
-            # TODO Check names and unicity for all DS and TR
+            # CHECKS here ...
+            # Check if No Inputs or No outputs
+            # Warning if Loaders & Extractors have same names
 
             return True
         except Exception as e:
@@ -123,49 +121,58 @@ class pipeline(etlObject):
         Returns:
             pd.DataFrame: Dataset in a pd.Dataframe object
         """
-        totalCountExtracted = 0
-        self.log.info("*** Extraction treatment ***")
-        for item in self.extractors:
-            self.log.info("Extracting data from the Data Source {}".format(item.name))
-            if (item.extract()):
-                self.log.info("Number of rows extracted {}".format(item.count))
-                totalCountExtracted += item.count
-        return totalCountExtracted
-
+        try:
+            totalCountExtracted = 0
+            self.log.info("*** Extraction treatment ***")
+            for item in self.extractors:
+                self.log.info("Extracting data from the Data Source {}".format(item.name))
+                if (item.extract()):
+                    self.log.info(" <{}> Rows: {} | Columns: {} ".format(item.name, item.count, item.content.columns))
+                    totalCountExtracted += item.count
+            return totalCountExtracted
+        except Exception as e:
+            self.log.error("pipeline.extract() Error -> {}".format(e))
+            return 0
+        
     def transform(self): 
         """ Make some modifications in the Dataset(s) after gathering the data and before loading
         Returns:
             pd.DataFrame: Output Dataframe
             int: Total Number of transformed rows
         """
-        self.log.info("*** Data Transformation treatment ***")
-        # Select only the Inputs needed for the transformer, initialize the data source stack with all extractors first
-        # this dsPipelineStack object will store all the initial datasets (extractors) but also the transformation results.
-        dsPipelineStack = etlDatasets()
-        for extractorItem in self.extractors:   
-            self.log.debug("Adding dataset {} in the Global stack".format(extractorItem.name))
-            extractorItem.content.name = extractorItem.name
-            dsPipelineStack.add(extractorItem.content)
-        totalCountTransformed = 0
+        try:
+            self.log.info("*** Data Transformation treatment ***")
+            # Select only the Inputs needed for the transformer, initialize the data source stack with all extractors first
+            # this dsPipelineStack object will store all the initial datasets (extractors) but also the transformation results.
+            dsPipelineStack = etlDatasets()
+            for extractorItem in self.extractors:   
+                self.log.debug("Adding Extractor/dataset {} in the data stack".format(extractorItem.name))
+                extractorItem.content.name = extractorItem.name
+                dsPipelineStack.add(extractorItem.content)
+            totalCountTransformed = 0
 
-        # Execute the Transformers stack on the inputs/extractors
-        for transformerItem in self.transformers:   # Pass through all the Tranformers ...
-            dsInputs = etlDatasets()
-            for dsItem in dsPipelineStack:
-                if (dsItem.name in transformerItem.dsInputs):
-                    self.log.debug("Adding dataset {} in the transformation stack".format(dsItem.name))
-                    dsInputs.add(dsItem.copy())
-            self.log.info("Transforming data via transformer {}".format(transformerItem.name))
-            if (not dsInputs.empty):
-                dsOutputs, tfCount = transformerItem.transform(dsInputs)
-                dsPipelineStack.merge(dsOutputs)
-                totalCountTransformed += tfCount
-                self.log.info("Number of rows transformed {} / {}".format(tfCount, totalCountTransformed))
-            else:
-                self.log.warning("The Tranformer {} has no input, by pass it !".format(transformerItem.name))
+            # Execute the Transformers stack on the inputs/extractors
+            for transformerItem in self.transformers:   # Pass through all the Tranformers ...
+                dsInputs = etlDatasets()
+                for dsItem in dsPipelineStack:
+                    if (dsItem.name in transformerItem.dsInputs):
+                        self.log.info("Including dataset {} for the transformation".format(dsItem.name))
+                        self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsItem.name, dsItem.count, dsItem.content.columns))
+                        dsInputs.add(dsItem.copy())
+                self.log.info("Apply Transformation via transformer {} ...".format(transformerItem.name))
+                if (not dsInputs.empty):
+                    dsOutputs, tfCount = transformerItem.transform(dsInputs)
+                    dsPipelineStack.merge(dsOutputs)
+                    totalCountTransformed += tfCount
+                    self.log.info("Number of rows transformed {} / {}".format(tfCount, totalCountTransformed))
+                else:
+                    self.log.warning("The Tranformer {} has no input, by pass it !".format(transformerItem.name))
 
-        return dsPipelineStack, totalCountTransformed
-
+            return dsPipelineStack, totalCountTransformed
+        except Exception as e:
+            self.log.error("pipeline.transform() Error -> {}".format(e))
+            return None, 0
+        
     def load(self, dsPipelineStack) -> int:
         """ Load the dataset transformed in one or more loaders.
             Only load the datasets which are referenced as Data Source Load and are in the Stack.
@@ -178,16 +185,20 @@ class pipeline(etlObject):
         Returns:
             bool: False if error
         """
-        totalCountLoaded = 0
-        self.log.info("*** Loading treatment ***")
-        for item in self.loaders:
-            # Load only the dataset which have a loader
-            dsToLoad = dsPipelineStack.getFromName(item.name)
-            if (dsToLoad == None):
-                self.log.warning("There are no data to load into the Data Source {}".format(item.name))
-            else:
-                self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
-                item.content = dsToLoad
-                totalCountLoaded += item.load()
-                self.log.info("Number of rows loaded {}".format(totalCountLoaded))
-        return totalCountLoaded
+        try:
+            totalCountLoaded = 0
+            self.log.info("*** Loading treatment ***")
+            for item in self.loaders:
+                # Load only the dataset which have a loader
+                dsToLoad = dsPipelineStack.getFromName(item.name)
+                if (dsToLoad == None):
+                    self.log.warning("There are no data to load into the Data Source {}".format(item.name))
+                else:
+                    self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
+                    item.content = dsToLoad
+                    totalCountLoaded += item.load()
+                    self.log.info(" <{}> Rows: {} | Columns: {} ".format(item.name, item.count, item.content.columns))
+            return totalCountLoaded
+        except Exception as e:
+            self.log.error("pipeline.load() Error -> {}".format(e))
+            return 0

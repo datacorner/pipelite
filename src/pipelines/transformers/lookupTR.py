@@ -6,7 +6,7 @@ import utils.constants as C
 from .Transformer import Transformer
 from pipelines.etlDatasets import etlDatasets
 
-class transcodeTR(Transformer):
+class lookupTR(Transformer):
     """ Transcode a column from a main dataset with data from the lookup table.
         * If data is found in the lookup table -> then the column is replace in the main dataset
         * If the data is not found -> row is dropped

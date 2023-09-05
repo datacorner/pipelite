@@ -48,5 +48,5 @@ class etlObject:
             log.info("Class instantiated successfully")
             return objectInst
         except Exception as e:
-            log.error("pipelineFactory.instantiate(): Error when loading the Class: {}".format(str(e)))
+            log.error("etlObject.instantiate(): Error when loading the Class: {}".format(str(e)))
         return None

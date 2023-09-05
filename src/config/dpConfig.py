@@ -7,7 +7,7 @@ import json, jsonpath_ng
 
 SECTION_PARAM_SEP = "."
 
-class pipelineConfig():
+class dpConfig():
     """This class contains all the configuration needed and loaded mainly from the INI file
     """
 
@@ -50,8 +50,8 @@ class pipelineConfig():
             return False
 
     def getParameter(self, paramPath, default="") -> str:
-        """ Returns the Parameter value based on the INI Section & parameter name.
-            If the parameter comes from the INI file we use the SECTION_PARAM_SEP to separate the section with the parameter
+        """ Returns the Parameter value based on the JSON Section & parameter name.
+            If the parameter comes from the JSON Config file we use the SECTION_PARAM_SEP to separate the section with the parameter
         Args:
             parameter (str): INI parameter name (section.parameter)
             default (str): default value if not found (by default empty string)

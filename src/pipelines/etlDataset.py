@@ -6,14 +6,26 @@ import pandas as pd
 import utils.constants as C
 
 class etlDataset:
-    """ This class encapsulate the data set management 
+    """ This class encapsulate the data set management (currently Pandas DataFrames) 
         (here it's currently managed by using Pandas DataFrame)
     """
     def __init__(self):
         self.name = C.EMPTY
         self.content = pd.DataFrame()
 
+    @property
+    def columns(self):
+        """ Returns all the dataset columns names
+        Returns:
+            list: columns names
+        """
+        return self.content.columns
+
     def copy(self):
+        """Returns a copy of the Dataset (to avoid any reference issues)
+        Returns:
+            etlDataset: strict copy of the current dataset
+        """
         newDS = etlDataset()
         newDS.name = self.name
         newDS.content = self.content.copy(deep=True)
@@ -29,7 +41,6 @@ class etlDataset:
 
     def readSQL(self, odbcConnection, query):
         """ Launch a SQL statement and get the resultset
-
         Args:
             odbcConnection (ODBC connection): ODBC connection via pyodbc
             query (str): SQL statement
@@ -69,12 +80,25 @@ class etlDataset:
                                  keys=keys)
     
     def lookupWith(self, dsLookup, mapColName):
+        """ Makes a lookup from the current dataset and the givent one. the join is made on the mapColName which must exists in both sides
+        Args:
+            dsLookup (etlDataset): lookup dataset
+            mapColName (str): column name on both side
+        """
         self.content = pd.merge(self.content, dsLookup, on=mapColName, how ="inner")
 
     def dropLineNaN(self, column):
+        """ Drops all rows if the column value is NaN
+        Args:
+            column (str): column name
+        """
         self.content = self.content.dropna(subset=[column])
 
     def dropColumn(self, column):
+        """Drop a column
+        Args:
+            column (str): column name
+        """
         del self.content[column]
 
     def renameColumn(self, oldName, newName):

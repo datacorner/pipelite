@@ -1,0 +1,62 @@
+{
+    "classname" : "pipelines.category.directPipeline",
+    "extractors" : [ {
+        "name": "E1",
+        "classname": "pipelines.datasources.csvFileDS",
+        "parameters": {
+            "separator": ",",
+            "filename": "a.csv",
+            "path": "tests/data/",
+            "encoding": "utf-8"
+        }
+    },
+    {
+        "name": "E2",
+        "classname": "pipelines.datasources.csvFileDS",
+        "parameters": {
+            "separator": ",",
+            "filename": "t.csv",
+            "path": "tests/data/",
+            "encoding": "utf-8"
+        }
+    } ],
+    "loaders" : [ {
+        "name": "L1",
+        "classname": "pipelines.datasources.csvFileDS",
+        "parameters": {
+            "separator": ",",
+            "filename": "ta.csv",
+            "path": "tests/data/out/",
+            "encoding": "utf-8"
+        }   
+    } ],
+    "transformers":  [ { 
+        "name": "T1",
+        "classname": "pipelines.transformers.lookupTR",
+        "inputs" : [ "E1", "E2" ],
+        "outputs" : [ "L1" ],
+        "parameters" : {
+            "main" : { "ds-name" : "E1", 
+                       "key" : "col2"},
+            "lookup" :  { "ds-name" : "E2", 
+                          "key" : "tcol1", 
+                          "keep" : "tcol2"}
+            }
+    },
+    { 
+        "name": "T2",
+        "classname": "pipelines.transformers.doNothingTR"
+    } ],
+    "parameters":{
+        "mode": "full"
+    },
+    "config": {
+        "logger" : {
+            "level": "DEBUG",
+            "format" : "%(asctime)s|%(name)s|%(levelname)s|%(message)s",
+            "path": "logs/",
+            "filename" : "pipe_csv2csv_transcode.log",
+            "maxbytes" : 1000000
+        }
+    }
+} 
