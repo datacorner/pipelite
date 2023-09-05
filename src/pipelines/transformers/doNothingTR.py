@@ -8,11 +8,11 @@ from .Transformer import Transformer
 class doNothingTR(Transformer):
 
     def transform(self, dsStack):
-        """ Returns all the data in a etlDataset format
+        """ Just do nothing !
         Args:
-            inputDataFrames (etlDataset() []): multiple dataframes
+            inputDataFrames (etlDatasets): multiple dataset in a collection
         Returns:
-            etlDataset: Output etlDataset [] of the transformer(s)
-            int: Number of rows transformed
+            etlDatasets: same as input
+            int: 0 transformed rows
         """
         return dsStack, 0

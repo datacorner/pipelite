@@ -41,7 +41,6 @@ class lookupTR(Transformer):
                     len(self.mainDatasetName) != 0 and 
                     len(self.mainColKey) != 0 and 
                     len(self.lookupDatasetColKeep) != 0)
-        
         except Exception as e:
             self.log.error("transcoderTR.initialize() Error -> {}".format(str(e)))
             return False
@@ -55,30 +54,31 @@ class lookupTR(Transformer):
             int: Number of rows transformed
         """
 
-        # identify the main & the lookup dataset first
-        if (dsStack[0].name == self.mainDatasetName):
-            dsMain, dsLookup = dsStack[0], dsStack[1]
-        else:
-            dsMain, dsLookup = dsStack[1],dsStack[0]
-
-        # Change the lookup column name to the main one for the lookup itself
-        dsLookup.renameColumn(self.lookupDatasetColKey, self.mainColKey)
-        originalRecCount = dsMain.count
-        self.log.debug("There are {} records in the original dataset".format(originalRecCount))
-        dsMain.lookupWith(dsLookup, self.mainColKey) # Effective lookup
-        dsMain.dropLineNaN(self.lookupDatasetColKeep) # drop the NA values (lookup failed / no values as result)
-        # Reshape the dataset (columns changes)
-        dsMain.dropColumn(self.mainColKey)
-        dsMain.renameColumn(self.lookupDatasetColKeep, self.mainColKey)
-        # display Nb of rows removed
-        iNbRemoved = originalRecCount - dsMain.count
-        if (iNbRemoved != 0):
-            self.log.warning("{} records have been removed ".format(iNbRemoved))
-
-        # Return the output as a collection with only one item with the excepted name
-        dsOutputs = etlDatasets()
-        # Create from the source another instance of the data
-        dsMain.name = self.dsOutputs[0]
-        dsOutputs.add(dsMain)
-        
-        return dsOutputs, iNbRemoved
+        try:
+            # identify the main & the lookup dataset first
+            if (dsStack[0].name == self.mainDatasetName):
+                dsMain, dsLookup = dsStack[0], dsStack[1]
+            else:
+                dsMain, dsLookup = dsStack[1],dsStack[0]
+            # Change the lookup column name to the main one for the lookup itself
+            dsLookup.renameColumn(self.lookupDatasetColKey, self.mainColKey)
+            originalRecCount = dsMain.count
+            self.log.debug("There are {} records in the original dataset".format(originalRecCount))
+            dsMain.lookupWith(dsLookup, self.mainColKey) # Effective lookup
+            dsMain.dropLineNaN(self.lookupDatasetColKeep) # drop the NA values (lookup failed / no values as result)
+            # Reshape the dataset (columns changes)
+            dsMain.dropColumn(self.mainColKey)
+            dsMain.renameColumn(self.lookupDatasetColKeep, self.mainColKey)
+            # display Nb of rows removed
+            iNbRemoved = originalRecCount - dsMain.count
+            if (iNbRemoved != 0):
+                self.log.warning("{} records have been removed by the transformation".format(iNbRemoved))
+            # Return the output as a collection with only one item with the excepted name
+            dsOutputs = etlDatasets()
+            # Create from the source another instance of the data
+            dsMain.name = self.dsOutputs[0]
+            dsOutputs.add(dsMain)
+            return dsOutputs, iNbRemoved
+        except Exception as e:
+            self.log.info("lookupTR.transform() -> ".format(e))
+            return dsStack, 0

@@ -32,7 +32,8 @@
         }
     } 
     ],
-    "loaders" : [ {
+    "loaders" : [ 
+    {
         "name": "O2",
         "classname": "pipelines.datasources.csvFileDS",
         "parameters": {
@@ -41,8 +42,10 @@
             "path": "tests/data/out/",
             "encoding": "utf-8"
         }   
-    } ],
-    "transformers":  [ { 
+    } 
+    ],
+    "transformers":  [ 
+    { 
         "name": "T1",
         "classname": "pipelines.transformers.concatTR",
         "inputs" : [ "I1", "I2" ],
@@ -54,9 +57,9 @@
         "inputs" : [ "TO1", "I3" ],
         "outputs" : [ "O2" ],
         "parameters" : {
-            "main" : { "ds-name" : "E1", 
+            "main" : { "ds-name" : "I1", 
                        "key" : "col2"},
-            "lookup" :  { "ds-name" : "E2", 
+            "lookup" :  { "ds-name" : "I2", 
                           "key" : "tcol1", 
                           "keep" : "tcol2"}
             }
@@ -64,7 +67,8 @@
     { 
         "name": "T3",
         "classname": "pipelines.transformers.doNothingTR"
-    } ],
+    } 
+    ],
     "parameters":{
         "mode": "full"
     },
