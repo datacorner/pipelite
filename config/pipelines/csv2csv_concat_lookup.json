@@ -57,11 +57,8 @@
         "inputs" : [ "TO1", "I3" ],
         "outputs" : [ "O2" ],
         "parameters" : {
-            "main" : { "ds-name" : "I1", 
-                       "key" : "col2"},
-            "lookup" :  { "ds-name" : "I2", 
-                          "key" : "tcol1", 
-                          "keep" : "tcol2"}
+            "main" : { "ds-name" : "I1", "key" : "col2"},
+            "lookup" :  { "ds-name" : "I2", "key" : "tcol1", "keep" : "tcol2"}
             }
     },
     { 
