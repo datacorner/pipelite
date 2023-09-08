@@ -18,11 +18,11 @@ class concatTR(Transformer):
         return True
     
     def transform(self, dsStack):
-        """ Do absolutemy nothing !
+        """ Concatenate 2 or more datasets together
         Args:
-            inputDataFrames (etlDataset []): multiple datasets in a list
+            dsStack (etlDatasets): multiple datasets to concat in a collection
         Returns:
-            etlDataset []: Output etlDataset[] of the transformer(s). Only One item in the list
+            etlDatasets: Output etlDataset collection of the transformer(s).
             int: Number of rows transformed
         """
         try:
@@ -31,15 +31,12 @@ class concatTR(Transformer):
             for obj in dsStack:
                 self.log.debug("Adding {} rows from the dataset {}".format(obj.count, obj.name))
                 output.concatWith(obj)
-
             # Return the output as a collection with only one item with the excepted name
             dsOutputs = etlDatasets()
             # Create from the source another instance of the data
             output.name = self.dsOutputs[0]
             dsOutputs.add(output)
-
             return dsOutputs, output.count
-        
         except Exception as e:
             self.log.info("concatTR.transform() -> ".format(e))
             return dsStack, 0
