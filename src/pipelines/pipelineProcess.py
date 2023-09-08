@@ -5,7 +5,7 @@ __license__ = "MIT"
 import utils.constants as C
 from .pipeline import pipeline
 from utils.log import log
-from .etlObject import etlObject
+from fmk.etlObject import etlObject
 
 class pipelineProcess:
 	def __init__(self, config, log):

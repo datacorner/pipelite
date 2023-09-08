@@ -2,8 +2,8 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelines.etlObject import etlObject
-from pipelines.etlDataset import etlDataset
+from fmk.etlObject import etlObject
+from fmk.etlDataset import etlDataset
 from abc import abstractmethod
 
 class DataSource(etlObject):

@@ -1,8 +1,8 @@
 {
-    "classname" : "pipelines.category.directPipeline",
+    "classname" : "pipelines.type.directPipeline",
     "extractors" : [ {
         "name": "S1",
-        "classname": "pipelines.datasources.csvFileDS",
+        "classname": "datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "a.csv",
@@ -12,7 +12,7 @@
     } ],
     "loaders" : [ {
         "name": "S1",
-        "classname": "pipelines.datasources.csvFileDS",
+        "classname": "datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "a-d.csv",
@@ -23,7 +23,7 @@
     "transformers":  [
     { 
         "name": "T2",
-        "classname": "pipelines.transformers.doNothingTR",
+        "classname": "transformers.doNothingTR",
         "inputs" : [ "S1" ],
         "outputs" : [ "S1" ]
     } ],

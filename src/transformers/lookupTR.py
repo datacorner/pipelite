@@ -4,7 +4,7 @@ __license__ = "MIT"
 
 import utils.constants as C
 from .Transformer import Transformer
-from pipelines.etlDatasets import etlDatasets
+from fmk.etlDatasets import etlDatasets
 
 class lookupTR(Transformer):
     """ Transcode a column from a main dataset with data from the lookup table.

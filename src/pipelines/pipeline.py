@@ -3,8 +3,8 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import utils.constants as C
-from .etlObject import etlObject
-from .etlDatasets import etlDatasets
+from fmk.etlObject import etlObject
+from fmk.etlDatasets import etlDatasets
 from config.dpConfig import dpConfig as pc
 
 """ Pipeline Management rules:

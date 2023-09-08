@@ -1,8 +1,8 @@
 {
-    "classname" : "pipelines.category.directPipeline",
+    "classname" : "pipelines.type.directPipeline",
     "extractors" : [ {
         "name": "E1",
-        "classname": "pipelines.datasources.csvFileDS",
+        "classname": "datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "a.csv",
@@ -12,7 +12,7 @@
     },
     {
         "name": "E2",
-        "classname": "pipelines.datasources.csvFileDS",
+        "classname": "datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "t.csv",
@@ -22,7 +22,7 @@
     } ],
     "loaders" : [ {
         "name": "L1",
-        "classname": "pipelines.datasources.csvFileDS",
+        "classname": "datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "ta.csv",
@@ -32,7 +32,7 @@
     } ],
     "transformers":  [ { 
         "name": "T1",
-        "classname": "pipelines.transformers.lookupTR",
+        "classname": "transformers.lookupTR",
         "inputs" : [ "E1", "E2" ],
         "outputs" : [ "L1" ],
         "parameters" : {
@@ -45,7 +45,7 @@
     },
     { 
         "name": "T2",
-        "classname": "pipelines.transformers.doNothingTR"
+        "classname": "transformers.doNothingTR"
     } ],
     "parameters":{
         "mode": "full"

@@ -1,12 +1,17 @@
 {
-    "classname" : "pipelines.category.directPipeline",
+    "classname" : "pipelines.type.directPipeline",
     "extractors" : [ {
         "name": "S1",
         "classname": "pipelines.datasources.odbcDS",
         "parameters": {
             "connectionstring": "DRIVER={SQLite3};Database=tests/data/dbsample.sqlite",
-            "query": "SELECT * FROM Customers"
-        }   
+            "query": "SELECT customer_id, first_name, birthdate FROM Customers;",
+            "delta-load": {
+                "active" : "yes",
+                "column" : "birthdate",
+                "tagfile" : "delta.tag"
+            }
+        } 
     } ],
     "loaders" : [ {
         "name": "S1",

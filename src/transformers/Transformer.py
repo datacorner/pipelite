@@ -3,8 +3,8 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from abc import abstractmethod
-from pipelines.etlDatasets import etlDatasets
-from pipelines.etlObject import etlObject
+from fmk.etlDatasets import etlDatasets
+from fmk.etlObject import etlObject
 
 class Transformer(etlObject):
     """ The First transformer can manage several extractors but not the next. Transformers works in stack.
