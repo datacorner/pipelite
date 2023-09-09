@@ -80,7 +80,11 @@ class etlDataset:
                             encoding=encoding, 
                             index=False, 
                             sep=separator)
-    
+
+    def read_excel(self, filename, sheet=0):
+        # Read the Excel file and provides a DataFrame
+        self.__content__ = pd.read_excel(filename, sheet_name=sheet) #, engine='openpyxl')
+        
     def concatWith(self, etlDatasetB, keys=None):
         """Concatenate the current dataset with the one in arg
         Args:
