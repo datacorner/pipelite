@@ -5,6 +5,7 @@ __license__ = "MIT"
 from .DataSource import DataSource 
 import utils.constants as C
 import os
+from config.dpConfig import dpConfig as pc
 
 class csvFileDS(DataSource):
 
@@ -29,9 +30,10 @@ class csvFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.separator = str(params['separator'])
-            self.filename = os.path.join(params['path'], params['filename'])
-            self.encoding = str(params['encoding'])
+            self.separator = pc.GETPARAM(str(params['separator']), C.EMPTY)
+            self.filename = os.path.join(pc.GETPARAM(params['path'], C.EMPTY), 
+                                         pc.GETPARAM(params['filename']))
+            self.encoding = pc.GETPARAM(str(params['encoding']), C.ENCODING)
 
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):

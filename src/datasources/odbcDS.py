@@ -5,6 +5,7 @@ __license__ = "MIT"
 from .DataSource import DataSource 
 import utils.constants as C
 import pyodbc
+from config.dpConfig import dpConfig as pc
 
 class odbcDS(DataSource):
 
@@ -28,8 +29,8 @@ class odbcDS(DataSource):
             bool: False if error
         """
         try:
-            self.connectionString = str(params['connectionstring'])
-            self.query = str(params['query'])
+            self.connectionString = str(pc.GETPARAM(params['connectionstring'], C.EMPTY))
+            self.query = str(pc.GETPARAM(params['query'], C.EMPTY))
 
             # checks
             if (len(self.connectionString) == 0):

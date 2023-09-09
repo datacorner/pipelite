@@ -157,7 +157,7 @@ class pipeline(etlObject):
                 for dsItem in dsPipelineStack:
                     if (dsItem.name in transformerItem.dsInputs):
                         self.log.info("Including dataset {} for the transformation".format(dsItem.name))
-                        self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsItem.name, dsItem.count, dsItem.content.columns))
+                        self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsItem.name, dsItem.count, dsItem.columns))
                         dsInputs.add(dsItem.copy())
                 self.log.info("Apply Transformation via transformer {} ...".format(transformerItem.name))
                 if (not dsInputs.empty):

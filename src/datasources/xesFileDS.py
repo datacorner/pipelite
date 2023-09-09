@@ -2,9 +2,16 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
+import xmltodict
 from .DataSource import DataSource 
 import utils.constants as C
 import os
+from json import dumps, loads
+from config.dpConfig import dpConfig as pc
+
+# Inspired by https://github.com/FrankBGao/read_xes/tree/master
+DATATYPES = ['string',  'int', 'date', 'float', 'boolean', 'id']
+CASE_KEY = 'concept-name-attr'
 
 class xesFileDS(DataSource):
 
@@ -16,10 +23,8 @@ class xesFileDS(DataSource):
         """ initialize and check all the needed configuration parameters
             A CSV Extractor/Loader must have:
                 * A filename
-                * A separator
                 * A path name
-                * An Encoding type
-                params['separator']
+                params['filename']
         Args:
             params (json list) : params for the data source.
                 example: {'separator': ',', 'filename': 'test2.csv', 'path': '/tests/data/', 'encoding': 'utf-8'}
@@ -27,14 +32,15 @@ class xesFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.filename = os.path.join(params['path'], params['filename'])
+            self.filename = os.path.join(pc.GETPARAM(params['path'], C.EMPTY), 
+                                         pc.GETPARAM(params['filename']))
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):
                 if (not os.path.isfile(self.filename)):
-                    raise Exception("The file {} does not exist or is not accessible.".format(self.filename))
+                    raise Exception("The XES file {} does not exist or is not accessible.".format(self.filename))
             return True
         except Exception as e:
-            self.log.error("CSVFileDS.initialize() Error: {}".format(e))
+            self.log.error("xesFileDS.initialize() Error: {}".format(e))
             return False
     
     def extract(self) -> int:
@@ -43,15 +49,15 @@ class xesFileDS(DataSource):
             etlDataset: data set
         """
         try:
-            if (self.filename == ""):
-                raise Exception ("No XES file specified.")
+            # Get the XES content (XML format)
             xmldata = open(self.filename, mode='r').read()
+            # Extract/flatten XES data
             events, attributes = self.__extractAll(xmldata)
-            self.content = pd.DataFrame(events)
+            self.content.initFromList(events)
     
             return self.content.count
         except Exception as e:
-            self.log.error("CSVFileDS.extract() Error while reading the file: ".format(e))
+            self.log.error("xesFileDS.extract() Error while reading the file: ".format(e))
             return False
          
     def __getEventDetails(self, event, id):
@@ -75,6 +81,32 @@ class xesFileDS(DataSource):
         return one_event_dict
 
     def __ExtractOneTrace(self, trace_item):
+        """ extract logs and attributes from 1 trace
+        Args:
+            trace_item (_type_): 1 trace (contains attrs + several logs)
+        Returns:
+            dict: trace attributes
+            list: events
+        """
+
+        # Build atributes / trace
+        attrs = list(trace_item.keys())
+        attrs_dict = {}
+        for i in DATATYPES:
+            if i in attrs:
+                if type(trace_item[i]) == list:
+                    for j in trace_item[i]:
+                        attrs_dict[j['@key']] = j['@value']
+                else:
+                    attrs_dict[trace_item[i]['@key']] = trace_item[i]['@value']
+        # build events / trace
+        events = []
+        if type(trace_item['event']) == dict:
+            trace_item['event'] = [trace_item['event']]
+
+        for i in trace_item['event']:
+            inter_event = self.__getEventDetails(i, attrs_dict['concept:name'])
+            events.append(inter_event)
         return attrs_dict, events
 
     def __extractAll(self, xml):
@@ -95,7 +127,7 @@ class xesFileDS(DataSource):
             trace_item = self.__ExtractOneTrace(trace)
             attributes_list.append(trace_item[0]) # Attributes
             event_list = event_list + trace_item[1] # Event details
-            self.log.debug("xesFile.__extractAll(): {}) {} -> {} evts".format(traceIdx, trace_item[0]['concept:name'], len(trace_item[1])))
+            self.log.debug("xesFileDS.__extractAll(): {}) {} -> {} evts".format(traceIdx, trace_item[0]['concept:name'], len(trace_item[1])))
             traceIdx += 1
         return event_list, attributes_list
     
