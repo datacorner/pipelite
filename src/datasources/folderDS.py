@@ -11,27 +11,38 @@ from .csvFileDS import csvFileDS
 from .excelFileDS import excelFileDS
 from .xesFileDS import xesFileDS
 from fmk.etlDataset import etlDataset
+from config.dpConfig import dpConfig as pc
 
 FILE_EXT_CSV = ".CSV"
 FILE_EXT_EXCEL = ".XLSX"
 FILE_EXT_XES = ".XES"
 
 class folderDS(DataSource):
-    @property
-    def filenamesFilter(self):
-        return self.__filenamesFilter
-    @filenamesFilter.setter   
-    def filenamesFilter(self, value):
-        self.__filenamesFilter = value
+    def __init__(self, config, log):
+        super().__init__(config, log)
+        self.folder = C.EMPTY
+        self.files = C.EMPTY
 
-    @property
-    def folderName(self):
-        return self.__folderName
-    @folderName.setter   
-    def folderName(self, value):
-        self.__folderName = value
+    def initialize(self, params) -> bool:
+        """ initialize and check all the needed configuration parameters
+        Args:
+            params (json list) : params for the data source.
+                example: {'separator': ',', 'filename': 'test2.csv', 'path': '/tests/data/', 'encoding': 'utf-8'}
+        Returns:
+            bool: False if error
+        """
+        try:
+            self.folder = pc.GETPARAM(str(params['folder']), 0)
+            self.filenameFilter = pc.GETPARAM(str(params['files']), "*")
 
-    def read(self) -> bool:
+            # Checks ...
+
+            return True
+        except Exception as e:
+            self.log.error("excelFileDS.initialize() Error: {}".format(e))
+            return False
+
+    def extract(self) -> bool:
         """ Several tasks to do in this order:
             1) List the folder content
             2) filter out the interresting files 
@@ -44,7 +55,7 @@ class folderDS(DataSource):
         globaldf = etlDataset()
         try:
             # Get the whole list of files to read
-            fileList = [f for f in Path(self.folderName).glob(self.filenamesFilter)]
+            fileList = [f for f in Path(self.folder).glob(self.files)]
             self.log.info("There are {} file(s) to read and concatenate".format(len(fileList)))
             for file in fileList:
                 dataset = None
