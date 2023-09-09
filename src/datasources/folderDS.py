@@ -7,6 +7,11 @@ import utils.constants as C
 from pathlib import Path
 import os
 
+from .csvFileDS import csvFileDS
+from .excelFileDS import excelFileDS
+from .xesFileDS import xesFileDS
+from fmk.etlDataset import etlDataset
+
 FILE_EXT_CSV = ".CSV"
 FILE_EXT_EXCEL = ".XLSX"
 FILE_EXT_XES = ".XES"
@@ -36,7 +41,7 @@ class folderDS(DataSource):
             bool: False is any trouble when reading
             Only support xlsx, csv and xes files
         """
-        globaldf = pd.DataFrame()
+        globaldf = etlDataset()
         try:
             # Get the whole list of files to read
             fileList = [f for f in Path(self.folderName).glob(self.filenamesFilter)]
@@ -44,23 +49,24 @@ class folderDS(DataSource):
             for file in fileList:
                 dataset = None
                 self.log.info("Reading {} ...".format(file))
-                _,ext = os.path.splitext(file)
+                _, ext = os.path.splitext(file)
                 # Instantiate the right extractor
                 if (ext.upper() == FILE_EXT_CSV):
-                    dataset = csvFileExtractor(self.log)
+                    dataset = csvFileDS(self.config, self.log)
                     dataset.filename = str(file)
                 elif (ext.upper() == FILE_EXT_EXCEL):
-                    dataset = excelFileExtractor(self.log)
+                    dataset = excelFileDS(self.config, self.log)
                     dataset.filename = str(file)
                 elif (ext.upper() == FILE_EXT_XES):
-                    dataset = xesFileExtractor(self.log)
+                    dataset = xesFileDS(self.log)
+                    dataset.filename = str(file)
 
                 # Extract the data and Merge/Concat with previous
                 if (dataset != None):
                     if (not dataset.read()):
                         raise Exception("Error while reading {}".format(dataset.filename))
-                    self.log.debug("Concatenating {} with {} rows and {} columns...".format(file, dataset.content.shape[0], dataset.content.shape[1]))
-                    globaldf = pd.concat([globaldf, dataset.content], ignore_index=True)
+                    self.log.debug("Concatenating {} with {} rows and {} columns...".format(file, dataset.content.count, len(dataset.content.columns)))
+                    globaldf.concatWith(dataset.content)
 
             self.log.debug("Final dataset has {} rows and {} columns...".format(globaldf.shape[0], globaldf.shape[1]))
             self.content = globaldf
