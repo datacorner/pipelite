@@ -32,8 +32,8 @@ class xesFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.filename = os.path.join(pc.GETPARAM(params['path'], C.EMPTY), 
-                                         pc.GETPARAM(params['filename']))
+            self.filename = os.path.join(pc.GETVALFROMLIST(params['path'], C.EMPTY), 
+                                         pc.GETVALFROMLIST(params['filename']))
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):
                 if (not os.path.isfile(self.filename)):

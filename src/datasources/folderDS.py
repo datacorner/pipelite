@@ -32,8 +32,8 @@ class folderDS(DataSource):
             bool: False if error
         """
         try:
-            self.folder = pc.GETPARAM(str(params['folder']), 0)
-            self.filenameFilter = pc.GETPARAM(str(params['files']), "*")
+            self.folder = pc.GETVALFROMLIST(str(params['folder']), 0)
+            self.filenameFilter = pc.GETVALFROMLIST(str(params['files']), "*")
 
             # Checks ...
 

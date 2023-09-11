@@ -30,10 +30,10 @@ class csvFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.separator = pc.GETPARAM(str(params['separator']), C.EMPTY)
-            self.filename = os.path.join(pc.GETPARAM(params['path'], C.EMPTY), 
-                                         pc.GETPARAM(params['filename']))
-            self.encoding = pc.GETPARAM(str(params['encoding']), C.ENCODING)
+            self.separator = pc.GETVALFROMLIST(str(params['separator']), C.EMPTY)
+            self.filename = os.path.join(pc.GETVALFROMLIST(params['path'], C.EMPTY), 
+                                         pc.GETVALFROMLIST(params['filename']))
+            self.encoding = pc.GETVALFROMLIST(str(params['encoding']), C.ENCODING)
 
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):

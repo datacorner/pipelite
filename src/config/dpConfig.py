@@ -17,7 +17,7 @@ class dpConfig():
         return
 
     @staticmethod
-    def GETPARAM(params, name, default=None):
+    def GETVALFROMLIST(params, name, default=None):
         try:
             return params[name] 
         except:
@@ -49,7 +49,7 @@ class dpConfig():
             print("pipelineConfig.load() -> {}".format(e))
             return False
 
-    def getParameter(self, paramPath, default="") -> str:
+    def getParameter(self, paramPath, default=C.EMPTY) -> str:
         """ Returns the Parameter value based on the JSON Section & parameter name.
             If the parameter comes from the JSON Config file we use the SECTION_PARAM_SEP to separate the section with the parameter
         Args:

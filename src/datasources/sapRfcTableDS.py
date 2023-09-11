@@ -49,18 +49,18 @@ class sapRfcTableDS(DataSource):
         try:
             # checks
             for param in MANDATORY_PARAMETERS:
-                if (pc.GETPARAM(str(params[param]), C.EMPTY)):
+                if (pc.GETVALFROMLIST(str(params[param]), C.EMPTY)):
                     raise Exception("Mandatory Parameter <{}> is missing".format(param))
             # Get params
-            self.ahost = pc.GETPARAM(str(params[SAPPARAM_AHOST]), C.EMPTY)
-            self.client = pc.GETPARAM(str(params[SAPPARAM_CLIENT]), C.EMPTY)
-            self.sysnr = pc.GETPARAM(str(params[SAPPARAM_SYSNR]), C.EMPTY)
-            self.user = pc.GETPARAM(str(params[SAPPARAM_USER]), C.EMPTY)
-            self.pwd = pc.GETPARAM(str(params[SAPPARAM_PWD]), C.EMPTY)
-            self.router = pc.GETPARAM(str(params[SAPPARAM_ROUTER]), C.EMPTY)
-            self.table = pc.GETPARAM(str(params[SAPPARAM_TABLE]), C.EMPTY)
-            self.fields = pc.GETPARAM(str(params[SAPPARAM_FIELDS]), [])
-            self.rowcount = pc.GETPARAM(str(params[SAPPARAM_ROWCOUNT]), 0)
+            self.ahost = pc.GETVALFROMLIST(str(params[SAPPARAM_AHOST]), C.EMPTY)
+            self.client = pc.GETVALFROMLIST(str(params[SAPPARAM_CLIENT]), C.EMPTY)
+            self.sysnr = pc.GETVALFROMLIST(str(params[SAPPARAM_SYSNR]), C.EMPTY)
+            self.user = pc.GETVALFROMLIST(str(params[SAPPARAM_USER]), C.EMPTY)
+            self.pwd = pc.GETVALFROMLIST(str(params[SAPPARAM_PWD]), C.EMPTY)
+            self.router = pc.GETVALFROMLIST(str(params[SAPPARAM_ROUTER]), C.EMPTY)
+            self.table = pc.GETVALFROMLIST(str(params[SAPPARAM_TABLE]), C.EMPTY)
+            self.fields = pc.GETVALFROMLIST(str(params[SAPPARAM_FIELDS]), [])
+            self.rowcount = pc.GETVALFROMLIST(str(params[SAPPARAM_ROWCOUNT]), 0)
             return True
         except Exception as e:
             self.log.error("CSVFileDS.initialize() Error: {}".format(e))

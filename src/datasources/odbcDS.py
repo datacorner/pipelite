@@ -29,8 +29,8 @@ class odbcDS(DataSource):
             bool: False if error
         """
         try:
-            self.connectionString = str(pc.GETPARAM(params['connectionstring'], C.EMPTY))
-            self.query = str(pc.GETPARAM(params['query'], C.EMPTY))
+            self.connectionString = str(pc.GETVALFROMLIST(params['connectionstring'], C.EMPTY))
+            self.query = str(pc.GETVALFROMLIST(params['query'], C.EMPTY))
 
             # checks
             if (len(self.connectionString) == 0):
