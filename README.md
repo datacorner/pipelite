@@ -8,7 +8,7 @@ The way this solution is built is also totally extensible and enables all develo
 ✅  External file (csv)  
 ✅  External Excel Spreadsheet (xls, xlsx, xlsm, xlsb, odf, ods and odt) (in Progress)  
 ✅  External XES File (in Progress)  
-✅  ODBC Data Sources (checked with SQL Server, SQLite) by using an configurable SQL query (Read Only)
+✅  ODBC Data Sources (checked with SQL Server, SQLite) by using an configurable SQL query (Read Only)  
 ✅  SAP Read Table via SAP RFC (Read Only / In Progress)  
 
 🚀 And provides those transformers
