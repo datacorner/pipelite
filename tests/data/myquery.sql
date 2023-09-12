@@ -1,0 +1,2 @@
+SELECT $fields 
+FROM $tablename;

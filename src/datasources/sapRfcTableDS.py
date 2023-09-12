@@ -49,18 +49,18 @@ class sapRfcTableDS(DataSource):
         try:
             # checks
             for param in MANDATORY_PARAMETERS:
-                if (pc.GETVALFROMLIST(str(params[param]), C.EMPTY)):
+                if (self.getValFromDict(params, param, C.EMPTY)):
                     raise Exception("Mandatory Parameter <{}> is missing".format(param))
             # Get params
-            self.ahost = pc.GETVALFROMLIST(str(params[SAPPARAM_AHOST]), C.EMPTY)
-            self.client = pc.GETVALFROMLIST(str(params[SAPPARAM_CLIENT]), C.EMPTY)
-            self.sysnr = pc.GETVALFROMLIST(str(params[SAPPARAM_SYSNR]), C.EMPTY)
-            self.user = pc.GETVALFROMLIST(str(params[SAPPARAM_USER]), C.EMPTY)
-            self.pwd = pc.GETVALFROMLIST(str(params[SAPPARAM_PWD]), C.EMPTY)
-            self.router = pc.GETVALFROMLIST(str(params[SAPPARAM_ROUTER]), C.EMPTY)
-            self.table = pc.GETVALFROMLIST(str(params[SAPPARAM_TABLE]), C.EMPTY)
-            self.fields = pc.GETVALFROMLIST(str(params[SAPPARAM_FIELDS]), [])
-            self.rowcount = pc.GETVALFROMLIST(str(params[SAPPARAM_ROWCOUNT]), 0)
+            self.ahost = self.getValFromDict(params, SAPPARAM_AHOST, C.EMPTY)
+            self.client = self.getValFromDict(params, SAPPARAM_CLIENT, C.EMPTY)
+            self.sysnr = self.getValFromDict(params, SAPPARAM_SYSNR, C.EMPTY)
+            self.user = self.getValFromDict(params, SAPPARAM_USER, C.EMPTY)
+            self.pwd = self.getValFromDict(params, SAPPARAM_PWD, C.EMPTY)
+            self.router = self.getValFromDict(params, SAPPARAM_ROUTER, C.EMPTY)
+            self.table = self.getValFromDict(params, SAPPARAM_TABLE, C.EMPTY)
+            self.fields = self.getValFromDict(params, SAPPARAM_FIELDS, [])
+            self.rowcount = self.getValFromDict(params, SAPPARAM_ROWCOUNT, 0)
             return True
         except Exception as e:
             self.log.error("CSVFileDS.initialize() Error: {}".format(e))

@@ -3,10 +3,10 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import utils.constants as C
-from .etlObject import etlObject
+from .dpObject import dpObject
 from .etlDataset import etlDataset
 
-class etlDatasets(etlObject):
+class etlDatasets(dpObject):
     """ Manages a collection of etlDatasets
     Args:
         etlObject (app Object type): must be a Datasource object

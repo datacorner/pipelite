@@ -3,9 +3,8 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import utils.constants as C
-from fmk.etlObject import etlObject
+from fmk.dpObject import dpObject
 from fmk.etlDatasets import etlDatasets
-from config.dpConfig import dpConfig as pc
 
 """ Pipeline Management rules:
     1) a pipeline can have 
@@ -17,7 +16,7 @@ from config.dpConfig import dpConfig as pc
         * If many loaders 
 
 """
-class pipeline(etlObject):
+class pipeline(dpObject):
     def __init__(self, config, log):
         super().__init__(config, log)
         self.extractors = []
@@ -50,20 +49,20 @@ class pipeline(etlObject):
                 raise ("At least one Object is needed for processing the pipeline.")
             # Initialize the Extractors
             for ds in etlObjParams:
-                dsClassName = pc.GETVALFROMLIST(ds, C.PLJSONCFG_PROP_CLASSNAME, C.EMPTY)
+                dsClassName = self.getValFromDict(ds, C.PLJSONCFG_PROP_CLASSNAME, C.EMPTY)
                 self.log.info("Instantiate Object: {}".format(dsClassName))
-                dsObj = etlObject.instantiate(dsClassName, self.config, self.log)
+                dsObj = dpObject.instantiate(dsClassName, self.config, self.log)
                 # Initialize Extractor
                 self.log.debug("Initialize Object: {}".format(dsClassName))
-                objParams = pc.GETVALFROMLIST(ds, C.PLJSONCFG_PROP_PARAMETERS)
+                objParams = self.getValFromDict(ds, C.PLJSONCFG_PROP_PARAMETERS)
                 if (paramJSONPath == C.PLJSONCFG_TRANSFORMER):
                     # Only for transformers ...
-                    dsObj.dsInputs = pc.GETVALFROMLIST(ds, C.PLJSONCFG_TRANSF_IN, [])
-                    dsObj.dsOutputs = pc.GETVALFROMLIST(ds, C.PLJSONCFG_TRANSF_OUT, [])
+                    dsObj.dsInputs = self.getValFromDict(ds, C.PLJSONCFG_TRANSF_IN, [])
+                    dsObj.dsOutputs = self.getValFromDict(ds, C.PLJSONCFG_TRANSF_OUT, [])
                 if (dsObj.initialize(objParams)):
                     # Add the extractor in the pipeline list
                     self.log.debug("Object {} initialized successfully".format(dsClassName))
-                    dsObj.name = pc.GETVALFROMLIST(ds, C.PLJSONCFG_PROP_NAME, C.EMPTY)
+                    dsObj.name = self.getValFromDict(ds, C.PLJSONCFG_PROP_NAME, C.EMPTY)
                     dsObj.objtype = paramJSONPath
                     objectList.append(dsObj)
                 else:

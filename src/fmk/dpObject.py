@@ -5,12 +5,26 @@ __license__ = "MIT"
 import importlib
 import utils.constants as C
 
-class etlObject:
+class dpObject:
     def __init__(self, config, log):
         self.log = log
         self.config = config
         self.name = ""
         self.ojbType = None
+
+    def getValFromDict(self, params, name, default=None):
+        """ return the param[name] value, if does not exist returns default
+        Args:
+            params (dict): python dict
+            name (str): name
+            default (obj, optional): Default value
+        Returns:
+            obj: value
+        """
+        try:
+            return params[name] 
+        except:
+            return default
 
     def initialize(self, params) -> bool:
         """ initialize and check all the needed configuration parameters

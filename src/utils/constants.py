@@ -28,6 +28,8 @@ PLJSONCFG_PROP_NAME = "name"
 PLJSONCFG_PROP_PARAMETERS = "parameters"
 PLJSONCFG_TRANSF_IN = "inputs"
 PLJSONCFG_TRANSF_OUT = "outputs"
+PLJSONCFG_DS_ODBC_CN = "connectionstring"
+PLJSONCFG_DS_ODBC_QUERY = "query"
 
 # Logger configuration
 TRACE_DEFAULT_LEVEL = logging.DEBUG

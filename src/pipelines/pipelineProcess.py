@@ -5,7 +5,7 @@ __license__ = "MIT"
 import utils.constants as C
 from .pipeline import pipeline
 from utils.log import log
-from fmk.etlObject import etlObject
+from fmk.dpObject import dpObject
 
 class pipelineProcess:
 	def __init__(self, config, log):
@@ -101,7 +101,7 @@ class pipelineProcess:
 		try:
 			# Get the pipeline class to instantiate from the config
 			fullClassPath = self.config.getParameter(C.PLJSONCFG_PL_CLASSNAME, C.EMPTY)
-			pipelineObject = etlObject.instantiate(fullClassPath, self.config, self.log)
+			pipelineObject = dpObject.instantiate(fullClassPath, self.config, self.log)
 			return pipelineObject
 
 		except Exception as e:

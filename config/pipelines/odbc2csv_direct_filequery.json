@@ -5,11 +5,10 @@
         "classname": "datasources.odbcDS",
         "parameters": {
             "connectionstring": "DRIVER={SQLite3};Database=tests/data/dbsample.sqlite",
-            "query": "SELECT customer_id, first_name, birthdate FROM Customers;",
-            "delta-load": {
-                "active" : "yes",
-                "column" : "birthdate",
-                "tagfile" : "delta.tag"
+            "query": "tests/data/myquery.sql",
+            "query-parameters": {
+                "tablename" : "Customers",
+                "fields" : "customer_id, first_name, birthdate"
             }
         } 
     } ],

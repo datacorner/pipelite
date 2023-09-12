@@ -16,13 +16,6 @@ class dpConfig():
         self.__pipelineConfig = None
         return
 
-    @staticmethod
-    def GETVALFROMLIST(params, name, default=None):
-        try:
-            return params[name] 
-        except:
-            return default
-
     def addParameter(self, name, value):
         """Add a new parameter in the list
         Args:

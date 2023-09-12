@@ -4,9 +4,9 @@ __license__ = "MIT"
 
 from abc import abstractmethod
 from fmk.etlDatasets import etlDatasets
-from fmk.etlObject import etlObject
+from fmk.dpObject import dpObject
 
-class Transformer(etlObject):
+class Transformer(dpObject):
     """ The First transformer can manage several extractors but not the next. Transformers works in stack.
         Dataframe is after the 1st the way to manage the dataset in transformation.
     Args:

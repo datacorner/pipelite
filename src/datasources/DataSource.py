@@ -2,11 +2,11 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from fmk.etlObject import etlObject
+from fmk.dpObject import dpObject
 from fmk.etlDataset import etlDataset
 from abc import abstractmethod
 
-class DataSource(etlObject):
+class DataSource(dpObject):
     def __init__(self, config, log):
         self.content = etlDataset()
         super().__init__(config, log)

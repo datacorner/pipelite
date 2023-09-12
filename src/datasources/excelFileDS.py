@@ -23,9 +23,9 @@ class excelFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.sheet = pc.GETVALFROMLIST(str(params['sheet']), 0)
-            self.filename = os.path.join(pc.GETVALFROMLIST(params['path'], C.EMPTY), 
-                                         pc.GETVALFROMLIST(params['filename']))
+            self.sheet = self.getValFromDict(params, 'sheet', 0)
+            self.filename = os.path.join(self.getValFromDict(params, 'path', C.EMPTY), 
+                                         self.getValFromDict(params, 'filename', C.EMPTY))
 
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):
