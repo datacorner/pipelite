@@ -1,5 +1,5 @@
 {
-    "classname" : "pipelines.type.directPipeline",
+    "classname" : "pipelines.directPL",
     "extractors" : [ {
         "name": "E1",
         "classname": "datasources.csvFileDS",

@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import utils.constants as C
-from .Transformer import Transformer
+from fmk.roots.Transformer import Transformer
 from fmk.etlDatasets import etlDatasets
 
 class lookupTR(Transformer):

@@ -1,5 +1,5 @@
 {
-    "classname" : "pipelines.type.directPipeline",
+    "classname" : "pipelines.directPL",
     "extractors" : [ 
     {
         "name": "I1",

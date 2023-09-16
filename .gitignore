@@ -2,3 +2,5 @@
 .venvDataPlumber/*
 .vscode/*
 logs/*.log
+exe/*
+.pypirc

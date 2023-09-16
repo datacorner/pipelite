@@ -1,10 +1,10 @@
 [project]
-name = "DataPlumber"
+name = "pipelite"
 version = "0.1.0"
 authors = [
   { name="ExyPro", email="admin@datacorner.fr" },
 ]
-description = "This solution builds a bridge between two different data sources"
+description = "This solution build by design (configuration) simple of complex Data Pipelines"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
@@ -28,14 +28,11 @@ dependencies = [
 ]
 
 [project.urls]
-"Bug Tracker" = "https://exypro.org/Discussions/forum/"
-Homepage = "https://exypro.org/"
+"Bug Tracker" = "https://github.com/datacorner/pipelite/issues"
+Homepage = "https://github.com/datacorner/pipelite/wiki"
 
 [project.scripts]
-pidg = "dataplumbing:main"
-
-[tool.setuptools]
-package-data = { pidg = ["config-samples/bplogs.sql" ] }
+pipelite = "pipelite:main"
 
 [build-system]
 # These are the assumed default build requirements from pip:

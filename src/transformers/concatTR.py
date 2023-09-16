@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from .Transformer import Transformer
+from fmk.roots.Transformer import Transformer
 from fmk.etlDataset import etlDataset
 from fmk.etlDatasets import etlDatasets
 

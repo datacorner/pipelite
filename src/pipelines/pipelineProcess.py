@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import utils.constants as C
-from .pipeline import pipeline
+from fmk.roots.Pipeline import Pipeline
 from utils.log import log
 from fmk.dpObject import dpObject
 
@@ -88,7 +88,7 @@ class pipelineProcess:
 			self.log.error("pipelineFactory.createAndExecute(): Error when processing the data: {}".format(str(e)))
 			return E_counts, T_counts, L_counts
 
-	def create(self) -> pipeline:
+	def create(self) -> Pipeline:
 		""" This function dynamically instanciate the right data pipeline (manages ETL) class to create a pipeline object. 
 			This to avoid in loading all the connectors (if any of them failed for example) when making a global import, 
 			by this way only the needed import is done on the fly

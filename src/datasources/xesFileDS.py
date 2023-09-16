@@ -3,11 +3,10 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import xmltodict
-from .DataSource import DataSource 
+from fmk.roots.DataSource import DataSource 
 import utils.constants as C
 import os
 from json import dumps, loads
-from config.dpConfig import dpConfig as pc
 
 # Inspired by https://github.com/FrankBGao/read_xes/tree/master
 DATATYPES = ['string',  'int', 'date', 'float', 'boolean', 'id']
