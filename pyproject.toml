@@ -1,6 +1,6 @@
 [project]
 name = "pipelite"
-version = "0.1.0"
+version = "0.1.2"
 authors = [
   { name="ExyPro", email="admin@datacorner.fr" },
 ]
@@ -25,6 +25,7 @@ dependencies = [
 "pyrfc==3.1",
 "requests==2.31.0",
 "xmltodict==0.13.0",
+"jsonpath-ng==1.6.0"
 ]
 
 [project.urls]

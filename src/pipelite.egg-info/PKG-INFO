@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pipelite
-Version: 0.1.0
+Version: 0.1.1
 Summary: This solution build by design (configuration) simple of complex Data Pipelines
 Author-email: ExyPro <admin@datacorner.fr>
 License: MIT License
@@ -40,6 +40,7 @@ Requires-Dist: pyodbc==4.0.39
 Requires-Dist: pyrfc==3.1
 Requires-Dist: requests==2.31.0
 Requires-Dist: xmltodict==0.13.0
+Requires-Dist: jsonpath-ng==1.6.0
 
 # The pipelite Project
 The purpose of this solution is to build and execute Data Pipelines. Nothing new under the sun of course, however it aims to make this task very simple and by just using the configuration to build those pipelines.  
