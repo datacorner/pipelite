@@ -1,3 +1,4 @@
+![](logo_transp.png)
 # The pipelite Project
 The purpose of this solution is to build and execute Data Pipelines. Nothing new under the sun of course, however it aims to make this task very simple and by just using the configuration to build those pipelines.  
 **So in short ... pipelite is a Data Pipeline solution by design !**  
