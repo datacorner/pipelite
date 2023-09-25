@@ -1,0 +1,15 @@
+{
+    "type" : "object",
+    "properties" : { 
+          "connectionstring": {"type" : "string"},
+          "query": {"type" : "string"},
+          "query-parameters":  {
+                "type" : "object",
+                "properties" : { 
+                      "tablename": {"type" : "string"},
+                      "fields": {"type" : "string"}
+                  }
+            }
+       },
+    "required": ["connectionstring"]
+}

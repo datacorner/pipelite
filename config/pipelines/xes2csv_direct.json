@@ -13,6 +13,7 @@
     "loaders" : [ {
         "name": "S1",
         "classname": "datasources.csvFileDS",
+        "validation": "config/metadata/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "test-xes.csv",

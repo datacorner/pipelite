@@ -25,7 +25,8 @@ dependencies = [
 "pyrfc==3.1",
 "requests==2.31.0",
 "xmltodict==0.13.0",
-"jsonpath-ng==1.6.0"
+"jsonpath-ng==1.6.0",
+"jsonschema==4.19.1"
 ]
 
 [project.urls]

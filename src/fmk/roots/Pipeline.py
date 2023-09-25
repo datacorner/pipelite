@@ -4,8 +4,9 @@ __license__ = "MIT"
 
 import utils.constants as C
 from fmk.dpObject import dpObject
-from fmk.etlDatasets import etlDatasets
 from abc import abstractmethod
+from jsonschema import validate
+import json
 
 """ Pipeline Management rules:
     1) a pipeline can have 
@@ -48,14 +49,21 @@ class Pipeline(dpObject):
             self.log.info("There is/are {} Class(es)".format(len(etlObjParams)))
             if (len(etlObjParams) < 1):
                 raise ("At least one Object is needed for processing the pipeline.")
-            # Initialize the Extractors
+            # Initialize the Extractors/transformers
             for ds in etlObjParams:
                 dsClassName = self.getValFromDict(ds, C.PLJSONCFG_PROP_CLASSNAME, C.EMPTY)
                 self.log.info("Instantiate Object: {}".format(dsClassName))
                 dsObj = dpObject.instantiate(dsClassName, self.config, self.log)
-                # Initialize Extractor
+                # Initialize Extractors/transformers
                 self.log.debug("Initialize Object: {}".format(dsClassName))
                 objParams = self.getValFromDict(ds, C.PLJSONCFG_PROP_PARAMETERS)
+                # Check the parameter (json) structure against the json scheme provided (if any)
+                validationSchemeFile = self.getValFromDict(ds, C.PLJSONCFG_PROP_VALIDATION, None)
+                if (validationSchemeFile != None):
+                    with open(validationSchemeFile, 'r') as f:
+                        valScheme = json.load(f)
+                    # If no exception is raised by validate(), the instance is valid.
+                    validate(instance=objParams, schema=valScheme)
                 if (paramJSONPath == C.PLJSONCFG_TRANSFORMER):
                     # Only for transformers ...
                     dsObj.dsInputs = self.getValFromDict(ds, C.PLJSONCFG_TRANSF_IN, [])

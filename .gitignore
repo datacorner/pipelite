@@ -1,5 +1,5 @@
 *.pyc
-.venvDataPlumber/*
+.venv_pipelite/*
 .vscode/*
 logs/*.log
 exe/*
