@@ -1,0 +1,24 @@
+{
+  "$id": "https://example.com/person.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lookup Transformer Parameters",
+    "type" : "object",
+     "properties" : { 
+           "main": {
+            "type" : "object",
+            "properties" : { 
+                  "ds-name": {"type" : "string"},
+                  "key": {"type" : "string"}
+              }
+        }, "lookup": {
+            "type" : "object",
+            "properties" : { 
+                  "ds-name": {"type" : "string"},
+                  "key": {"type" : "string"},
+                  "keep": {"type" : "string"}
+              }
+        }
+       },
+     "required": ["main", 
+                  "lookup"]
+}

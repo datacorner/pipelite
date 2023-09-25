@@ -47,7 +47,7 @@ class cmdLineConfig:
 			return None
 		
 	@staticmethod
-	def emulate_readIni(configfile):
+	def set_config(cfg):
 		""" This function gather the arguments sent in the CLI and build the configuration object / USE FOR INI FILE CONFIGURATION FILE ONLY
 		Args:
 			parser (argparse.ArgumentParser): CLI arguments
@@ -60,7 +60,7 @@ class cmdLineConfig:
 		try:
 			config = dpConfig()
 			# Check Data Source Type
-			args = dict(configfile=configfile)
+			args = dict(cfg=cfg)
 			config = cmdLineConfig.manageArgs(args)
 			return config
 

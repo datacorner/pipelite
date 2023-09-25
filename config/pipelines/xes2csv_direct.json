@@ -3,17 +3,16 @@
     "extractors" : [ {
         "name": "S1",
         "classname": "datasources.xesFileDS",
+        "validation": "config/parameters/datasources/xesFileDS.json",
         "parameters": {
-            "separator": ",",
             "filename": "test.xes",
-            "path": "tests/data/",
-            "encoding": "utf-8"
+            "path": "tests/data/"
         }   
     } ],
     "loaders" : [ {
         "name": "S1",
         "classname": "datasources.csvFileDS",
-        "validation": "config/metadata/datasources/csvFileDS.json",
+        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "test-xes.csv",

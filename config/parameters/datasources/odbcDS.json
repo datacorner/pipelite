@@ -1,0 +1,18 @@
+{
+      "$id": "https://example.com/person.schema.json",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "ODBC Connection Parameters",
+      "type" : "object",
+      "properties" : { 
+            "connectionstring": {"type" : "string"},
+            "query": {"type" : "string"},
+            "query-parameters":  {
+                  "type" : "object",
+                  "properties" : { 
+                        "tablename": {"type" : "string"},
+                        "fields": {"type" : "string"}
+                        }
+                  }
+            },
+      "required": ["connectionstring"]
+}

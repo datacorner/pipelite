@@ -1,0 +1,15 @@
+{
+  "$id": "https://example.com/person.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CSV File Parameters",
+  "type" : "object",
+    "properties" : { 
+          "separator": {"type" : "string"},
+          "filename": {"type" : "string"},
+          "path": {"type" : "string"},
+          "encoding": {"type" : "string"}
+      },
+    "required": ["filename", 
+                "path", 
+                "encoding"]
+}

@@ -3,7 +3,7 @@
     "extractors" : [ {
         "name": "E1",
         "classname": "datasources.csvFileDS",
-        "validation": "config/metadata/datasources/csvFileDS.json",
+        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "a.csv",
@@ -14,7 +14,7 @@
     {
         "name": "E2",
         "classname": "datasources.csvFileDS",
-        "validation": "config/metadata/datasources/csvFileDS.json",
+        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "b.csv",
@@ -25,7 +25,7 @@
     "loaders" : [ {
         "name": "L1",
         "classname": "datasources.csvFileDS",
-        "validation": "config/metadata/datasources/csvFileDS.json",
+        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "ab-concat.csv",

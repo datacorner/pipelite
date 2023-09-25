@@ -7,28 +7,31 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
 from pipelines.pipelineProcess import pipelineProcess
 from config.cmdLineConfig import cmdLineConfig
 
-class testBPRepo(unittest.TestCase):
+class testODBC(unittest.TestCase):
     def setUp(self):
-        print("Running ODBC import Test")
+        print("Running XES Test")
 
     def tearDown(self):
         print("**** E:{} T:{} L:{} ****".format(self.e, self.t, self.l))
-        print("End of ODBC import Test")
+        print("End of XES Test")
 
     def processTest(self, configfile):
         print("Process Test")
 	    # Get configuration from cmdline & ini file
-        config = cmdLineConfig.emulate_readIni(configfile=configfile) 
+        config = cmdLineConfig.set_config(cfg=configfile)
         log = pipelineProcess.getLogger(config)
         return pipelineProcess(config, log).process()
 
-    def test_bp_repo_delta(self):
-        self.e, self.t, self.l = self.processTest("./tests/config/config-bprepo-delta.ini")
-        self.assertTrue(self.e>0 and self.t==self.l and self.l>0)
+    def checkResults(self, expectedResults):
+        # Check results
+        self.assertTrue(self.e==expectedResults[0] and 
+                        self.t==expectedResults[1] and 
+                        self.l==expectedResults[2])
 
-    def test_bp_repo_full(self):
-        self.e, self.t, self.l = self.processTest("./tests/config/config-bprepo-full.ini")
-        self.assertTrue(self.e>0 and self.t==self.l and self.l>0)
+    def test_xes2csv_direct(self):
+        results = [1394, 0, 1394]
+        self.e, self.t, self.l = self.processTest("./config/pipelines/xes2csv_direct.json")
+        self.checkResults(results)
 
 if __name__ == '__main__':
     unittest.main()

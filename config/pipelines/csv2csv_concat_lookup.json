@@ -4,7 +4,7 @@
     {
         "name": "I1",
         "classname": "datasources.csvFileDS",
-        "validation": "config/metadata/datasources/csvFileDS.json",
+        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "a.csv",
@@ -15,7 +15,7 @@
     {
         "name": "I2",
         "classname": "datasources.csvFileDS",
-        "validation": "config/metadata/datasources/csvFileDS.json",
+        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "b.csv",
@@ -26,7 +26,7 @@
     {
         "name": "I3",
         "classname": "datasources.csvFileDS",
-        "validation": "config/metadata/datasources/csvFileDS.json",
+        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "t.csv",
@@ -38,7 +38,7 @@
     "loaders" : [ {
         "name": "O2",
         "classname": "datasources.csvFileDS",
-        "validation": "config/metadata/datasources/csvFileDS.json",
+        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "tcl.csv",
