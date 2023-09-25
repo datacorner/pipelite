@@ -2,11 +2,11 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from fmk.roots.DataSource import DataSource 
+from pipelite.parents.DataSource import DataSource 
 import utils.constants as C
 import pyodbc
 from config.dpConfig import dpConfig as pc
-from fmk.SqlTemplate import SqlTemplate
+from pipelite.SqlTemplate import SqlTemplate
 
 class odbcDS(DataSource):
 

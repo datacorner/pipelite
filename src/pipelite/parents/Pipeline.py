@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import utils.constants as C
-from fmk.dpObject import dpObject
+from pipelite.dpObject import dpObject
 from abc import abstractmethod
 from jsonschema import validate
 import json

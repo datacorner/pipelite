@@ -3,8 +3,8 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import utils.constants as C
-from fmk.roots.Pipeline import Pipeline
-from fmk.etlDatasets import etlDatasets
+from pipelite.parents.Pipeline import Pipeline
+from pipelite.etlDatasets import etlDatasets
 
 class directPL(Pipeline):
     def __init__(self, config, log):

@@ -3,8 +3,8 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import utils.constants as C
-from fmk.roots.Transformer import Transformer
-from fmk.etlDatasets import etlDatasets
+from pipelite.parents.Transformer import Transformer
+from pipelite.etlDatasets import etlDatasets
 
 class lookupTR(Transformer):
     """ Transcode a column from a main dataset with data from the lookup table.

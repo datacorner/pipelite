@@ -3,9 +3,9 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import utils.constants as C
-from fmk.roots.Pipeline import Pipeline
+from pipelite.parents.Pipeline import Pipeline
 from utils.log import log
-from fmk.dpObject import dpObject
+from pipelite.dpObject import dpObject
 
 class pipelineProcess:
 	def __init__(self, config, log):
@@ -51,7 +51,10 @@ class pipelineProcess:
 		return self.execute(pipeline=pipeline)
 
 	def execute(self, pipeline):
-		""" Execute the pipeline
+		""" Execute the pipeline in this order:
+				1) Extract the data sources
+				2) Process the transformations
+				3) load the data sources
 		Returns:
 			int: Number of rows read
 			int: Number of rows transformed

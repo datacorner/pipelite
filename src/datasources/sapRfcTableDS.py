@@ -2,9 +2,9 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from fmk.roots.DataSource import DataSource 
+from pipelite.parents.DataSource import DataSource 
 import utils.constants as C
-from fmk.etlDataset import etlDataset
+from pipelite.etlDataset import etlDataset
 from pyrfc import Connection, ABAPApplicationError, ABAPRuntimeError, LogonError, CommunicationError
 from config.dpConfig import dpConfig as pc
 

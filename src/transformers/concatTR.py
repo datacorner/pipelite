@@ -2,9 +2,9 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from fmk.roots.Transformer import Transformer
-from fmk.etlDataset import etlDataset
-from fmk.etlDatasets import etlDatasets
+from pipelite.parents.Transformer import Transformer
+from pipelite.etlDataset import etlDataset
+from pipelite.etlDatasets import etlDatasets
 
 class concatTR(Transformer):
     

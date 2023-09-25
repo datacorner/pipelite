@@ -2,7 +2,7 @@ __author__ = "Benoit CAYLA"
 __email__ = "benoit@datacorner.fr"
 __license__ = "MIT"
 
-from fmk.roots.DataSource import DataSource 
+from pipelite.parents.DataSource import DataSource 
 import utils.constants as C
 from pathlib import Path
 import os
@@ -10,7 +10,7 @@ import os
 from .csvFileDS import csvFileDS
 from .excelFileDS import excelFileDS
 from .xesFileDS import xesFileDS
-from fmk.etlDataset import etlDataset
+from pipelite.etlDataset import etlDataset
 from config.dpConfig import dpConfig as pc
 
 FILE_EXT_CSV = ".CSV"
