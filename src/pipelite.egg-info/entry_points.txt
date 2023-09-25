@@ -1,2 +1,0 @@
-[console_scripts]
-pipelite = pipelite:main
