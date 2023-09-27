@@ -38,6 +38,10 @@ class log:
         return final_message
     
     def getCallerInfo(self) -> str:
+        """ get the class caller by looking at the stack call
+        Returns:
+            str: caller class & method 
+        """
         try:
             prev_frame = (inspect.currentframe().f_back).f_back
             the_class = prev_frame.f_locals["self"].__class__
@@ -47,25 +51,21 @@ class log:
             return "N.A."
 
     def info(self, *message):
-        callerInfo = self.getCallerInfo()
-        final_message = self.buildMessage(callerInfo, message)
+        final_message = self.buildMessage(self.getCallerInfo(), message)
         self.display("Info|" + final_message)
         self.__logger.info(final_message)
 
     def error(self, *message):
-        callerInfo = self.getCallerInfo()
-        final_message = self.buildMessage(callerInfo, message)
+        final_message = self.buildMessage(self.getCallerInfo(), message)
         self.display("ERROR|" + final_message)
         self.__logger.error(final_message)
 
     def debug(self, *message):
-        callerInfo = self.getCallerInfo()
-        final_message = self.buildMessage(callerInfo, message)
+        final_message = self.buildMessage(self.getCallerInfo(), message)
         self.display("DEBUG|" + final_message)
         self.__logger.debug(final_message)
 
     def warning(self, *message):
-        callerInfo = self.getCallerInfo()
-        final_message = self.buildMessage(callerInfo, message)
+        final_message = self.buildMessage(self.getCallerInfo(), message)
         self.display("WARNING|" + final_message)
         self.__logger.warning(final_message)

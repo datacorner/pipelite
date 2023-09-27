@@ -64,7 +64,7 @@ class pipelineProcess:
 		try:
 			# PROCESS THE DATA
 			if (pipeline.initialize()): # init logs here ...
-				pipeline.log.info("Data Plumber has been initialized successfully")
+				pipeline.log.info("pipelite has been initialized successfully")
 				pipeline.log.info("Now, Extract data from Data Source ...")
 				E_counts = pipeline.extract()	# EXTRACT (E of ETL)
 				pipeline.log.info("Data extracted successfully: {} rows extracted".format(E_counts))

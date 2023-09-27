@@ -35,6 +35,6 @@ PLJSONCFG_DS_ODBC_QUERY = "query"
 # Logger configuration
 TRACE_DEFAULT_LEVEL = logging.DEBUG
 TRACE_DEFAULT_FORMAT = "%(asctime)s|%(name)s|%(levelname)s|%(message)s"
-TRACE_DEFAULT_FILENAME = "dataplumber.log"
+TRACE_DEFAULT_FILENAME = "pipelite.log"
 TRACE_DEFAULT_MAXBYTES = 1000000
 
