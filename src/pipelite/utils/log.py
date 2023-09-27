@@ -4,9 +4,11 @@ __license__ = "MIT"
 
 import logging
 from logging.handlers import RotatingFileHandler
-import utils.constants as C
+import pipelite.utils.constants as C
+import inspect
 
 class log:
+
     def __init__(self, loggerName, logfilename, level, format):
         self.__logger = logging.getLogger(loggerName)
         logHandler = RotatingFileHandler(logfilename, 
@@ -29,28 +31,41 @@ class log:
     def display(self, message):
         print(message)
     
-    def buildMessage(self, _msg):
-        final_message = ""
-        for msg in _msg:
-            final_message += str(msg)
+    def buildMessage(self, callerInfo, msg):
+        final_message = "{" +callerInfo + "} "
+        for msgItem in msg:
+            final_message += str(msgItem)
         return final_message
     
+    def getCallerInfo(self) -> str:
+        try:
+            prev_frame = (inspect.currentframe().f_back).f_back
+            the_class = prev_frame.f_locals["self"].__class__
+            the_method = prev_frame.f_code.co_name
+            return the_class.__module__ + "." + the_method + "()"
+        except Exception as e:
+            return "N.A."
+
     def info(self, *message):
-        final_message = self.buildMessage(message)
-        self.display("Info> " + final_message)
+        callerInfo = self.getCallerInfo()
+        final_message = self.buildMessage(callerInfo, message)
+        self.display("Info|" + final_message)
         self.__logger.info(final_message)
 
     def error(self, *message):
-        final_message = self.buildMessage(message)
-        self.display("**ERROR**> " + final_message)
+        callerInfo = self.getCallerInfo()
+        final_message = self.buildMessage(callerInfo, message)
+        self.display("ERROR|" + final_message)
         self.__logger.error(final_message)
 
     def debug(self, *message):
-        final_message = self.buildMessage(message)
-        self.display("Debug> " + final_message)
+        callerInfo = self.getCallerInfo()
+        final_message = self.buildMessage(callerInfo, message)
+        self.display("DEBUG|" + final_message)
         self.__logger.debug(final_message)
 
     def warning(self, *message):
-        final_message = self.buildMessage(message)
-        self.display("*WARNING*> " + final_message)
+        callerInfo = self.getCallerInfo()
+        final_message = self.buildMessage(callerInfo, message)
+        self.display("WARNING|" + final_message)
         self.__logger.warning(final_message)

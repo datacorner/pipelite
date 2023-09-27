@@ -5,9 +5,9 @@ import os
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
 
 from pipelite.pipelineProcess import pipelineProcess
-from config.cmdLineConfig import cmdLineConfig
+from pipelite.config.cmdLineConfig import cmdLineConfig
 
-class testODBC(unittest.TestCase):
+class testXES(unittest.TestCase):
     def setUp(self):
         print("Running XES Test")
 

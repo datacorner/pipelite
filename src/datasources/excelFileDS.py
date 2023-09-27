@@ -3,9 +3,8 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.parents.DataSource import DataSource 
-import utils.constants as C
+import pipelite.utils.constants as C
 import os
-from config.dpConfig import dpConfig as pc
 
 class excelFileDS(DataSource):
 

@@ -2,9 +2,9 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import utils.constants as C
+import pipelite.utils.constants as C
 from pipelite.parents.Pipeline import Pipeline
-from utils.log import log
+from pipelite.utils.log import log
 from pipelite.dpObject import dpObject
 
 class pipelineProcess:
@@ -40,12 +40,12 @@ class pipelineProcess:
 		"""
 		try:
 			# INSTANCIATE ONLY THE NEEDED CLASS / DATA SOURCE TYPE
-			self.log.info("Data Plumber initialisation ...")
+			self.log.info("pipelite initialisation ...")
 			pipeline = self.create()
 			if (pipeline == None):
 				raise Exception ("The Data pipeline has not been created successfully")
 		except Exception as e:
-			self.log.error("pipelineFactory.process(): Data Plumber cannot be initialized: {}".format(str(e)))
+			self.log.error("pipelineFactory.process(): pipelite cannot be initialized: {}".format(str(e)))
 			return
 		
 		return self.execute(pipeline=pipeline)

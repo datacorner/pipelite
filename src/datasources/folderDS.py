@@ -3,7 +3,7 @@ __email__ = "benoit@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.parents.DataSource import DataSource 
-import utils.constants as C
+import pipelite.utils.constants as C
 from pathlib import Path
 import os
 
@@ -11,7 +11,6 @@ from .csvFileDS import csvFileDS
 from .excelFileDS import excelFileDS
 from .xesFileDS import xesFileDS
 from pipelite.etlDataset import etlDataset
-from config.dpConfig import dpConfig as pc
 
 FILE_EXT_CSV = ".CSV"
 FILE_EXT_EXCEL = ".XLSX"

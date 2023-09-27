@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import utils.constants as C
+import pipelite.utils.constants as C
 import json, jsonpath_ng
 
 SECTION_PARAM_SEP = "."

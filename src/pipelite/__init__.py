@@ -4,7 +4,7 @@ __license__ = "MIT"
 
 import argparse
 from pipelite.pipelineProcess import pipelineProcess
-from config.cmdLineConfig import cmdLineConfig
+from pipelite.config.cmdLineConfig import cmdLineConfig
 
 def main() -> None:
 	"""Entry point for the application script"""

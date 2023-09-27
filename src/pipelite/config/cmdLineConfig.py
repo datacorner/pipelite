@@ -2,8 +2,8 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import utils.constants as C
-from config.dpConfig import dpConfig
+import pipelite.utils.constants as C
+from pipelite.config.dpConfig import dpConfig
 
 class cmdLineConfig:
 	

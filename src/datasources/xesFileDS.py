@@ -4,7 +4,7 @@ __license__ = "MIT"
 
 import xmltodict
 from pipelite.parents.DataSource import DataSource 
-import utils.constants as C
+import pipelite.utils.constants as C
 import os
 from json import dumps, loads
 
@@ -117,7 +117,7 @@ class xesFileDS(DataSource):
             list: attributes
         """
         traces = loads(dumps(xmltodict.parse(xml)))['log']['trace']
-        self.log.debug("xesFile.__extractAll(): {} traces to manage".format(len(traces)))
+        self.log.debug("{} traces to manage".format(len(traces)))
         attributes_list = []
         event_list = []
         # reads the traces tags one by one and get all the events & attrs
@@ -126,7 +126,7 @@ class xesFileDS(DataSource):
             trace_item = self.__ExtractOneTrace(trace)
             attributes_list.append(trace_item[0]) # Attributes
             event_list = event_list + trace_item[1] # Event details
-            self.log.debug("xesFileDS.__extractAll(): {}) {} -> {} evts".format(traceIdx, trace_item[0]['concept:name'], len(trace_item[1])))
+            self.log.debug("{}/{} -> {} evts".format(traceIdx, trace_item[0]['concept:name'], len(trace_item[1])))
             traceIdx += 1
         return event_list, attributes_list
     

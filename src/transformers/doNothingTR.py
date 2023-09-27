@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import utils.constants as C
+import pipelite.utils.constants as C
 from pipelite.parents.Transformer import Transformer
 
 class doNothingTR(Transformer):

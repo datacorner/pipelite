@@ -3,10 +3,9 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.parents.DataSource import DataSource 
-import utils.constants as C
+import pipelite.utils.constants as C
 from pipelite.etlDataset import etlDataset
 from pyrfc import Connection, ABAPApplicationError, ABAPRuntimeError, LogonError, CommunicationError
-from config.dpConfig import dpConfig as pc
 
 # Parameters to have in the config file under /parameters
 SAPPARAM_AHOST = "ahost"

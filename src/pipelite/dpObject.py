@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import importlib
-import utils.constants as C
+import pipelite.utils.constants as C
 
 class dpObject:
     def __init__(self, config, log):

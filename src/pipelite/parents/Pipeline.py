@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import utils.constants as C
+import pipelite.utils.constants as C
 from pipelite.dpObject import dpObject
 from abc import abstractmethod
 from jsonschema import validate
@@ -13,10 +13,6 @@ import json
         * Many Extractors
         * Many Transformers
         * Many Loaders
-    BUT:
-        * If many extractors -> The first transformer must merge them in one dataframe
-        * If many loaders 
-
 """
 class Pipeline(dpObject):
     def __init__(self, config, log):
@@ -87,11 +83,12 @@ class Pipeline(dpObject):
                 # some init considering the object
                 if (paramJSONPath == C.PLJSONCFG_TRANSFORMER):
                     # Only for transformers ...
+                    self.log.debug("Transformer {} initialized successfully".format(dsClassName))
                     dsObj.dsInputs = self.getValFromDict(ds, C.PLJSONCFG_TRANSF_IN, [])
                     dsObj.dsOutputs = self.getValFromDict(ds, C.PLJSONCFG_TRANSF_OUT, [])
                 if (dsObj.initialize(objParams)):
                     # Add the extractor in the pipeline list
-                    self.log.debug("Object {} initialized successfully".format(dsClassName))
+                    self.log.debug("Data Source {} initialized successfully".format(dsClassName))
                     dsObj.name = self.getValFromDict(ds, C.PLJSONCFG_PROP_NAME, C.EMPTY)
                     dsObj.objtype = paramJSONPath
                     objectList.append(dsObj)

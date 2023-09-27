@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
 
 from pipelite.pipelineProcess import pipelineProcess
-from config.cmdLineConfig import cmdLineConfig
+from pipelite.config.cmdLineConfig import cmdLineConfig
 
 class testCSVFiles(unittest.TestCase):
     def setUp(self):

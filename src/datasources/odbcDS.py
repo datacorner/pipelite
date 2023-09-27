@@ -3,10 +3,9 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.parents.DataSource import DataSource 
-import utils.constants as C
+import pipelite.utils.constants as C
 import pyodbc
-from config.dpConfig import dpConfig as pc
-from pipelite.SqlTemplate import SqlTemplate
+from pipelite.utils.SqlTemplate import SqlTemplate
 
 class odbcDS(DataSource):
 
