@@ -64,7 +64,7 @@ class Pipeline(dpObject):
         objectList = []
         try:
             etlObjParams = self.config.getParameter(paramJSONPath, C.EMPTY)
-            # Extractors init
+            # DS or TR to init
             self.log.info("There is/are {} Class(es)".format(len(etlObjParams)))
             if (len(etlObjParams) < 1):
                 raise ("At least one Object is needed for processing the pipeline.")
@@ -113,14 +113,12 @@ class Pipeline(dpObject):
             if (len(self.extractors) == 0):
                 raise Exception("Extractor(s) has/have not been initialized properly")
             self.log.info("There is/are {} extractor(s)".format(len(self.extractors)))
-
             # 2) init Loaders
             self.log.info("Initializing Loaders(s) ...")
             self.loaders = self.__initETLObjects(C.PLJSONCFG_LOADER)
             if (len(self.loaders) == 0):
                 raise Exception("Loader(s) has/have not been initialized properly")
             self.log.info("There is/are {} loader(s)".format(len(self.loaders)))
-
             # 3) init Transformers
             self.log.info("Initializing Transformer(s) ...")
             self.transformers = self.__initETLObjects(C.PLJSONCFG_TRANSFORMER)

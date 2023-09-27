@@ -47,7 +47,6 @@ class pipelineProcess:
 		except Exception as e:
 			self.log.error("pipelineFactory.process(): pipelite cannot be initialized: {}".format(str(e)))
 			return
-		
 		return self.execute(pipeline=pipeline)
 
 	def execute(self, pipeline):
