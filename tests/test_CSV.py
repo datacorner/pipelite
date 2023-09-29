@@ -30,22 +30,22 @@ class testCSVFiles(unittest.TestCase):
 
     def test_csv2csv_direct(self):
         results = [3, 0, 3]
-        self.e, self.t, self.l = self.processTest("./config/pipelines/csv2csv_direct.json")
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_direct.json")
         self.checkResults(results)
 
     def test_csv2csv_concat(self):
         results = [7, 7, 7]
-        self.e, self.t, self.l = self.processTest("./config/pipelines/csv2csv_concat.json")
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_concat.json")
         self.checkResults(results)
 
     def test_csv2csv_lookup(self):
         results = [10, 1, 2]
-        self.e, self.t, self.l = self.processTest("./config/pipelines/csv2csv_lookup.json")
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_lookup.json")
         self.checkResults(results)
 
     def test_csv2csv_concat_lookup(self):
         results = [14, 10, 4]
-        self.e, self.t, self.l = self.processTest("./config/pipelines/csv2csv_concat_lookup.json")
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_concat_lookup.json")
         self.checkResults(results)
 
 if __name__ == '__main__':

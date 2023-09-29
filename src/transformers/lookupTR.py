@@ -31,11 +31,11 @@ class lookupTR(Transformer):
             bool: False if error
         """
         try:
-            self.lookupDatasetName = params["lookup"]["ds-name"]
-            self.lookupDatasetColKey = params["lookup"]["key"]
-            self.mainDatasetName = params["main"]["ds-name"]
-            self.mainColKey = params["main"]["key"]
-            self.lookupDatasetColKeep = params["lookup"]["keep"]
+            self.lookupDatasetName = params.getParameter("lookup")["ds-name"]
+            self.lookupDatasetColKey = params.getParameter("lookup")["key"]
+            self.mainDatasetName = params.getParameter("main")["ds-name"]
+            self.mainColKey = params.getParameter("main")["key"]
+            self.lookupDatasetColKeep = params.getParameter("lookup")["keep"]
             return (len(self.lookupDatasetName) != 0 and 
                     len(self.lookupDatasetColKey) != 0 and 
                     len(self.mainDatasetName) != 0 and 

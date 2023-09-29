@@ -2,27 +2,27 @@
     "classname" : "pipelines.directPL",
     "extractors" : [ {
         "name": "S1",
-        "classname": "datasources.odbcDS",
-        "validation": "config/parameters/datasources/odbcDS.json",
+        "classname": "datasources.xesFileDS",
+        "validation": "src/config/parameters/datasources/xesFileDS.json",
         "parameters": {
-            "connectionstring": "DRIVER={SQLite3};Database=tests/data/dbsample.sqlite",
-            "query": "SELECT customer_id, first_name, birthdate FROM Customers;"
-        } 
+            "filename": "test.xes",
+            "path": "tests/data/"
+        }   
     } ],
     "loaders" : [ {
         "name": "S1",
         "classname": "datasources.csvFileDS",
-        "validation": "config/parameters/datasources/csvFileDS.json",
+        "validation": "src/config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
-            "filename": "db-Customers.csv",
+            "filename": "test-xes.csv",
             "path": "tests/data/out",
             "encoding": "utf-8"
         }   
     } ],
     "transformers":  [
     { 
-        "name": "T1",
+        "name": "T",
         "classname": "transformers.doNothingTR",
         "inputs" : [ "S1" ],
         "outputs" : [ "S1" ]
@@ -35,7 +35,7 @@
             "level": "DEBUG",
             "format" : "%(asctime)s|%(name)s|%(levelname)s|%(message)s",
             "path": "logs/",
-            "filename" : "pipe_csv2csv.log",
+            "filename" : "xes2csv_direct.log",
             "maxbytes" : 1000000
         }
     }

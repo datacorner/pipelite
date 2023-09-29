@@ -18,7 +18,7 @@ class xesFileDS(DataSource):
         super().__init__(config, log)
         self.filename = C.EMPTY
 
-    def initialize(self, params) -> bool:
+    def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
             A CSV Extractor/Loader must have:
                 * A filename
@@ -31,8 +31,8 @@ class xesFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.filename = os.path.join(self.getValFromDict(params, 'path', C.EMPTY), 
-                                         self.getValFromDict(params, 'filename', C.EMPTY))
+            self.filename = os.path.join(cfg.getParameter('path', C.EMPTY), 
+                                         cfg.getParameter('filename', C.EMPTY))
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):
                 if (not os.path.isfile(self.filename)):

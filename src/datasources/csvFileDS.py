@@ -14,7 +14,11 @@ class csvFileDS(DataSource):
         self.filename = C.EMPTY
         self.encoding = C.ENCODING
 
-    def initialize(self, params) -> bool:
+    @property
+    def parametersValidationFile(self):
+        return "src/config/parameters/datasources/csvFileDS.json"
+
+    def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
             A CSV Extractor/Loader must have:
                 * A filename
@@ -23,22 +27,20 @@ class csvFileDS(DataSource):
                 * An Encoding type
                 params['separator']
         Args:
-            params (json list) : params for the data source.
+            cfg (objConfig) : params for the data source.
                 example: {'separator': ',', 'filename': 'test2.csv', 'path': '/tests/data/', 'encoding': 'utf-8'}
         Returns:
             bool: False if error
         """
         try:
-            self.separator = self.getValFromDict(params, 'separator', C.EMPTY)
-            self.filename = os.path.join(self.getValFromDict(params, 'path', C.EMPTY), 
-                                         self.getValFromDict(params, 'filename', C.EMPTY))
-            self.encoding = self.getValFromDict(params, 'encoding', C.ENCODING)
-
+            self.separator = cfg.getParameter('separator', C.EMPTY)
+            self.filename = os.path.join(cfg.getParameter('path', C.EMPTY), 
+                                         cfg.getParameter('filename', C.EMPTY))
+            self.encoding = cfg.getParameter('encoding', C.EMPTY)
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):
                 if (not os.path.isfile(self.filename)):
                     raise Exception("The file {} does not exist or is not accessible.".format(self.filename))
-            
             return True
         except Exception as e:
             self.log.error("CSVFileDS.initialize() Error: {}".format(e))

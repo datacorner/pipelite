@@ -38,3 +38,5 @@ TRACE_DEFAULT_FORMAT = "%(asctime)s|%(name)s|%(levelname)s|%(message)s"
 TRACE_DEFAULT_FILENAME = "pipelite.log"
 TRACE_DEFAULT_MAXBYTES = 1000000
 
+# Config files
+CFGFILES_ETLOBJECT = "src/config/parameters/etlObjects.json"

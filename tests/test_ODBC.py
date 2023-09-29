@@ -30,12 +30,12 @@ class testODBC(unittest.TestCase):
 
     def test_odbc2csv_direct(self):
         results = [6, 0, 6]
-        self.e, self.t, self.l = self.processTest("./config/pipelines/odbc2csv_direct.json")
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/odbc2csv_direct.json")
         self.checkResults(results)
 
     def test_odbc2csv_direct_filequery(self):
         results = [6, 0, 6]
-        self.e, self.t, self.l = self.processTest("./config/pipelines/odbc2csv_direct_filequery.json")
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/odbc2csv_direct_filequery.json")
         self.checkResults(results)
 
 if __name__ == '__main__':

@@ -4,6 +4,8 @@ __license__ = "MIT"
 
 import importlib
 import pipelite.utils.constants as C
+from jsonschema import validate
+import json
 
 class dpObject:
     def __init__(self, config, log):
@@ -12,19 +14,31 @@ class dpObject:
         self.name = ""
         self.ojbType = None
 
-    def getValFromDict(self, params, name, default=None):
-        """ return the param[name] value, if does not exist returns default
+    @property
+    def parametersValidationFile(self):
+        return C.EMPTY
+
+    def validateParametersCfg(self, inputValidationSchemeFile, jsonParameters) -> bool:
+        """ Validate the JSON configuration (from parameters). This configuration stuff is specific to the object instantiated only.
+            Use json-schema
         Args:
-            params (dict): python dict
-            name (str): name
-            default (obj, optional): Default value
+            validationSchemeFile (string): filename and path is a validation is needed, None else
+            jsonParameters (json): parameters to check
+
         Returns:
-            obj: value
+            bool: _description_
         """
         try:
-            return params[name] 
-        except:
-            return default
+            # Check the parameter (json) structure against the json scheme provided (if any)
+            if (inputValidationSchemeFile != C.EMPTY):
+                with open(inputValidationSchemeFile, 'r') as f:
+                    valScheme = json.load(f)
+                # If no exception is raised by validate(), the instance is valid.
+                validate(instance=jsonParameters, schema=valScheme)
+            return True
+        except Exception as e:
+            self.log.error("pipeline.validateParametersCfg() -> {}".format(e))
+            return False
 
     def initialize(self, params) -> bool:
         """ initialize and check all the needed configuration parameters
@@ -53,7 +67,7 @@ class dpObject:
                 # Get the latest element : the class name without the path
                 pipelineClass = fullClassPath.split(".")[-1]
 
-            # Instantiate the pipeline object
+            # Instantiate the object
             log.debug("pipelineFactory.instantiate(): Import module -> {}".format(fullClassPath))
             datasourceObject = importlib.import_module(name=fullClassPath)
             log.debug("pipelineFactory.instantiate(): Module {} imported, instantiate the class".format(fullClassPath))

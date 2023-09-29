@@ -1,8 +1,8 @@
 Metadata-Version: 2.1
 Name: pipelite
-Version: 0.1.2
+Version: 0.1.4
 Summary: This solution build by design (configuration) simple of complex Data Pipelines
-Author-email: ExyPro <admin@datacorner.fr>
+Author-email: datacorner <admin@datacorner.fr>
 License: MIT License
         
         Copyright (c) 2023 Benoît Cayla

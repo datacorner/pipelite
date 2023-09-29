@@ -3,20 +3,16 @@
     "extractors" : [ {
         "name": "S1",
         "classname": "datasources.odbcDS",
-        "validation": "config/parameters/datasources/odbcDS.json",
+        "validation": "src/config/parameters/datasources/odbcDS.json",
         "parameters": {
             "connectionstring": "DRIVER={SQLite3};Database=tests/data/dbsample.sqlite",
-            "query": "tests/data/myquery.sql",
-            "query-parameters": {
-                "tablename" : "Customers",
-                "fields" : "customer_id, first_name, birthdate"
-            }
+            "query": "SELECT customer_id, first_name, birthdate FROM Customers;"
         } 
     } ],
     "loaders" : [ {
         "name": "S1",
         "classname": "datasources.csvFileDS",
-        "validation": "config/parameters/datasources/csvFileDS.json",
+        "validation": "src/config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "db-Customers.csv",

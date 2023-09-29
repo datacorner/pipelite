@@ -13,7 +13,7 @@ class excelFileDS(DataSource):
         self.sheet = 0
         self.filename = C.EMPTY
 
-    def initialize(self, params) -> bool:
+    def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
         Args:
             params (json list) : params for the data source.
@@ -22,9 +22,9 @@ class excelFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.sheet = self.getValFromDict(params, 'sheet', 0)
-            self.filename = os.path.join(self.getValFromDict(params, 'path', C.EMPTY), 
-                                         self.getValFromDict(params, 'filename', C.EMPTY))
+            self.sheet = cfg.getParameter('sheet', C.EMPTY)
+            self.filename = os.path.join(cfg.getParameter('path', C.EMPTY), 
+                                         cfg.getParameter('filename', C.EMPTY))
 
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):

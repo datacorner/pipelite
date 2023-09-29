@@ -22,7 +22,7 @@ class folderDS(DataSource):
         self.folder = C.EMPTY
         self.files = C.EMPTY
 
-    def initialize(self, params) -> bool:
+    def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
         Args:
             params (json list) : params for the data source.
@@ -31,8 +31,8 @@ class folderDS(DataSource):
             bool: False if error
         """
         try:
-            self.folder = self.getValFromDict(params, 'folder', 0)
-            self.filenameFilter = self.getValFromDict(params, 'files', "*")
+            self.folder = cfg.getParameter('folder', 0)
+            self.filenameFilter = cfg.getParameter('files', "*")
 
             # Checks ...
 

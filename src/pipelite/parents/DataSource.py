@@ -23,10 +23,10 @@ class DataSource(dpObject):
             return 0
 
     @abstractmethod
-    def initialize(self, params) -> bool:
+    def initialize(self, cfg) -> bool:
         """ Initialize and makes some checks (params) for that datasource
         Args:
-            params (json): parameters
+            cfg (objConfig): parameters
         Returns:
             bool: False if error
         """

@@ -1,7 +1,15 @@
 LICENSE
+MANIFEST.in
 README.md
 pyproject.toml
-src/pipelite.py
+src/config/parameters/etlObjects.json
+src/config/parameters/datasources/__init__.py
+src/config/parameters/datasources/csvFileDS.json
+src/config/parameters/datasources/odbcDS.json
+src/config/parameters/datasources/xesFileDS.json
+src/config/parameters/transformers/__init__.py
+src/config/parameters/transformers/concatTR.json
+src/config/parameters/transformers/lookupTR.json
 src/datasources/__init__.py
 src/datasources/csvFileDS.py
 src/datasources/excelFileDS.py
@@ -15,6 +23,7 @@ src/pipelite/__init__.py
 src/pipelite/dpObject.py
 src/pipelite/etlDataset.py
 src/pipelite/etlDatasets.py
+src/pipelite/objConfig.py
 src/pipelite/pipelineProcess.py
 src/pipelite.egg-info/PKG-INFO
 src/pipelite.egg-info/SOURCES.txt

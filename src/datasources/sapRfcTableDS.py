@@ -38,7 +38,7 @@ class sapRfcTableDS(DataSource):
         self.fields = []
         self.rowcount = 0
 
-    def initialize(self, params) -> bool:
+    def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
         Args:
             params (json list) : params for the data source.
@@ -48,18 +48,18 @@ class sapRfcTableDS(DataSource):
         try:
             # checks
             for param in MANDATORY_PARAMETERS:
-                if (self.getValFromDict(params, param, C.EMPTY)):
+                if (cfg.getParameter(param, C.EMPTY)):
                     raise Exception("Mandatory Parameter <{}> is missing".format(param))
             # Get params
-            self.ahost = self.getValFromDict(params, SAPPARAM_AHOST, C.EMPTY)
-            self.client = self.getValFromDict(params, SAPPARAM_CLIENT, C.EMPTY)
-            self.sysnr = self.getValFromDict(params, SAPPARAM_SYSNR, C.EMPTY)
-            self.user = self.getValFromDict(params, SAPPARAM_USER, C.EMPTY)
-            self.pwd = self.getValFromDict(params, SAPPARAM_PWD, C.EMPTY)
-            self.router = self.getValFromDict(params, SAPPARAM_ROUTER, C.EMPTY)
-            self.table = self.getValFromDict(params, SAPPARAM_TABLE, C.EMPTY)
-            self.fields = self.getValFromDict(params, SAPPARAM_FIELDS, [])
-            self.rowcount = self.getValFromDict(params, SAPPARAM_ROWCOUNT, 0)
+            self.ahost = cfg.getParameter(SAPPARAM_AHOST, C.EMPTY)
+            self.client = cfg.getParameter(SAPPARAM_CLIENT, C.EMPTY)
+            self.sysnr = cfg.getParameter(SAPPARAM_SYSNR, C.EMPTY)
+            self.user = cfg.getParameter(SAPPARAM_USER, C.EMPTY)
+            self.pwd = cfg.getParameter(SAPPARAM_PWD, C.EMPTY)
+            self.router = cfg.getParameter(SAPPARAM_ROUTER, C.EMPTY)
+            self.table = cfg.getParameter(SAPPARAM_TABLE, C.EMPTY)
+            self.fields = cfg.getParameter(SAPPARAM_FIELDS, [])
+            self.rowcount = cfg.getParameter(SAPPARAM_ROWCOUNT, 0)
             return True
         except Exception as e:
             self.log.error("CSVFileDS.initialize() Error: {}".format(e))

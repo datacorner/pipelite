@@ -5,8 +5,7 @@ __license__ = "MIT"
 import pipelite.utils.constants as C
 from pipelite.dpObject import dpObject
 from abc import abstractmethod
-from jsonschema import validate
-import json
+from pipelite.objConfig import objConfig
 
 """ Pipeline Management rules:
     1) a pipeline can have 
@@ -21,29 +20,6 @@ class Pipeline(dpObject):
         self.loaders = []
         self.transformers = []
 
-    def __validateJSON(self, validationSchemeFile, jsonParameters) -> bool:
-        """ Validate the JSON configuration (from parameters). This configuration stuff is specific to the object instantiated only.
-            Use json-schema
-        Args:
-            validationSchemeFile (string): filename and path is a validation is needed, None else
-            jsonParameters (json): parameters to check
-
-        Returns:
-            bool: _description_
-        """
-        try:
-            # Check the parameter (json) structure against the json scheme provided (if any)
-            if (validationSchemeFile != None):
-                with open(validationSchemeFile, 'r') as f:
-                    valScheme = json.load(f)
-                # If no exception is raised by validate(), the instance is valid.
-                validate(instance=jsonParameters, schema=valScheme)
-            return True
-            
-        except Exception as e:
-            self.log.error("pipeline.__validateJSON() -> {}".format(e))
-            return False
-        
     def __initETLObjects(self, paramJSONPath) -> list:
         """ Initialize an set of similar etl object (can be a extractor, loader or transformer)
         Args:
@@ -69,33 +45,35 @@ class Pipeline(dpObject):
             if (len(etlObjParams) < 1):
                 raise ("At least one Object is needed for processing the pipeline.")
             # Initialize the Extractors/transformers
-            for ds in etlObjParams:
-                dsClassName = self.getValFromDict(ds, C.PLJSONCFG_PROP_CLASSNAME, C.EMPTY)
-                self.log.info("Instantiate Object: {}".format(dsClassName))
-                dsObj = dpObject.instantiate(dsClassName, self.config, self.log)
-                # Initialize Extractors/transformers
-                self.log.debug("Initialize Object: {}".format(dsClassName))
-                objParams = self.getValFromDict(ds, C.PLJSONCFG_PROP_PARAMETERS)
-                # Check the parameter (json) structure against the json scheme provided (if any)
-                validationSchemeFile = self.getValFromDict(ds, C.PLJSONCFG_PROP_VALIDATION, None)
-                if (not self.__validateJSON(validationSchemeFile, objParams)):
-                    raise Exception("The {} parameters are not configured properly, check out the configuration file.".format(ds['name']))
+            for ObjItem in etlObjParams:
+                dpConfig = objConfig(self.log, self.config, paramJSONPath, ObjItem)
+                if not dpConfig.validate():
+                    raise Exception("Impossible to validate the object configuration")
+                if not dpConfig.initialize():
+                    raise Exception("Impossible to initialize the object")
+                # instantiate & Init the object
+                self.log.info("Instantiate Object: {}".format(dpConfig.className))
+                dsObj = dpObject.instantiate(dpConfig.className, self.config, self.log)
+                self.log.debug("Initialize Object: {}".format(dpConfig.className))
+                # Check the parameter (json) structure against the json scheme provided (if any, otherwise try to get the one by default)
+                valFileCfg = dpConfig.validation if dpConfig.validation != None else dsObj.parametersValidationFile
+                if (not self.validateParametersCfg(valFileCfg, dpConfig.parameters)):
+                    raise Exception("The {} parameters are not configured properly, check out the configuration file.".format(dsObj['name']))
                 # some init considering the object
                 if (paramJSONPath == C.PLJSONCFG_TRANSFORMER):
                     # Only for transformers ...
-                    self.log.debug("Transformer {} initialized successfully".format(dsClassName))
-                    dsObj.dsInputs = self.getValFromDict(ds, C.PLJSONCFG_TRANSF_IN, [])
-                    dsObj.dsOutputs = self.getValFromDict(ds, C.PLJSONCFG_TRANSF_OUT, [])
-                if (dsObj.initialize(objParams)):
-                    # Add the extractor in the pipeline list
-                    self.log.debug("Data Source {} initialized successfully".format(dsClassName))
-                    dsObj.name = self.getValFromDict(ds, C.PLJSONCFG_PROP_NAME, C.EMPTY)
+                    self.log.debug("Transformer {} initialized successfully".format(dpConfig.className))
+                    dsObj.dsInputs = dpConfig.inputs
+                    dsObj.dsOutputs = dpConfig.outputs
+                if (dsObj.initialize(dpConfig)):
+                    # Add the object in the list
+                    self.log.debug("Data Source {} initialized successfully".format(dpConfig.className))
+                    dsObj.name = dpConfig.name
                     dsObj.objtype = paramJSONPath
                     objectList.append(dsObj)
                 else:
-                    raise ("Object {} cannot be initialized properly".format(dsClassName))
+                    raise Exception("Object {} cannot be initialized properly".format(dpConfig.className))
             return objectList
-
         except Exception as e:
             self.log.error("pipeline.__initETLObjects() -> {}".format(e))
             return objectList

@@ -2,27 +2,27 @@
     "classname" : "pipelines.directPL",
     "extractors" : [ {
         "name": "S1",
-        "classname": "datasources.xesFileDS",
-        "validation": "config/parameters/datasources/xesFileDS.json",
+        "classname": "datasources.csvFileDS",
         "parameters": {
-            "filename": "test.xes",
-            "path": "tests/data/"
+            "separator": ",",
+            "filename": "a.csv",
+            "path": "tests/data/",
+            "encoding": "utf-8"
         }   
     } ],
     "loaders" : [ {
         "name": "S1",
         "classname": "datasources.csvFileDS",
-        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
-            "filename": "test-xes.csv",
+            "filename": "a-d.csv",
             "path": "tests/data/out",
             "encoding": "utf-8"
         }   
     } ],
     "transformers":  [
     { 
-        "name": "T",
+        "name": "T2",
         "classname": "transformers.doNothingTR",
         "inputs" : [ "S1" ],
         "outputs" : [ "S1" ]
@@ -35,7 +35,7 @@
             "level": "DEBUG",
             "format" : "%(asctime)s|%(name)s|%(levelname)s|%(message)s",
             "path": "logs/",
-            "filename" : "xes2csv_direct.log",
+            "filename" : "pipe_csv2csv.log",
             "maxbytes" : 1000000
         }
     }

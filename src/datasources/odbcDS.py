@@ -14,7 +14,7 @@ class odbcDS(DataSource):
         self.query = C.EMPTY
         self.connectionString = C.EMPTY
 
-    def initialize(self, params) -> bool:
+    def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
             A ODBC Extractor/Loader must have:
                 * A connection string
@@ -37,10 +37,11 @@ class odbcDS(DataSource):
             bool: False if error
         """
         try:
-            self.connectionString = str(self.getValFromDict(params, C.PLJSONCFG_DS_ODBC_CN, C.EMPTY))
+            
+            self.connectionString = str(cfg.getParameter(C.PLJSONCFG_DS_ODBC_CN, C.EMPTY))
             template = SqlTemplate(self.log)
-            self.query = template.getQuery(self.getValFromDict(params, C.PLJSONCFG_DS_ODBC_QUERY, C.EMPTY), 
-                                           self.getValFromDict(params, "query-parameters", {}))
+            self.query = template.getQuery(cfg.getParameter(C.PLJSONCFG_DS_ODBC_QUERY, C.EMPTY), 
+                                           cfg.getParameter("query-parameters", {}))
             
             # checks
             if (len(self.connectionString) == 0):

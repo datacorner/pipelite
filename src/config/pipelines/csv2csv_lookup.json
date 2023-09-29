@@ -1,10 +1,8 @@
 {
     "classname" : "pipelines.directPL",
-    "extractors" : [ 
-    {
-        "name": "I1",
+    "extractors" : [ {
+        "name": "E1",
         "classname": "datasources.csvFileDS",
-        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "a.csv",
@@ -13,50 +11,31 @@
         }
     },
     {
-        "name": "I2",
+        "name": "E2",
         "classname": "datasources.csvFileDS",
-        "validation": "config/parameters/datasources/csvFileDS.json",
-        "parameters": {
-            "separator": ",",
-            "filename": "b.csv",
-            "path": "tests/data/",
-            "encoding": "utf-8"
-        }
-    },
-    {
-        "name": "I3",
-        "classname": "datasources.csvFileDS",
-        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "t.csv",
             "path": "tests/data/",
             "encoding": "utf-8"
         }
-    } 
-    ],
+    } ],
     "loaders" : [ {
-        "name": "O2",
+        "name": "L1",
         "classname": "datasources.csvFileDS",
-        "validation": "config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
-            "filename": "tcl.csv",
+            "filename": "ta.csv",
             "path": "tests/data/out/",
             "encoding": "utf-8"
         }   
     } ],
     "transformers":  [ { 
         "name": "T1",
-        "classname": "transformers.concatTR",
-        "inputs" : [ "I1", "I2" ],
-        "outputs" : [ "TO1" ]
-    },
-    { 
-        "name": "T2",
         "classname": "transformers.lookupTR",
-        "inputs" : [ "TO1", "I3" ],
-        "outputs" : [ "O2" ],
+        "validation": "src/config/parameters/transformers/lookupTR.json",
+        "inputs" : [ "E1", "E2" ],
+        "outputs" : [ "L1" ],
         "parameters" : {
             "main" : { "ds-name" : "E1", 
                        "key" : "col2"},
@@ -66,7 +45,7 @@
             }
     },
     { 
-        "name": "T3",
+        "name": "T2",
         "classname": "transformers.doNothingTR"
     } ],
     "parameters":{
