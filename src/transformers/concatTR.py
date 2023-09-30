@@ -2,11 +2,19 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
+import pipelite.constants as C
 from pipelite.parents.Transformer import Transformer
 from pipelite.etlDataset import etlDataset
 from pipelite.etlDatasets import etlDatasets
 
+CFGFILES_DSOBJECT = "concatTR.json"
+
 class concatTR(Transformer):
+
+    @property
+    def parametersValidationFile(self):
+        return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_TRANSFORMERS, 
+                                    file=CFGFILES_DSOBJECT)
     
     def initialize(self, params) -> bool:
         """ Initialize and makes some checks (params) for that transformer

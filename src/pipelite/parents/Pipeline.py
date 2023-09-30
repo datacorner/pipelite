@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 from pipelite.dpObject import dpObject
 from abc import abstractmethod
 from pipelite.objConfig import objConfig
@@ -41,12 +41,14 @@ class Pipeline(dpObject):
         try:
             etlObjParams = self.config.getParameter(paramJSONPath, C.EMPTY)
             # DS or TR to init
-            self.log.info("There is/are {} Class(es)".format(len(etlObjParams)))
+            self.log.info("There is/are {} [{}] objects(es)".format(len(etlObjParams), paramJSONPath))
             if (len(etlObjParams) < 1):
-                raise ("At least one Object is needed for processing the pipeline.")
+                raise Exception("At least one Object is needed for processing the pipeline!")
+            self.log.debug("Intantiate needs and configured objects ...")
             # Initialize the Extractors/transformers
             for ObjItem in etlObjParams:
-                dpConfig = objConfig(self.log, self.config, paramJSONPath, ObjItem)
+                dpConfig = objConfig(self.config, self.log, paramJSONPath, ObjItem)
+                self.log.debug("Validate and initialize Object...")
                 if not dpConfig.validate():
                     raise Exception("Impossible to validate the object configuration")
                 if not dpConfig.initialize():
@@ -75,7 +77,7 @@ class Pipeline(dpObject):
                     raise Exception("Object {} cannot be initialized properly".format(dpConfig.className))
             return objectList
         except Exception as e:
-            self.log.error("pipeline.__initETLObjects() -> {}".format(e))
+            self.log.error("{}".format(e))
             return objectList
     
     def initialize(self) -> bool:
@@ -110,7 +112,7 @@ class Pipeline(dpObject):
 
             return True
         except Exception as e:
-            self.log.error("pipeline.initialize() Error -> {}".format(e))
+            self.log.error("{}".format(e))
             return False
 
     def terminate(self) -> bool:

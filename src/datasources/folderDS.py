@@ -3,7 +3,7 @@ __email__ = "benoit@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.parents.DataSource import DataSource 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 from pathlib import Path
 import os
 
@@ -15,6 +15,7 @@ from pipelite.etlDataset import etlDataset
 FILE_EXT_CSV = ".CSV"
 FILE_EXT_EXCEL = ".XLSX"
 FILE_EXT_XES = ".XES"
+CFGFILES_DSOBJECT = "folderDS.json"
 
 class folderDS(DataSource):
     def __init__(self, config, log):
@@ -22,6 +23,11 @@ class folderDS(DataSource):
         self.folder = C.EMPTY
         self.files = C.EMPTY
 
+    @property
+    def parametersValidationFile(self):
+        return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_DATASOURCES, 
+                                    file=CFGFILES_DSOBJECT)
+    
     def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
         Args:
@@ -38,7 +44,7 @@ class folderDS(DataSource):
 
             return True
         except Exception as e:
-            self.log.error("excelFileDS.initialize() Error: {}".format(e))
+            self.log.error("{}".format(e))
             return False
 
     def extract(self) -> bool:
@@ -83,5 +89,5 @@ class folderDS(DataSource):
             return True
         
         except Exception as e:
-            self.log.error("folderExtractor.read() Error: " + str(e))
+            self.log.error("{}".format(e))
             return False

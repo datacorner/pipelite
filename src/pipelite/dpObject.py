@@ -3,9 +3,10 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import importlib
-import pipelite.utils.constants as C
+import pipelite.constants as C
 from jsonschema import validate
 import json
+import importlib.resources
 
 class dpObject:
     def __init__(self, config, log):
@@ -14,6 +15,20 @@ class dpObject:
         self.name = ""
         self.ojbType = None
 
+    def getResourceFile(self, package, file) -> str:
+        """ returns the filename needed to access to the data resource file stored in a package
+        Args:
+            package (str): package name in the project
+            file (str): name of the resource file (without path)
+        Returns:
+            str: real path and file name for accessing the data resource 
+        """
+        try:
+            return str(importlib.resources.files(package).joinpath(file))
+        except Exception as e:
+            self.log.error("{}".format(e))
+            return C.EMPTY
+    
     @property
     def parametersValidationFile(self):
         return C.EMPTY
@@ -37,7 +52,7 @@ class dpObject:
                 validate(instance=jsonParameters, schema=valScheme)
             return True
         except Exception as e:
-            self.log.error("pipeline.validateParametersCfg() -> {}".format(e))
+            self.log.error("{}".format(e))
             return False
 
     def initialize(self, params) -> bool:

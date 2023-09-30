@@ -1,0 +1,23 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "CSV File Parameters",
+    "type" : "object",
+      "properties" : { 
+            "ahost": {"type" : "string"},
+            "client": {"type" : "string"},
+            "sysnr": {"type" : "string"},
+            "user": {"type" : "string"},
+            "pwd": {"type" : "string"},
+            "router": {"type" : "string"},
+            "table": {"type" : "string"},
+            "fields": {"type" : "string"},
+            "rowcount": {"type" : "string"}
+        },
+      "required": ["ahost", 
+                  "client", 
+                  "sysnr", 
+                  "user", 
+                  "pwd", 
+                  "table"]
+  }

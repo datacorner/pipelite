@@ -2,7 +2,6 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import pipelite.utils.constants as C
 from pipelite.parents.Pipeline import Pipeline
 from pipelite.etlDatasets import etlDatasets
 
@@ -17,7 +16,7 @@ class directPL(Pipeline):
         """
         try:
             totalCountExtracted = 0
-            self.log.info("*** Extraction treatment ***")
+            self.log.info("*** EXTRACT ***")
             for item in self.extractors:
                 self.log.info("Extracting data from the Data Source {}".format(item.name))
                 if (item.extract()):
@@ -25,7 +24,7 @@ class directPL(Pipeline):
                     totalCountExtracted += item.count
             return totalCountExtracted
         except Exception as e:
-            self.log.error("pipeline.extract() Error -> {}".format(e))
+            self.log.error("{}".format(e))
             return 0
         
     def transform(self): 
@@ -35,7 +34,7 @@ class directPL(Pipeline):
             int: Total Number of transformed rows
         """
         try:
-            self.log.info("*** Data Transformation treatment ***")
+            self.log.info("*** TRANSFORM ***")
             # Select only the Inputs needed for the transformer, initialize the data source stack with all extractors first
             # this dsPipelineStack object will store all the initial datasets (extractors) but also the transformation results.
             dsPipelineStack = etlDatasets()
@@ -64,7 +63,7 @@ class directPL(Pipeline):
 
             return dsPipelineStack, totalCountTransformed
         except Exception as e:
-            self.log.error("pipeline.transform() Error -> {}".format(e))
+            self.log.error("{}".format(e))
             return None, 0
         
     def load(self, dsPipelineStack) -> int:
@@ -81,7 +80,7 @@ class directPL(Pipeline):
         """
         try:
             totalCountLoaded = 0
-            self.log.info("*** Loading treatment ***")
+            self.log.info("*** LOAD ***")
             for item in self.loaders:
                 # Load only the dataset which have a loader
                 dsToLoad = dsPipelineStack.getFromName(item.name)
@@ -94,5 +93,5 @@ class directPL(Pipeline):
                     self.log.info(" <{}> Rows: {} | Columns: {} ".format(item.name, item.count, item.content.columns))
             return totalCountLoaded
         except Exception as e:
-            self.log.error("pipeline.load() Error -> {}".format(e))
+            self.log.error("{}".format(e))
             return 0

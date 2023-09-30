@@ -3,8 +3,13 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.parents.DataSource import DataSource 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 import os
+
+CFGPARAMS_PATH = "path"
+CFGPARAMS_FILENAME = "filename"
+CFGPARAMS_SHEET = "sheet"
+CFGFILES_DSOBJECT = "excelFileDS.json"
 
 class excelFileDS(DataSource):
 
@@ -13,6 +18,11 @@ class excelFileDS(DataSource):
         self.sheet = 0
         self.filename = C.EMPTY
 
+    @property
+    def parametersValidationFile(self):
+        return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_DATASOURCES, 
+                                    file=CFGFILES_DSOBJECT)
+    
     def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
         Args:
@@ -22,9 +32,9 @@ class excelFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.sheet = cfg.getParameter('sheet', C.EMPTY)
-            self.filename = os.path.join(cfg.getParameter('path', C.EMPTY), 
-                                         cfg.getParameter('filename', C.EMPTY))
+            self.sheet = cfg.getParameter(CFGPARAMS_SHEET, C.EMPTY)
+            self.filename = os.path.join(cfg.getParameter(CFGPARAMS_PATH, C.EMPTY), 
+                                         cfg.getParameter(CFGPARAMS_FILENAME, C.EMPTY))
 
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):
@@ -33,7 +43,7 @@ class excelFileDS(DataSource):
             
             return True
         except Exception as e:
-            self.log.error("excelFileDS.initialize() Error: {}".format(e))
+            self.log.error("{}".format(e))
             return False
     
     def extract(self) -> int:
@@ -47,5 +57,5 @@ class excelFileDS(DataSource):
                          sheet_name=self.sheet)
             return self.content.count
         except Exception as e:
-            self.log.error("excelFileDS.extract() Error while reading the file: ".format(e))
+            self.log.error("{}".format(e))
             return False

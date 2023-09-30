@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 import json, jsonpath_ng
 
 SECTION_PARAM_SEP = "."
@@ -10,11 +10,11 @@ SECTION_PARAM_SEP = "."
 class dpConfig():
     """This class contains all the configuration needed and loaded mainly from the INI file
     """
-
+    
     def __init__(self):
         self.__parameters = {}
         self.__pipelineConfig = None
-        return
+        self.rootPath = C.EMPTY
 
     def addParameter(self, name, value):
         """Add a new parameter in the list

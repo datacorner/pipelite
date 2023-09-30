@@ -19,6 +19,7 @@ class testCSVFiles(unittest.TestCase):
         print("Process Test")
 	    # Get configuration from cmdline & ini file
         config = cmdLineConfig.set_config(cfg=configfile)
+        config.rootPath = "src/"
         log = pipelineProcess.getLogger(config)
         return pipelineProcess(config, log).process()
 

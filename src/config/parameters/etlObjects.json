@@ -1,7 +1,7 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "ETL objects configuration structure",
+    "title": "ETL objects main configuration structure",
     "type" : "object",
       "properties" : { 
             "name": {"type" : "string"},

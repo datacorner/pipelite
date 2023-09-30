@@ -4,13 +4,19 @@ __license__ = "MIT"
 
 import xmltodict
 from pipelite.parents.DataSource import DataSource 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 import os
 from json import dumps, loads
+import importlib.resources
 
-# Inspired by https://github.com/FrankBGao/read_xes/tree/master
+# Highly inspired by https://github.com/FrankBGao/read_xes/tree/master ;-)
 DATATYPES = ['string',  'int', 'date', 'float', 'boolean', 'id']
 CASE_KEY = 'concept-name-attr'
+
+# json validation Configuration 
+CFGFILES_DSOBJECT = "xesFileDS.json"
+CFGPARAMS_PATH = "path"
+CFGPARAMS_FILENAME = "filename"
 
 class xesFileDS(DataSource):
 
@@ -18,6 +24,11 @@ class xesFileDS(DataSource):
         super().__init__(config, log)
         self.filename = C.EMPTY
 
+    @property
+    def parametersValidationFile(self):
+        return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_DATASOURCES, 
+                                    file=CFGFILES_DSOBJECT)
+    
     def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
             A CSV Extractor/Loader must have:
@@ -31,15 +42,15 @@ class xesFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.filename = os.path.join(cfg.getParameter('path', C.EMPTY), 
-                                         cfg.getParameter('filename', C.EMPTY))
+            self.filename = os.path.join(cfg.getParameter(CFGPARAMS_PATH, C.EMPTY), 
+                                         cfg.getParameter(CFGPARAMS_FILENAME, C.EMPTY))
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):
                 if (not os.path.isfile(self.filename)):
                     raise Exception("The XES file {} does not exist or is not accessible.".format(self.filename))
             return True
         except Exception as e:
-            self.log.error("xesFileDS.initialize() Error: {}".format(e))
+            self.log.error("{}".format(e))
             return False
     
     def extract(self) -> int:
@@ -56,7 +67,7 @@ class xesFileDS(DataSource):
     
             return self.content.count
         except Exception as e:
-            self.log.error("xesFileDS.extract() Error while reading the file: ".format(e))
+            self.log.error("{}".format(e))
             return False
          
     def __getEventDetails(self, event, id):

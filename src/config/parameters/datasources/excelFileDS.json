@@ -1,0 +1,14 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Excel File Parameters",
+    "type" : "object",
+      "properties" : { 
+            "filename": {"type" : "string"},
+            "path": {"type" : "string"},
+            "sheet": {"type" : "string"}
+        },
+      "required": ["filename", 
+                  "path", 
+                  "sheet"]
+  }

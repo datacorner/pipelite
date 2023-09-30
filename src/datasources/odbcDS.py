@@ -3,9 +3,15 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.parents.DataSource import DataSource 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 import pyodbc
 from pipelite.utils.SqlTemplate import SqlTemplate
+
+# json validation Configuration 
+CFGFILES_DSOBJECT = "odbcDS.json"
+CFGPARAMS_QUERY_PARAMETERS = "query-parameters"
+CFGPARAMS_ODBC_CN = "connectionstring"
+CFGPARAMS_ODBC_QUERY = "query"
 
 class odbcDS(DataSource):
 
@@ -14,6 +20,11 @@ class odbcDS(DataSource):
         self.query = C.EMPTY
         self.connectionString = C.EMPTY
 
+    @property
+    def parametersValidationFile(self):
+        return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_DATASOURCES, 
+                                    file=CFGFILES_DSOBJECT)
+    
     def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
             A ODBC Extractor/Loader must have:
@@ -38,10 +49,10 @@ class odbcDS(DataSource):
         """
         try:
             
-            self.connectionString = str(cfg.getParameter(C.PLJSONCFG_DS_ODBC_CN, C.EMPTY))
+            self.connectionString = str(cfg.getParameter(CFGPARAMS_ODBC_CN, C.EMPTY))
             template = SqlTemplate(self.log)
-            self.query = template.getQuery(cfg.getParameter(C.PLJSONCFG_DS_ODBC_QUERY, C.EMPTY), 
-                                           cfg.getParameter("query-parameters", {}))
+            self.query = template.getQuery(cfg.getParameter(CFGPARAMS_ODBC_QUERY, C.EMPTY), 
+                                           cfg.getParameter(CFGPARAMS_QUERY_PARAMETERS, {}))
             
             # checks
             if (len(self.connectionString) == 0):
@@ -51,7 +62,7 @@ class odbcDS(DataSource):
             
             return True
         except Exception as e:
-            self.log.error("odbcDS.initialize() Error: {}".format(e))
+            self.log.error("{}".format(e))
             return False
     
     def extract(self) -> int:
@@ -76,7 +87,7 @@ class odbcDS(DataSource):
             return False
         
         except Exception as e:
-            self.log.error("odbcDS.extract(Exception) Exception while reading ODBC Data Source: ".format(e))
+            self.log.error("Exception while reading ODBC Data Source: ".format(e))
             try:
                 odbcConnection.close()
             except:

@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 import pathlib
 from string import Template
 import os
@@ -26,7 +26,7 @@ class SqlTemplate():
                 # The SQL Query is in the config file (json)
                 return Template(template)
         except Exception as e:
-            self.__log__.error("SqlTemplate.getTemplate() -> Error when reading the SQL template " + str(e))
+            self.__log__.error("Error when reading the SQL template: {}".format(e))
             return ""
 
     def getQuery(self, entryTemplate, queryParameters) -> str:
@@ -44,5 +44,5 @@ class SqlTemplate():
             return sqlTemplate.substitute(queryParameters)
 
         except Exception as e:
-            self.__log__.error("SqlTemplate.build() -> Unable to build the Blue Prism Query -> " + str(e))
+            self.__log__.error("Unable to build the Blue Prism Query: {}".format(e))
             return C.EMPTY

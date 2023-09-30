@@ -2,9 +2,11 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 from pipelite.parents.Transformer import Transformer
 from pipelite.etlDatasets import etlDatasets
+
+CFGFILES_DSOBJECT = "lookupTR.json"
 
 class lookupTR(Transformer):
     """ Transcode a column from a main dataset with data from the lookup table.
@@ -23,6 +25,11 @@ class lookupTR(Transformer):
         self.mainDatasetName = C.EMPTY
         self.mainColKey = C.EMPTY
 
+    @property
+    def parametersValidationFile(self):
+        return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_TRANSFORMERS, 
+                                    file=CFGFILES_DSOBJECT)
+    
     def initialize(self, params) -> bool:
         """ Initialize and makes some checks (params) for that transformer
         Args:

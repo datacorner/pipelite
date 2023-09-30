@@ -4,7 +4,7 @@ __license__ = "MIT"
 
 import logging
 from logging.handlers import RotatingFileHandler
-import pipelite.utils.constants as C
+import pipelite.constants as C
 import inspect
 
 class log:

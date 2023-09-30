@@ -3,10 +3,13 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.parents.DataSource import DataSource 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 from pipelite.etlDataset import etlDataset
 from pyrfc import Connection, ABAPApplicationError, ABAPRuntimeError, LogonError, CommunicationError
+import importlib.resources
 
+# json validation Configuration 
+CFGFILES_DSOBJECT = "sapRfcTableDS.json"
 # Parameters to have in the config file under /parameters
 SAPPARAM_AHOST = "ahost"
 SAPPARAM_CLIENT = "client"
@@ -18,12 +21,7 @@ SAPPARAM_TABLE = "table"
 SAPPARAM_FIELDS = "fields"  # list of fields / column names
 SAPPARAM_ROWCOUNT = "rowcount"
 
-MANDATORY_PARAMETERS = [SAPPARAM_AHOST, 
-                        SAPPARAM_CLIENT, 
-                        SAPPARAM_SYSNR, 
-                        SAPPARAM_USER, 
-                        SAPPARAM_PWD, 
-                        SAPPARAM_TABLE]
+CFGFILES_DSOBJECT = C.CFG_PARAMETER_DEF_FOLDER + "/datasources/sapRfcTableDS.json"
 
 class sapRfcTableDS(DataSource):
     def __init__(self, config, log):
@@ -38,6 +36,11 @@ class sapRfcTableDS(DataSource):
         self.fields = []
         self.rowcount = 0
 
+    @property
+    def parametersValidationFile(self):
+        return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_DATASOURCES, 
+                                    file=CFGFILES_DSOBJECT)
+    
     def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
         Args:
@@ -46,10 +49,6 @@ class sapRfcTableDS(DataSource):
             bool: False if error
         """
         try:
-            # checks
-            for param in MANDATORY_PARAMETERS:
-                if (cfg.getParameter(param, C.EMPTY)):
-                    raise Exception("Mandatory Parameter <{}> is missing".format(param))
             # Get params
             self.ahost = cfg.getParameter(SAPPARAM_AHOST, C.EMPTY)
             self.client = cfg.getParameter(SAPPARAM_CLIENT, C.EMPTY)
@@ -62,7 +61,7 @@ class sapRfcTableDS(DataSource):
             self.rowcount = cfg.getParameter(SAPPARAM_ROWCOUNT, 0)
             return True
         except Exception as e:
-            self.log.error("CSVFileDS.initialize() Error: {}".format(e))
+            self.log.error("{}".format(e))
             return False
 
     def __connectToSAP__(self) -> Connection:
@@ -81,12 +80,12 @@ class sapRfcTableDS(DataSource):
                               saprouter=self.router)
             return conn
         except CommunicationError:
-            self.log.error("sapRfcDS.__connectToSAP() Could not connect to server.")
+            self.log.error("CommunicationError: Could not connect to server.")
         except LogonError:
-            self.log.error("sapRfcDS.__connectToSAP() Could not log in. Wrong credentials?")
+            self.log.error("LogonError: Could not log in. Wrong credentials?")
             print("Could not log in. Wrong credentials?")
         except (ABAPApplicationError, ABAPRuntimeError):
-            self.log.error("sapRfcDS.__connectToSAP(): An error occurred")
+            self.log.error("ABAPApplicationError / ABAPRuntimeError")
         return None
 
     def __callRFCReadTable__(self, conn) -> etlDataset:
@@ -125,7 +124,7 @@ class sapRfcTableDS(DataSource):
             return res
 
         except Exception as e:
-            self.log.error("sapRfcDS.__callRFCReadTable__() Exception -> " + str(e))
+            self.log.error("{}".format(e))
             return etlDataset()
 
     def extract(self) -> int:

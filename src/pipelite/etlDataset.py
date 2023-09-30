@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pandas as pd
-import pipelite.utils.constants as C
+import pipelite.constants as C
 
 class etlDataset:
     """ This class encapsulate the data set management (currently Pandas DataFrames) 

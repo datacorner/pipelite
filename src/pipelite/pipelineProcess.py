@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 from pipelite.parents.Pipeline import Pipeline
 from pipelite.utils.log import log
 from pipelite.dpObject import dpObject
@@ -45,7 +45,7 @@ class pipelineProcess:
 			if (pipeline == None):
 				raise Exception ("The Data pipeline has not been created successfully")
 		except Exception as e:
-			self.log.error("pipelineFactory.process(): pipelite cannot be initialized: {}".format(str(e)))
+			self.log.error("pipelite cannot be initialized: {}".format(str(e)))
 			return
 		return self.execute(pipeline=pipeline)
 
@@ -81,13 +81,13 @@ class pipelineProcess:
 							pipeline.log.info("Data loaded successfully")
 					pipeline.log.info("Pipeline Stats -> E:{} T:{} L:{}".format(E_counts, T_counts, L_counts))
 			else:
-				self.log.error("pipelineFactory.createAndExecute(): The Data pipeline has not been initialized properly")
+				raise Exception("The Data pipeline has not been initialized properly")
 			
 			pipeline.terminate()
 			return E_counts, T_counts, L_counts
 		
 		except Exception as e:
-			self.log.error("pipelineFactory.createAndExecute(): Error when processing the data: {}".format(str(e)))
+			self.log.error("Error when processing the data: {}".format(str(e)))
 			return E_counts, T_counts, L_counts
 
 	def create(self) -> Pipeline:
@@ -107,5 +107,5 @@ class pipelineProcess:
 			return pipelineObject
 
 		except Exception as e:
-			self.log.error("pipelineFactory.create(): Error when loading the Data Source Factory: {}".format(str(e)))
+			self.log.error("Error when loading the Data Source Factory: {}".format(str(e)))
 			return None

@@ -2,9 +2,10 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 from jsonschema import validate
 import json
+import importlib.resources
 
 class objConfig:
     def __init__(self, config, log, type, objconfig):
@@ -36,13 +37,14 @@ class objConfig:
     def validate(self) -> bool:
         try:
             # Check the parameter (json) structure against the json scheme for all etl objects
-            with open(C.CFGFILES_ETLOBJECT, 'r') as f:
+            filename = importlib.resources.files(C.RESOURCE_PKGFOLDER_ROOT).joinpath(C.RESOURCE_ETLOBJECTS_TEMPLATE)
+            with open(str(filename), 'r') as f:
                 valScheme = json.load(f)
             # If no exception is raised by validate(), the instance is valid.
             validate(instance=self.objConfig, schema=valScheme)
             return True
         except Exception as e:
-            self.log.error("objConfig.validate() Error: {}".format(e))
+            self.log.error("{}".format(e))
             return False
         
     def initialize(self) -> bool:
@@ -56,7 +58,7 @@ class objConfig:
             self.name = self.getVal(self.objConfig, C.PLJSONCFG_PROP_NAME, C.EMPTY)
             return True
         except Exception as e:
-            self.log.error("objConfig.initialize() Error: {}".format(e))
+            self.log.error("{}".format(e))
             return False
 
     def getParameter(self, name, default=None) -> str:

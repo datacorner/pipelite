@@ -3,8 +3,15 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.parents.DataSource import DataSource 
-import pipelite.utils.constants as C
+import pipelite.constants as C
 import os
+
+# json validation Configuration 
+CFGFILES_DSOBJECT = "csvFileDS.json"
+CFGPARAMS_SEPARATOR = "separator"
+CFGPARAMS_PATH = "path"
+CFGPARAMS_FILENAME = "filename"
+CFGPARAMS_ENCODING = "encoding"
 
 class csvFileDS(DataSource):
 
@@ -16,7 +23,8 @@ class csvFileDS(DataSource):
 
     @property
     def parametersValidationFile(self):
-        return "src/config/parameters/datasources/csvFileDS.json"
+        return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_DATASOURCES, 
+                                    file=CFGFILES_DSOBJECT)
 
     def initialize(self, cfg) -> bool:
         """ initialize and check all the needed configuration parameters
@@ -33,17 +41,17 @@ class csvFileDS(DataSource):
             bool: False if error
         """
         try:
-            self.separator = cfg.getParameter('separator', C.EMPTY)
-            self.filename = os.path.join(cfg.getParameter('path', C.EMPTY), 
-                                         cfg.getParameter('filename', C.EMPTY))
-            self.encoding = cfg.getParameter('encoding', C.EMPTY)
+            self.separator = cfg.getParameter(CFGPARAMS_SEPARATOR, C.EMPTY)
+            self.filename = os.path.join(cfg.getParameter(CFGPARAMS_PATH, C.EMPTY), 
+                                         cfg.getParameter(CFGPARAMS_FILENAME, C.EMPTY))
+            self.encoding = cfg.getParameter(CFGPARAMS_ENCODING, C.EMPTY)
             # Checks ...
             if (self.ojbType == C.PLJSONCFG_LOADER):
                 if (not os.path.isfile(self.filename)):
                     raise Exception("The file {} does not exist or is not accessible.".format(self.filename))
             return True
         except Exception as e:
-            self.log.error("CSVFileDS.initialize() Error: {}".format(e))
+            self.log.error("{}".format(e))
             return False
     
     def extract(self) -> int:
@@ -58,7 +66,7 @@ class csvFileDS(DataSource):
                                  separator=self.separator)
             return self.content.count
         except Exception as e:
-            self.log.error("CSVFileDS.extract() Error while reading the file: ".format(e))
+            self.log.error("Error while reading the file: ".format(e))
             return False
 
     def load(self) -> int:
@@ -69,9 +77,9 @@ class csvFileDS(DataSource):
         try:
             self.log.info("Load  the Dataset into the file: {}".format(self.filename))
             self.content.writeCSV(filename=self.filename, 
-                                  encoding=C.ENCODING,
+                                  encoding=self.encoding,
                                   separator=self.separator)
             return self.content.count
         except Exception as e:
-            self.log.error("CSVFileDS.extract() Error while writing the file: ".format(e))
+            self.log.error("Error while writing the file: ".format(e))
             return 0
