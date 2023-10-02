@@ -105,8 +105,7 @@ class Pipeline(dpObject):
             # 3) init Transformers
             self.log.info("Initializing Transformer(s) ...")
             self.transformers = self.__initETLObjects(C.PLJSONCFG_TRANSFORMER)
-            if (len(self.transformers) == 0):
-                raise Exception("Transformers(s) has/have not been initialized properly")
+
             self.log.info("There is/are {} Transformers(s)".format(len(self.transformers)))
             return True
         except Exception as e:

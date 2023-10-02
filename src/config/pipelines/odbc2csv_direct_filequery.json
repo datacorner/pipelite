@@ -27,7 +27,7 @@
     "transformers":  [
     { 
         "name": "T1",
-        "classname": "transformers.doNothingTR",
+        "classname": "transformers.donothingTR",
         "inputs" : [ "S1" ],
         "outputs" : [ "S1" ]
     } ],

@@ -7,6 +7,11 @@ from pipelite.parents.Transformer import Transformer
 from pipelite.etlDatasets import etlDatasets
 
 CFGFILES_DSOBJECT = "lookupTR.json"
+PARAM_LOOKUP = "lookup"
+PARAM_MAIN = "main"
+PARAM_DS_NAME = "ds-name"
+PARAM_KEY = "key"
+PARAM_LOOKUP_KEEP = "keep"
 
 class lookupTR(Transformer):
     """ Transcode a column from a main dataset with data from the lookup table.
@@ -38,18 +43,18 @@ class lookupTR(Transformer):
             bool: False if error
         """
         try:
-            self.lookupDatasetName = params.getParameter("lookup")["ds-name"]
-            self.lookupDatasetColKey = params.getParameter("lookup")["key"]
-            self.mainDatasetName = params.getParameter("main")["ds-name"]
-            self.mainColKey = params.getParameter("main")["key"]
-            self.lookupDatasetColKeep = params.getParameter("lookup")["keep"]
+            self.lookupDatasetName = params.getParameter(PARAM_LOOKUP)[PARAM_DS_NAME]
+            self.lookupDatasetColKey = params.getParameter(PARAM_LOOKUP)[PARAM_KEY]
+            self.lookupDatasetColKeep = params.getParameter(PARAM_LOOKUP)[PARAM_LOOKUP_KEEP]
+            self.mainDatasetName = params.getParameter(PARAM_MAIN)[PARAM_DS_NAME]
+            self.mainColKey = params.getParameter(PARAM_MAIN)[PARAM_KEY]
             return (len(self.lookupDatasetName) != 0 and 
                     len(self.lookupDatasetColKey) != 0 and 
                     len(self.mainDatasetName) != 0 and 
                     len(self.mainColKey) != 0 and 
                     len(self.lookupDatasetColKeep) != 0)
         except Exception as e:
-            self.log.error("transcoderTR.initialize() Error -> {}".format(str(e)))
+            self.log.error("{}".format(str(e)))
             return False
     
     def transform(self, dsTransformerInputs) -> etlDatasets:
@@ -69,10 +74,11 @@ class lookupTR(Transformer):
             dsLookup = dsTransformerInputs.getFromName(self.lookupDatasetName)
             if (dsLookup == None):
                 raise Exception("Lookup stream has not been identified in the flow")
+            self.log.debug("Perform Lookup between Main stream {} and Lookup Stream {} on main key [{}]".format(self.mainDatasetName, self.lookupDatasetName, self.mainColKey))
             # Change the lookup column name to the main one for the lookup itself
             dsLookup.renameColumn(self.lookupDatasetColKey, self.mainColKey)
             originalRecCount = dsMain.count
-            self.log.debug("There are {} records in the original dataset".format(originalRecCount))
+            self.log.debug("There are {} records in the main dataset stream".format(originalRecCount))
             dsMain.lookupWith(dsLookup, self.mainColKey) # Effective lookup
             dsMain.dropLineNaN(self.lookupDatasetColKeep) # drop the NA values (lookup failed / no values as result)
             # Reshape the dataset (columns changes)
@@ -81,7 +87,7 @@ class lookupTR(Transformer):
             # display Nb of rows removed
             iNbRemoved = originalRecCount - dsMain.count
             if (iNbRemoved != 0):
-                self.log.warning("{} records have been removed by the transformation".format(iNbRemoved))
+                self.log.warning("{} records have been removed by the transformation (no lookup)".format(iNbRemoved))
             # Return the output as a collection with only one item with the excepted name
             dsOutputs = etlDatasets()
             # Create from the source another instance of the data

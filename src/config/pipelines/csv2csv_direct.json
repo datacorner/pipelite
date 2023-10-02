@@ -20,13 +20,7 @@
             "encoding": "utf-8"
         }   
     } ],
-    "transformers":  [
-    { 
-        "name": "T2",
-        "classname": "transformers.doNothingTR",
-        "inputs" : [ "S1" ],
-        "outputs" : [ "S1" ]
-    } ],
+    "transformers":  [ ],
     "parameters":{
         "mode": "full"
     },

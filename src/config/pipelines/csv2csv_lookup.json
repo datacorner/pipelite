@@ -46,7 +46,7 @@
     },
     { 
         "name": "T2",
-        "classname": "transformers.doNothingTR"
+        "classname": "transformers.donothingTR"
     } ],
     "parameters":{
         "mode": "full"

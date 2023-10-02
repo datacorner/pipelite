@@ -1,0 +1,19 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Regex Transformer Parameters",
+      "type" : "object",
+       "properties" : { 
+             "main": {
+              "type" : "object",
+              "properties" : { 
+                    "column": {"type" : "string"},
+                    "start": {"type" : "number"},
+                    "length": {"type" : "number"}
+                }
+          }
+        },
+       "required": ["column", 
+                  "start",
+                  "length"]
+  }

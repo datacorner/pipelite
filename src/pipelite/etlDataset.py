@@ -116,6 +116,15 @@ class etlDataset:
         """
         del self.__content[column]
 
+    def subString(self, columnName, start, length):
+        """extract a substring
+        Args:
+            columnName (str): column name
+            start (int): start index
+            length (int): extraction length
+        """
+        self.__content[columnName] = self.__content[columnName].str[start:length]
+
     def renameColumn(self, oldName, newName):
         """rename a column inside the dataset
         Args:

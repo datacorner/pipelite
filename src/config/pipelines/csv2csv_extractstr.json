@@ -2,31 +2,36 @@
     "classname" : "pipelines.directPL",
     "extractors" : [ {
         "name": "S1",
-        "classname": "datasources.odbcDS",
-        "validation": "src/config/parameters/datasources/odbcDS.json",
+        "classname": "datasources.csvFileDS",
         "parameters": {
-            "connectionstring": "DRIVER={SQLite3};Database=tests/data/dbsample.sqlite",
-            "query": "SELECT customer_id, first_name, birthdate FROM Customers;"
-        } 
+            "separator": ",",
+            "filename": "test.csv",
+            "path": "tests/data/",
+            "encoding": "utf-8"
+        }   
     } ],
     "loaders" : [ {
         "name": "S1",
         "classname": "datasources.csvFileDS",
-        "validation": "src/config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
-            "filename": "db-Customers.csv",
+            "filename": "test-extractstr.csv",
             "path": "tests/data/out",
             "encoding": "utf-8"
         }   
     } ],
     "transformers":  [
     { 
-        "name": "T1",
-        "classname": "transformers.donothingTR",
+        "name": "T2",
+        "classname": "transformers.extractstrTR",
         "inputs" : [ "S1" ],
-        "outputs" : [ "S1" ]
-    } ],
+        "outputs" : [ "S1" ],
+        "parameters": {
+            "column": "concept:name",
+            "start": 2,
+            "length": 3
+        }   
+    }],
     "parameters":{
         "mode": "full"
     },
