@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
 from pipelite.pipelineProcess import pipelineProcess
 from pipelite.config.cmdLineConfig import cmdLineConfig
 
-class testCSVFiles(unittest.TestCase):
+class testTransformers(unittest.TestCase):
     def setUp(self):
         print("Running CSV import Test")
 
@@ -29,9 +29,24 @@ class testCSVFiles(unittest.TestCase):
                         self.t==expectedResults[1] and 
                         self.l==expectedResults[2])
 
-    def test_csv2csv_direct(self):
-        results = [3, 0, 3]
-        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_direct.json")
+    def test_csv2csv_extractstr(self):
+        results = [1394, 1394, 1394]
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_extractstr.json")
+        self.checkResults(results)
+
+    def test_csv2csv_concat(self):
+        results = [7, 7, 7]
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_concat.json")
+        self.checkResults(results)
+
+    def test_csv2csv_lookup(self):
+        results = [10, 10, 2]
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_lookup.json")
+        self.checkResults(results)
+
+    def test_csv2csv_concat_lookup(self):
+        results = [14, 21, 4]
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_concat_lookup.json")
         self.checkResults(results)
 
 if __name__ == '__main__':

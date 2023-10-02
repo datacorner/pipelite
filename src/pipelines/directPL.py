@@ -51,7 +51,7 @@ class directPL(Pipeline):
                     iCountBefore = dsInputs.totalRowCount
                     dsOutputs = transformerItem.transform(dsInputs)
                     self.dsStack.merge(dsOutputs)
-                    totalCountTransformed += iCountBefore - dsOutputs.totalRowCount
+                    totalCountTransformed += iCountBefore #- dsOutputs.totalRowCount
                     self.log.info("Number of rows transformed {} / {}".format(totalCountTransformed, totalCountTransformed))
                 else:
                     self.log.warning("The Tranformer {} has no input, by pass it !".format(transformerItem.name))

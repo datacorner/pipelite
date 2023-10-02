@@ -29,7 +29,7 @@ class testXES(unittest.TestCase):
                         self.l==expectedResults[2])
 
     def test_xes2csv_direct(self):
-        results = [1394, 0, 1394]
+        results = [1394, 1394, 1394]
         self.e, self.t, self.l = self.processTest("./src/config/pipelines/xes2csv_direct.json")
         self.checkResults(results)
 
