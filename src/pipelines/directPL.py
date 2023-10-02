@@ -19,9 +19,12 @@ class directPL(Pipeline):
             self.log.info("*** EXTRACT ***")
             for item in self.extractors:
                 self.log.info("Extracting data from the Data Source {}".format(item.name))
-                if (item.extract()):
-                    self.log.info(" <{}> Rows: {} | Columns: {} ".format(item.name, item.count, item.content.columns))
-                    totalCountExtracted += item.count
+                dsExtracted = item.extract()    # extract the data from the DataSource
+                dsExtracted.name = item.name
+                if (dsExtracted.count > 0):
+                    self.dsStack.add(dsExtracted)   # Add the Data source content (dataset) in the Dataset stack
+                    self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsExtracted.name, dsExtracted.count, dsExtracted.columns))
+                    totalCountExtracted += dsExtracted.count
             return totalCountExtracted
         except Exception as e:
             self.log.error("{}".format(e))
@@ -37,36 +40,27 @@ class directPL(Pipeline):
             self.log.info("*** TRANSFORM ***")
             # Select only the Inputs needed for the transformer, initialize the data source stack with all extractors first
             # this dsPipelineStack object will store all the initial datasets (extractors) but also the transformation results.
-            dsPipelineStack = etlDatasets()
-            for extractorItem in self.extractors:   
-                self.log.debug("Adding Extractor/dataset {} in the data stack".format(extractorItem.name))
-                extractorItem.content.name = extractorItem.name
-                dsPipelineStack.add(extractorItem.content)
             totalCountTransformed = 0
 
             # Execute the Transformers stack on the inputs/extractors
             for transformerItem in self.transformers:   # Pass through all the Tranformers ...
                 dsInputs = etlDatasets()
-                for dsItem in dsPipelineStack:
-                    if (dsItem.name in transformerItem.dsInputs):
-                        self.log.info("Including dataset {} for the transformation".format(dsItem.name))
-                        self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsItem.name, dsItem.count, dsItem.columns))
-                        dsInputs.add(dsItem.copy())
-                self.log.info("Apply Transformation via transformer {} ...".format(transformerItem.name))
+                for trName in transformerItem.dsInputs: # datasets in input per transformer
+                    dsInputs.add(self.dsStack.getFromName(trName))
                 if (not dsInputs.empty):
-                    dsOutputs, tfCount = transformerItem.transform(dsInputs)
-                    dsPipelineStack.merge(dsOutputs)
-                    totalCountTransformed += tfCount
-                    self.log.info("Number of rows transformed {} / {}".format(tfCount, totalCountTransformed))
+                    iCountBefore = dsInputs.totalRowCount
+                    dsOutputs = transformerItem.transform(dsInputs)
+                    self.dsStack.merge(dsOutputs)
+                    totalCountTransformed += iCountBefore - dsOutputs.totalRowCount
+                    self.log.info("Number of rows transformed {} / {}".format(totalCountTransformed, totalCountTransformed))
                 else:
                     self.log.warning("The Tranformer {} has no input, by pass it !".format(transformerItem.name))
-
-            return dsPipelineStack, totalCountTransformed
+            return totalCountTransformed
         except Exception as e:
             self.log.error("{}".format(e))
-            return None, 0
+            return 0
         
-    def load(self, dsPipelineStack) -> int:
+    def load(self) -> int:
         """ Load the dataset transformed in one or more loaders.
             Only load the datasets which are referenced as Data Source Load and are in the Stack.
             Be Careful: the loaders are not in the stack by default (because they don't still have data)
@@ -83,14 +77,13 @@ class directPL(Pipeline):
             self.log.info("*** LOAD ***")
             for item in self.loaders:
                 # Load only the dataset which have a loader
-                dsToLoad = dsPipelineStack.getFromName(item.name)
+                dsToLoad = self.dsStack.getFromName(item.name)
                 if (dsToLoad == None):
                     self.log.warning("There are no data to load into the Data Source {}".format(item.name))
                 else:
                     self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
-                    item.content = dsToLoad
-                    totalCountLoaded += item.load()
-                    self.log.info(" <{}> Rows: {} | Columns: {} ".format(item.name, item.count, item.content.columns))
+                    totalCountLoaded += item.load(dsToLoad)
+                    self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsToLoad.name, dsToLoad.count, dsToLoad.columns))
             return totalCountLoaded
         except Exception as e:
             self.log.error("{}".format(e))

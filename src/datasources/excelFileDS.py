@@ -5,6 +5,7 @@ __license__ = "MIT"
 from pipelite.parents.DataSource import DataSource 
 import pipelite.constants as C
 import os
+from pipelite.etlDataset import etlDataset
 
 CFGPARAMS_PATH = "path"
 CFGPARAMS_FILENAME = "filename"
@@ -46,16 +47,16 @@ class excelFileDS(DataSource):
             self.log.error("{}".format(e))
             return False
     
-    def extract(self) -> int:
+    def extract(self) -> etlDataset:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read
         """
         try:
             self.log.info("Extract the Dataset from the file: {}".format(self.filename))
-            self.content.read_excel(self.filename, 
-                         sheet_name=self.sheet)
-            return self.content.count
+            dsExtract = etlDataset()
+            dsExtract.read_excel(self.filename, sheet_name=self.sheet)
+            return dsExtract
         except Exception as e:
             self.log.error("{}".format(e))
             return False

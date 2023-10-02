@@ -4,10 +4,11 @@ __license__ = "MIT"
 
 import pipelite.constants as C
 from pipelite.parents.Transformer import Transformer
+from pipelite.etlDatasets import etlDatasets
 
 class doNothingTR(Transformer):
 
-    def transform(self, dsStack):
+    def transform(self, dsTransformerInputs) -> etlDatasets:
         """ Just do nothing !
         Args:
             inputDataFrames (etlDatasets): multiple dataset in a collection
@@ -15,4 +16,4 @@ class doNothingTR(Transformer):
             etlDatasets: same as input
             int: 0 transformed rows
         """
-        return dsStack, 0
+        return dsTransformerInputs, 0

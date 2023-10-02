@@ -47,7 +47,7 @@ class folderDS(DataSource):
             self.log.error("{}".format(e))
             return False
 
-    def extract(self) -> bool:
+    def extract(self) -> etlDataset:
         """ Several tasks to do in this order:
             1) List the folder content
             2) filter out the interresting files 
@@ -85,9 +85,8 @@ class folderDS(DataSource):
                     globaldf.concatWith(dataset.content)
 
             self.log.debug("Final dataset has {} rows and {} columns...".format(globaldf.shape[0], globaldf.shape[1]))
-            self.content = globaldf
-            return True
+            return globaldf
         
         except Exception as e:
             self.log.error("{}".format(e))
-            return False
+            return etlDataset()

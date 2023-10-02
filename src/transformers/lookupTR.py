@@ -52,7 +52,7 @@ class lookupTR(Transformer):
             self.log.error("transcoderTR.initialize() Error -> {}".format(str(e)))
             return False
     
-    def transform(self, dsStack):
+    def transform(self, dsTransformerInputs) -> etlDatasets:
         """ Returns all the data in a etlDataset format
         Args:
             inputDataFrames (etlDatasets): multiple datasets (inputs)
@@ -63,10 +63,12 @@ class lookupTR(Transformer):
 
         try:
             # identify the main & the lookup dataset first
-            if (dsStack[0].name == self.mainDatasetName):
-                dsMain, dsLookup = dsStack[0], dsStack[1]
-            else:
-                dsMain, dsLookup = dsStack[1],dsStack[0]
+            dsMain = dsTransformerInputs.getFromName(self.mainDatasetName)
+            if (dsMain == None):
+                raise Exception("Main stream has not been identified in the flow")
+            dsLookup = dsTransformerInputs.getFromName(self.lookupDatasetName)
+            if (dsLookup == None):
+                raise Exception("Lookup stream has not been identified in the flow")
             # Change the lookup column name to the main one for the lookup itself
             dsLookup.renameColumn(self.lookupDatasetColKey, self.mainColKey)
             originalRecCount = dsMain.count
@@ -85,7 +87,8 @@ class lookupTR(Transformer):
             # Create from the source another instance of the data
             dsMain.name = self.dsOutputs[0]
             dsOutputs.add(dsMain)
-            return dsOutputs, iNbRemoved
+            return dsOutputs
+        
         except Exception as e:
-            self.log.info("lookupTR.transform() -> ".format(e))
-            return dsStack, 0
+            self.log.error("{}".format(e))
+            return dsTransformerInputs

@@ -67,18 +67,14 @@ class pipelineProcess:
 				pipeline.log.info("Now, Extract data from Data Source ...")
 				E_counts = pipeline.extract()	# EXTRACT (E of ETL)
 				pipeline.log.info("Data extracted successfully: {} rows extracted".format(E_counts))
-				if (E_counts == 0):
-					pipeline.log.info("** There are no data to process, terminate here **")
-				else:
+				if (E_counts > 0):
 					pipeline.log.info("Transform imported data ...")
-					dsStack, T_counts = pipeline.transform()	# TRANSFORM (T of ETL)
-					pipeline.log.info("Data transformed successfully, {} rows - after transformation - to import into the Data Source".format(T_counts))
-					if (dsStack[0].count > 0): 
-						# LOAD (L of ETL)
-						pipeline.log.info("Load data into the Data Source ...")
-						L_counts = pipeline.load(dsStack) # LOAD (L of ETL)
-						if (L_counts > 0):
-							pipeline.log.info("Data loaded successfully")
+					T_counts = pipeline.transform()	# TRANSFORM (T of ETL)
+					pipeline.log.info("Data transformed successfully, {} rows - after transformation - to import into the Data Source".format(T_counts)) 
+					pipeline.log.info("Load data into the Data Source ...")
+					L_counts = pipeline.load() # LOAD (L of ETL)
+					if (L_counts > 0):
+						pipeline.log.info("Data loaded successfully")
 					pipeline.log.info("Pipeline Stats -> E:{} T:{} L:{}".format(E_counts, T_counts, L_counts))
 			else:
 				raise Exception("The Data pipeline has not been initialized properly")

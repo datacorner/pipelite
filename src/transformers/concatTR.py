@@ -25,7 +25,7 @@ class concatTR(Transformer):
         """
         return True
     
-    def transform(self, dsStack):
+    def transform(self, dsTransformerInputs) -> etlDatasets:
         """ Concatenate 2 or more datasets together
         Args:
             dsStack (etlDatasets): multiple datasets to concat in a collection
@@ -35,8 +35,8 @@ class concatTR(Transformer):
         """
         try:
             output = etlDataset()
-            self.log.info("There are {} datasets to concatenate".format(dsStack.count))
-            for obj in dsStack:
+            self.log.info("There are {} datasets to concatenate".format(dsTransformerInputs.count))
+            for obj in dsTransformerInputs:
                 self.log.debug("Adding {} rows from the dataset {}".format(obj.count, obj.name))
                 output.concatWith(obj)
             # Return the output as a collection with only one item with the excepted name
@@ -44,7 +44,8 @@ class concatTR(Transformer):
             # Create from the source another instance of the data
             output.name = self.dsOutputs[0]
             dsOutputs.add(output)
-            return dsOutputs, output.count
+            return dsOutputs
+        
         except Exception as e:
             self.log.info("concatTR.transform() -> ".format(e))
-            return dsStack, 0
+            return dsTransformerInputs

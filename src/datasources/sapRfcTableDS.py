@@ -6,7 +6,7 @@ from pipelite.parents.DataSource import DataSource
 import pipelite.constants as C
 from pipelite.etlDataset import etlDataset
 from pyrfc import Connection, ABAPApplicationError, ABAPRuntimeError, LogonError, CommunicationError
-import importlib.resources
+from pipelite.etlDataset import etlDataset
 
 # json validation Configuration 
 CFGFILES_DSOBJECT = "sapRfcTableDS.json"
@@ -127,16 +127,17 @@ class sapRfcTableDS(DataSource):
             self.log.error("{}".format(e))
             return etlDataset()
 
-    def extract(self) -> int:
+    def extract(self) -> etlDataset:
         """ flaten the XES (XML format) and returns all the data in a etlDataset format
         Returns:
             etlDataset: data set
         """
         try:
+            dsExtract = etlDataset()
             sapConn = self.__connectToSAP__()
             if (sapConn != None):
-                self.content = self.__callRFCReadTable(sapConn)
-            return self.content.count
+                dsExtract = self.__callRFCReadTable(sapConn)
+            return dsExtract
         except Exception as e:
             self.log.error("sapRfcDS.extract() Error while accessing the SAP RFC Table: ".format(e))
-            return False
+            return etlDataset()

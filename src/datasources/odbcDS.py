@@ -6,6 +6,7 @@ from pipelite.parents.DataSource import DataSource
 import pipelite.constants as C
 import pyodbc
 from pipelite.utils.SqlTemplate import SqlTemplate
+from pipelite.etlDataset import etlDataset
 
 # json validation Configuration 
 CFGFILES_DSOBJECT = "odbcDS.json"
@@ -65,31 +66,31 @@ class odbcDS(DataSource):
             self.log.error("{}".format(e))
             return False
     
-    def extract(self) -> int:
+    def extract(self) -> etlDataset:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read
         """
         try:
+            dsExtract = etlDataset()
             self.log.info("Connect to the ODBC Datasource ...")
             odbcConnection = pyodbc.connect(self.connectionString)
             self.log.info("Connected to ODBC Data source")
             if (not odbcConnection.closed):
                 self.log.debug("Execute the query: {}".format(self.query))
-                self.content.readSQL(odbcConnection=odbcConnection, 
+                dsExtract.readSQL(odbcConnection=odbcConnection, 
                                      query=self.query)
                 odbcConnection.close()
-                self.log.debug("Number of <{}> rows read in the ODBC Data Source".format(self.content.shape[0]))
-
-            return self.content.count
+                self.log.debug("Number of <{}> rows read in the ODBC Data Source".format(dsExtract.shape[0]))
+            return dsExtract
+        
         except pyodbc.Error as e:
             self.log.error("odbcDS.extract() -> pyodbc.Error while reading ODBC Data Source: Code: {} - Message: {}".format(e.args[0], e.args[1]))
-            return False
-        
+            return etlDataset()
         except Exception as e:
             self.log.error("Exception while reading ODBC Data Source: ".format(e))
             try:
                 odbcConnection.close()
             except:
                 pass
-            return False
+            return etlDataset()

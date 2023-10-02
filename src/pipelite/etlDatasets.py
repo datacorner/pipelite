@@ -2,7 +2,6 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-import pipelite.constants as C
 from .dpObject import dpObject
 from .etlDataset import etlDataset
 
@@ -22,6 +21,17 @@ class etlDatasets(dpObject):
         """
         return len(self.dataset)
     
+    @property
+    def totalRowCount(self) -> int:
+        """Returns the Number of all the etlDataset count inside the collection
+        Returns:
+            int: all datasets count
+        """
+        count = 0
+        for i in self.dataset:
+            count += i.count
+        return count
+
     @property
     def empty(self) -> bool:
         """ Empty dataset ?

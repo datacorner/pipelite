@@ -6,6 +6,7 @@ import pipelite.constants as C
 from pipelite.dpObject import dpObject
 from abc import abstractmethod
 from pipelite.objConfig import objConfig
+from pipelite.etlDatasets import etlDatasets
 
 """ Pipeline Management rules:
     1) a pipeline can have 
@@ -16,9 +17,11 @@ from pipelite.objConfig import objConfig
 class Pipeline(dpObject):
     def __init__(self, config, log):
         super().__init__(config, log)
-        self.extractors = []
-        self.loaders = []
-        self.transformers = []
+        # ETL objects does not contain any data, just the pipeline specifications
+        self.extractors = []    # dpObject list with all extractors
+        self.loaders = []       # dpObject list with all loaders
+        self.transformers = []  # dpObject list with all transformers
+        self.dsStack = etlDatasets()    # data set stack (contains the data)
 
     def __initETLObjects(self, paramJSONPath) -> list:
         """ Initialize an set of similar etl object (can be a extractor, loader or transformer)
@@ -80,7 +83,7 @@ class Pipeline(dpObject):
             self.log.error("{}".format(e))
             return objectList
     
-    def initialize(self) -> bool:
+    def __initAllETLObjects(self) -> bool:
         """Initialize the pipeline object by gathering the Pipeline infos and initializing the etl objects
         Returns:
             bool: False if error
@@ -105,10 +108,22 @@ class Pipeline(dpObject):
             if (len(self.transformers) == 0):
                 raise Exception("Transformers(s) has/have not been initialized properly")
             self.log.info("There is/are {} Transformers(s)".format(len(self.transformers)))
+            return True
+        except Exception as e:
+            self.log.error("{}".format(e))
+            return False
 
-            # CHECKS here ...
-            # Check if No Inputs or No outputs
-            # Warning if Loaders & Extractors have same names
+    def initialize(self) -> bool:
+        """Initialize the pipeline object by gathering the Pipeline infos and initializing the etl objects
+        Returns:
+            bool: False if error
+        """
+        try:
+            if self.__initAllETLObjects():
+                pass
+            # TO DO CHECKS here ...
+            #   Check if No Inputs or No outputs
+            #   Warning if Loaders & Extractors have same names
 
             return True
         except Exception as e:
@@ -122,23 +137,23 @@ class Pipeline(dpObject):
     
     @abstractmethod
     def extract(self) -> int: 
-        """This method must be surchaged and aims to collect the data from the datasource to provides the corresponding dataframe
+        """This method must be surchaged and aims to collect the data from the datasources to provides the corresponding datasets
         Returns:
-            pd.DataFrame: Dataset in a pd.Dataframe object
+            int: Total Number of read rows
         """
         return 0
         
     @abstractmethod
-    def transform(self): 
+    def transform(self) -> int: 
         """ Make some modifications in the Dataset(s) after gathering the data and before loading
         Returns:
             etlDataset: Output dataset
             int: Total Number of transformed rows
         """
-        return None, 0
+        return 0
     
     @abstractmethod
-    def load(self, dsPipelineStack) -> int:
+    def load(self) -> int:
         """ Load the dataset transformed in one or more loaders.
             Only load the datasets which are referenced as Data Source Load and are in the Stack.
             Be Careful: the loaders are not in the stack by default (because they don't still have data)

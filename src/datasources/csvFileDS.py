@@ -5,6 +5,7 @@ __license__ = "MIT"
 from pipelite.parents.DataSource import DataSource 
 import pipelite.constants as C
 import os
+from pipelite.etlDataset import etlDataset
 
 # json validation Configuration 
 CFGFILES_DSOBJECT = "csvFileDS.json"
@@ -54,32 +55,33 @@ class csvFileDS(DataSource):
             self.log.error("{}".format(e))
             return False
     
-    def extract(self) -> int:
+    def extract(self) -> etlDataset:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read
         """
         try:
             self.log.info("Extract the Dataset from the file: {}".format(self.filename))
-            self.content.readCSV(filename=self.filename, 
+            dsExtract = etlDataset()
+            dsExtract.readCSV(filename=self.filename, 
                                  encoding=self.encoding, 
                                  separator=self.separator)
-            return self.content.count
+            return dsExtract
         except Exception as e:
             self.log.error("Error while reading the file: ".format(e))
-            return False
+            return super().extract()
 
-    def load(self) -> int:
+    def load(self, dataset) -> int:
         """ write the dataset in the datasource
         Returns:
             int: Number of data rows loaded
         """
         try:
             self.log.info("Load  the Dataset into the file: {}".format(self.filename))
-            self.content.writeCSV(filename=self.filename, 
+            dataset.writeCSV(filename=self.filename, 
                                   encoding=self.encoding,
                                   separator=self.separator)
-            return self.content.count
+            return dataset.count
         except Exception as e:
             self.log.error("Error while writing the file: ".format(e))
             return 0

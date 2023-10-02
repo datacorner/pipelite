@@ -35,12 +35,12 @@ class testCSVFiles(unittest.TestCase):
         self.checkResults(results)
 
     def test_csv2csv_concat(self):
-        results = [7, 7, 7]
+        results = [7, 0, 7]
         self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_concat.json")
         self.checkResults(results)
 
     def test_csv2csv_lookup(self):
-        results = [10, 1, 2]
+        results = [10, 8, 2]
         self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_lookup.json")
         self.checkResults(results)
 

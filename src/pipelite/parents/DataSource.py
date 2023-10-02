@@ -8,7 +8,6 @@ from abc import abstractmethod
 
 class DataSource(dpObject):
     def __init__(self, config, log):
-        self.content = etlDataset()
         super().__init__(config, log)
 
     @property
@@ -33,17 +32,17 @@ class DataSource(dpObject):
         return True
 
     @abstractmethod
-    def extract(self) -> int:
+    def extract(self) -> etlDataset:
         """ MUST BE OVERRIDED !
             Returns all the data in a DataFrame format
         Returns:
-            int: Number of data read
+            etlDataset: Number of data read
         """
         self.log.error("DataSource.extract() -> This Data sources does not support reading/extracting")
-        return 0
+        return etlDataset()
 
     @abstractmethod
-    def load(self) -> int:
+    def load(self, etlDataset) -> int:
         """ MUST BE OVERRIDED !
             write the dataset in the datasource
         Returns:

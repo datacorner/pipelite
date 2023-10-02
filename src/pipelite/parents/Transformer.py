@@ -28,16 +28,15 @@ class Transformer(dpObject):
         return True
 
     @abstractmethod
-    def transform(self, dsStack):
+    def transform(self, dsTransformerInputs) -> etlDatasets:
         """ MUST BE OVERRIDED !
             Returns all the data in a DataFrame format
             This must:
                 1) get from the dsStack list the input datasets
                 2) return the datasets (with the right name)
         Args:
-            inputDataStack (etlDatasets): multiple dataframes in source
+            dsTransformerInputs (etlDatasets): multiple dataframes in source in input for thtis transformer
         Returns:
             etlDatasets: Output etlDatasets of the transformer(s)
-            int: Number of rows transformed
         """
-        return etlDatasets(), 0
+        return etlDatasets()
