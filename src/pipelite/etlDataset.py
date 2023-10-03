@@ -123,7 +123,7 @@ class etlDataset:
             start (int): start index
             length (int): extraction length
         """
-        self.__content[columnName] = self.__content[columnName].str[start:length]
+        self.__content[columnName] = self.__content[columnName].str[start:start+length]
 
     def renameColumn(self, oldName, newName):
         """rename a column inside the dataset

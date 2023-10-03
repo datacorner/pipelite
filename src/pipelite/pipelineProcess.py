@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.parents.Pipeline import Pipeline
+from pipelite.interfaces.IPipeline import IPipeline
 from pipelite.utils.log import log
 from pipelite.dpObject import dpObject
 
@@ -86,7 +86,7 @@ class pipelineProcess:
 			self.log.error("Error when processing the data: {}".format(str(e)))
 			return E_counts, T_counts, L_counts
 
-	def create(self) -> Pipeline:
+	def create(self) -> IPipeline:
 		""" This function dynamically instanciate the right data pipeline (manages ETL) class to create a pipeline object. 
 			This to avoid in loading all the connectors (if any of them failed for example) when making a global import, 
 			by this way only the needed import is done on the fly
@@ -101,7 +101,6 @@ class pipelineProcess:
 			fullClassPath = self.config.getParameter(C.PLJSONCFG_PL_CLASSNAME, C.EMPTY)
 			pipelineObject = dpObject.instantiate(fullClassPath, self.config, self.log)
 			return pipelineObject
-
 		except Exception as e:
 			self.log.error("Error when loading the Data Source Factory: {}".format(str(e)))
 			return None

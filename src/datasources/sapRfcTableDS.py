@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.parents.DataSource import DataSource 
+from pipelite.interfaces.IDataSource import IDataSource 
 import pipelite.constants as C
 from pipelite.etlDataset import etlDataset
 from pyrfc import Connection, ABAPApplicationError, ABAPRuntimeError, LogonError, CommunicationError
@@ -23,7 +23,7 @@ SAPPARAM_ROWCOUNT = "rowcount"
 
 CFGFILES_DSOBJECT = C.CFG_PARAMETER_DEF_FOLDER + "/datasources/sapRfcTableDS.json"
 
-class sapRfcTableDS(DataSource):
+class sapRfcTableDS(IDataSource):
     def __init__(self, config, log):
         super().__init__(config, log)
         self.ahost = C.EMPTY

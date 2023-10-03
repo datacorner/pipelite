@@ -6,7 +6,7 @@ from abc import abstractmethod
 from pipelite.etlDatasets import etlDatasets
 from pipelite.dpObject import dpObject
 
-class Transformer(dpObject):
+class ITransformer(dpObject):
     """ The First transformer can manage several extractors but not the next. Transformers works in stack.
         Dataframe is after the 1st the way to manage the dataset in transformation.
     Args:

@@ -1,19 +1,17 @@
 {
     "$id": "https://example.com/person.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "Substring Transformer Parameters",
+    "title": "rename column Transformer Parameters",
       "type" : "object",
        "properties" : { 
              "main": {
               "type" : "object",
               "properties" : { 
-                    "column": {"type" : "string"},
-                    "start": {"type" : "number"},
-                    "length": {"type" : "number"}
+                    "column-name": {"type" : "string"},
+                    "new-name": {"type" : "string"}
                 }
           }
         },
-       "required": ["column", 
-                  "start",
-                  "length"]
+       "required": ["column-name", 
+                  "new-name"]
   }

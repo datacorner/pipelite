@@ -17,5 +17,7 @@ The way this solution is built is also totally extensible and enables all develo
 ✅ Nothing !  
 ✅ Concat 2 Data sources  
 ✅ Lookup with 2 data sources  
+✅ Substring from a column  
+✅ Changing column names  
 
 [Jump to the wiki from here](https://github.com/datacorner/pipelite/wiki)

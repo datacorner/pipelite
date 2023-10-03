@@ -7,18 +7,16 @@ from pipelite.interfaces.ITransformer import ITransformer
 from pipelite.etlDatasets import etlDatasets
 import re
 
-CFGFILES_DSOBJECT = "extractstrTR.json"
-PARAM_COLUMN = "column"
-PARAM_START = "start"
-PARAM_LENGTH = "length"
+CFGFILES_DSOBJECT = "renamecolTR.json"
+PARAM_COLUMN = "column-name"
+PARAM_NEW = "new-name"
 
-class extractstrTR(ITransformer):
+class renamecolTR(ITransformer):
 
     def __init__(self, config, log):
         super().__init__(config, log)
         self.columnName = C.EMPTY
-        self.start = 0
-        self.length = 0
+        self.newName = C.EMPTY
 
     def initialize(self, params) -> bool:
         """ Initialize and makes some checks (params) for that transformer
@@ -29,8 +27,7 @@ class extractstrTR(ITransformer):
         """
         try:
             self.columnName = params.getParameter(PARAM_COLUMN)
-            self.start = params.getParameter(PARAM_START, 0)
-            self.length = params.getParameter(PARAM_LENGTH, 0)
+            self.newName = params.getParameter(PARAM_NEW)
             return True
         except Exception as e:
             self.log.error("{}".format(str(e)))
@@ -42,12 +39,12 @@ class extractstrTR(ITransformer):
                                     file=CFGFILES_DSOBJECT)
     
     def transform(self, dsTransformerInputs) -> etlDatasets:
-        """ extract a string from a given column and replace the result
+        """ rename the column in all datasets configured for this transformation
         Args:
             inputDataFrames (etlDatasets): multiple dataset in a collection
         Returns:
-            etlDatasets: same as input
+            etlDatasets: modified dataset
         """
         for dsItem in dsTransformerInputs:  # go through each dataset in entry
-            dsItem.subString(self.columnName, self.start, self.length)
+            dsItem.renameColumn(self.columnName,self.newName)
         return dsTransformerInputs

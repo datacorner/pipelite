@@ -14,7 +14,7 @@ from pipelite.etlDatasets import etlDatasets
         * Many Transformers
         * Many Loaders
 """
-class Pipeline(dpObject):
+class IPipeline(dpObject):
     def __init__(self, config, log):
         super().__init__(config, log)
         # ETL objects does not contain any data, just the pipeline specifications

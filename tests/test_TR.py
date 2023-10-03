@@ -49,5 +49,10 @@ class testTransformers(unittest.TestCase):
         self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_concat_lookup.json")
         self.checkResults(results)
 
+    def test_csv2csv_renamecol(self):
+        results = [1394, 1394, 1394]
+        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_renamecol.json")
+        self.checkResults(results)
+
 if __name__ == '__main__':
     unittest.main()

@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.parents.DataSource import DataSource 
+from pipelite.interfaces.IDataSource import IDataSource 
 import pipelite.constants as C
 import os
 from pipelite.etlDataset import etlDataset
@@ -14,7 +14,7 @@ CFGPARAMS_PATH = "path"
 CFGPARAMS_FILENAME = "filename"
 CFGPARAMS_ENCODING = "encoding"
 
-class csvFileDS(DataSource):
+class csvFileDS(IDataSource):
 
     def __init__(self, config, log):
         super().__init__(config, log)

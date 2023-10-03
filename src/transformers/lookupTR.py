@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.parents.Transformer import Transformer
+from pipelite.interfaces.ITransformer import ITransformer
 from pipelite.etlDatasets import etlDatasets
 
 CFGFILES_DSOBJECT = "lookupTR.json"
@@ -13,7 +13,7 @@ PARAM_DS_NAME = "ds-name"
 PARAM_KEY = "key"
 PARAM_LOOKUP_KEEP = "keep"
 
-class lookupTR(Transformer):
+class lookupTR(ITransformer):
     """ Transcode a column from a main dataset with data from the lookup table.
         * If data is found in the lookup table -> then the column is replace in the main dataset
         * If the data is not found -> row is dropped

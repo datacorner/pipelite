@@ -2,10 +2,10 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.parents.Pipeline import Pipeline
+from pipelite.interfaces.IPipeline import IPipeline
 from pipelite.etlDatasets import etlDatasets
 
-class directPL(Pipeline):
+class directPL(IPipeline):
     def __init__(self, config, log):
         super().__init__(config, log)
 

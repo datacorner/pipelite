@@ -2,10 +2,10 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.parents.Transformer import Transformer
+from pipelite.interfaces.ITransformer import ITransformer
 from pipelite.etlDatasets import etlDatasets
 
-class donothingTR(Transformer):
+class donothingTR(ITransformer):
 
     def transform(self, dsTransformerInputs) -> etlDatasets:
         """ Just do nothing !
