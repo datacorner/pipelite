@@ -118,8 +118,8 @@ class IPipeline(dpObject):
             bool: False if error
         """
         try:
-            if self.__initAllETLObjects():
-                pass
+            if not(self.__initAllETLObjects()):
+                raise Exception ("All the pipeline objects could not be configured and initialized properly")
             # TO DO CHECKS here ...
             #   Check if No Inputs or No outputs
             #   Warning if Loaders & Extractors have same names

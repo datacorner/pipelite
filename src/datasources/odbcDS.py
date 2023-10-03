@@ -78,7 +78,7 @@ class odbcDS(IDataSource):
             self.log.info("Connected to ODBC Data source")
             if (not odbcConnection.closed):
                 self.log.debug("Execute the query: {}".format(self.query))
-                dsExtract.readSQL(odbcConnection=odbcConnection, 
+                dsExtract.read_sql(odbcConnection=odbcConnection, 
                                      query=self.query)
                 odbcConnection.close()
                 self.log.debug("Number of <{}> rows read in the ODBC Data Source".format(dsExtract.shape[0]))

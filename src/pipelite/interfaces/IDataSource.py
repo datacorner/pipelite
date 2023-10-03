@@ -10,17 +10,6 @@ class IDataSource(dpObject):
     def __init__(self, config, log):
         super().__init__(config, log)
 
-    @property
-    def count(self):
-        """Returns the number of rows
-        Returns:
-            int: rows count
-        """
-        try:
-            return self.content.count
-        except:
-            return 0
-
     @abstractmethod
     def initialize(self, cfg) -> bool:
         """ Initialize and makes some checks (params) for that datasource
@@ -42,7 +31,7 @@ class IDataSource(dpObject):
         return etlDataset()
 
     @abstractmethod
-    def load(self, etlDataset) -> int:
+    def load(self, dataset) -> int:
         """ MUST BE OVERRIDED !
             write the dataset in the datasource
         Returns:

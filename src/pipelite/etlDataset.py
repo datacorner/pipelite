@@ -50,7 +50,7 @@ class etlDataset:
         """
         return self.__content.shape[0]
 
-    def readSQL(self, odbcConnection, query):
+    def read_sql(self, odbcConnection, query):
         """ Launch a SQL statement and get the resultset
         Args:
             odbcConnection (ODBC connection): ODBC connection via pyodbc
@@ -58,7 +58,7 @@ class etlDataset:
         """
         self.__content = pd.read_sql(query, odbcConnection)
 
-    def readCSV(self, filename, separator, encoding):
+    def read_csv(self, filename, separator, encoding):
         """ Read the Data from a CSV file by using Pandas
         Args:
             filename (str): filename and path
@@ -69,7 +69,11 @@ class etlDataset:
                                     encoding=encoding, 
                                     delimiter=separator)
 
-    def writeCSV(self, filename, separator, encoding):
+    def read_excel(self, filename, sheet=0):
+        # Read the Excel file and provides a DataFrame
+        self.__content = pd.read_excel(filename, sheet_name=sheet) #, engine='openpyxl')
+
+    def write_csv(self, filename, separator, encoding):
         """ Write the Data into a CSV file by using Pandas
         Args:
             filename (str): filename and path
@@ -80,11 +84,19 @@ class etlDataset:
                             encoding=encoding, 
                             index=False, 
                             sep=separator)
+    
+    def get_csv(self, encoding=C.ENCODING):
+        """return the csv content
 
-    def read_excel(self, filename, sheet=0):
-        # Read the Excel file and provides a DataFrame
-        self.__content = pd.read_excel(filename, sheet_name=sheet) #, engine='openpyxl')
-        
+        Args:
+            encoding (_type_, optional): encoding content. Defaults to C.ENCODING UTF-8
+        Returns:
+            str: csv content
+        """
+        return self.__content.to_csv(header=True, 
+                                     encoding=encoding, 
+                                     index=False)
+
     def concatWith(self, etlDatasetB, keys=None):
         """Concatenate the current dataset with the one in arg
         Args:
@@ -133,6 +145,20 @@ class etlDataset:
         """
         self.__content.rename(columns={oldName:newName}, inplace=True)
 
+    def getRowBloc(self, rowIndexfrom, rowIndexTo):
+        """ split the current content (by row) and returns the dataset which starts at row index rowIndexfrom and
+            end at row index rowIndexTo
+        Args:
+            rowIndexfrom (int): row index start
+            rowIndexTo (int): row index end
+
+        Returns:
+            _type_: _description_
+        """
+        newDatasetBloc = etlDataset()
+        newDatasetBloc.__content = self.__content.iloc[rowIndexfrom:rowIndexTo:,:]
+        return newDatasetBloc
+
     def __getitem__(self, item):
         """ Makes the Data column accessible via [] array
             example: df['colName']
@@ -152,3 +178,7 @@ class etlDataset:
             object: data
         """
         return self.__content.__getattr__(name)
+    
+    def __str__(self):
+        return self.__content.__str__()
+        

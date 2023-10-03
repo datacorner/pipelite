@@ -7,6 +7,7 @@ import pipelite.constants as C
 import os
 from pipelite.etlDataset import etlDataset
 
+
 # json validation Configuration 
 CFGFILES_DSOBJECT = "csvFileDS.json"
 CFGPARAMS_SEPARATOR = "separator"
@@ -63,7 +64,7 @@ class csvFileDS(IDataSource):
         try:
             self.log.info("Extract the Dataset from the file: {}".format(self.filename))
             dsExtract = etlDataset()
-            dsExtract.readCSV(filename=self.filename, 
+            dsExtract.read_csv(filename=self.filename, 
                                  encoding=self.encoding, 
                                  separator=self.separator)
             return dsExtract
@@ -78,7 +79,7 @@ class csvFileDS(IDataSource):
         """
         try:
             self.log.info("Load  the Dataset into the file: {}".format(self.filename))
-            dataset.writeCSV(filename=self.filename, 
+            dataset.write_csv(filename=self.filename, 
                                   encoding=self.encoding,
                                   separator=self.separator)
             return dataset.count
