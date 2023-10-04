@@ -21,3 +21,10 @@ The way this solution is built is also totally extensible and enables all develo
 ✅ Changing column names  
 
 [Jump to the wiki from here](https://github.com/datacorner/pipelite/wiki)
+
+# Installation
+
+just use pip by typing
+```
+    pip install pipelite
+```
