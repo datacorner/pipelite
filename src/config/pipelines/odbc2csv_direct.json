@@ -1,8 +1,8 @@
 {
-    "classname" : "pipelines.directPL",
+    "classname" : "pipelite.pipelines.directPL",
     "extractors" : [ {
         "name": "S1",
-        "classname": "datasources.odbcDS",
+        "classname": "pipelite.datasources.odbcDS",
         "validation": "src/config/parameters/datasources/odbcDS.json",
         "parameters": {
             "connectionstring": "DRIVER={SQLite3};Database=tests/data/dbsample.sqlite",
@@ -11,7 +11,7 @@
     } ],
     "loaders" : [ {
         "name": "S1",
-        "classname": "datasources.csvFileDS",
+        "classname": "pipelite.datasources.csvFileDS",
         "validation": "src/config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
@@ -23,7 +23,7 @@
     "transformers":  [
     { 
         "name": "T1",
-        "classname": "transformers.donothingTR",
+        "classname": "pipelite.transformers.donothingTR",
         "inputs" : [ "S1" ],
         "outputs" : [ "S1" ]
     } ],

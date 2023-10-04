@@ -1,9 +1,9 @@
 {
-    "classname" : "pipelines.directPL",
+    "classname" : "pipelite.pipelines.directPL",
     "extractors" : [ 
     {
         "name": "I1",
-        "classname": "datasources.csvFileDS",
+        "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "a.csv",
@@ -13,7 +13,7 @@
     },
     {
         "name": "I2",
-        "classname": "datasources.csvFileDS",
+        "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "b.csv",
@@ -23,7 +23,7 @@
     },
     {
         "name": "I3",
-        "classname": "datasources.csvFileDS",
+        "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "t.csv",
@@ -34,7 +34,7 @@
     ],
     "loaders" : [ {
         "name": "O2",
-        "classname": "datasources.csvFileDS",
+        "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
             "filename": "tcl.csv",
@@ -44,13 +44,13 @@
     } ],
     "transformers":  [ { 
         "name": "T1",
-        "classname": "transformers.concatTR",
+        "classname": "pipelite.transformers.concatTR",
         "inputs" : [ "I1", "I2" ],
         "outputs" : [ "TO1" ]
     },
     { 
         "name": "T2",
-        "classname": "transformers.lookupTR",
+        "classname": "pipelite.transformers.lookupTR",
         "inputs" : [ "TO1", "I3" ],
         "outputs" : [ "O2" ],
         "parameters" : {
@@ -63,7 +63,7 @@
     },
     { 
         "name": "T3",
-        "classname": "transformers.donothingTR"
+        "classname": "pipelite.transformers.donothingTR"
     } ],
     "parameters":{
         "mode": "full"

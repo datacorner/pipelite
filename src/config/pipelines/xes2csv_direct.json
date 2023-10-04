@@ -1,8 +1,8 @@
 {
-    "classname" : "pipelines.directPL",
+    "classname" : "pipelite.pipelines.directPL",
     "extractors" : [ {
         "name": "S1",
-        "classname": "datasources.xesFileDS",
+        "classname": "pipelite.datasources.xesFileDS",
         "validation": "src/config/parameters/datasources/xesFileDS.json",
         "parameters": {
             "filename": "test.xes",
@@ -11,7 +11,7 @@
     } ],
     "loaders" : [ {
         "name": "S1",
-        "classname": "datasources.csvFileDS",
+        "classname": "pipelite.datasources.csvFileDS",
         "validation": "src/config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
@@ -23,7 +23,7 @@
     "transformers":  [
     { 
         "name": "T",
-        "classname": "transformers.donothingTR",
+        "classname": "pipelite.transformers.donothingTR",
         "inputs" : [ "S1" ],
         "outputs" : [ "S1" ]
     } ],

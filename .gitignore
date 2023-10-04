@@ -1,6 +1,7 @@
 *.pyc
 .venv_pipelite/*
 .vscode/*
-logs/*.log*
 exe/*
 .pypirc
+logs/*
+logs/pipe_csv2csv.log.1
