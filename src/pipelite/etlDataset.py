@@ -13,9 +13,8 @@ class etlDataset:
         self.name = C.EMPTY
         self.__content = pd.DataFrame() # encapsulate DataFrame
 
-
     @property
-    def columns(self):
+    def columns(self) -> []:
         """ Returns all the dataset columns names
         Returns:
             list: columns names
@@ -33,7 +32,10 @@ class etlDataset:
             self.__content = pd.DataFrame(value, defaultype)
         elif (isinstance(value, pd.DataFrame)):
             self.__content = value
-            
+    
+    def get(self) -> pd.DataFrame: 
+        return self.__content
+    
     def copy(self):
         """Returns a copy of the Dataset (to avoid any reference issues)
         Returns:
