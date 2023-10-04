@@ -120,7 +120,7 @@ class sapRfcTableDS(IDataSource):
                     record[field_name] = field_value
                 records.append(record)
             res = etlDataset()
-            res.initFromList(records, defaultype=str)
+            res.set(records, defaultype=str)
             return res
 
         except Exception as e:

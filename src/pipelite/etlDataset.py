@@ -13,6 +13,7 @@ class etlDataset:
         self.name = C.EMPTY
         self.__content = pd.DataFrame() # encapsulate DataFrame
 
+
     @property
     def columns(self):
         """ Returns all the dataset columns names
@@ -21,17 +22,18 @@ class etlDataset:
         """
         return self.__content.columns
 
-    def initFromList(self, lst, defaultype=None):
-        """ initialize the content via a list
-        Args:
-            lst (list): data set
-            defaultype: default type for columns
-        """
-        if (defaultype == None):
-            self.__content = pd.DataFrame(lst)
-        else:
-            self.__content = pd.DataFrame(lst, dtype=defaultype)
+    def set(self, value, defaultype=None):
+        """ initialize a dataset from a list ofr another Dataframe
 
+        Args:
+            value (object): other object to init from
+            defaultype (_type_, optional): type by default. Defaults to None.
+        """
+        if (isinstance(value, list)):
+            self.__content = pd.DataFrame(value, defaultype)
+        elif (isinstance(value, pd.DataFrame)):
+            self.__content = value
+            
     def copy(self):
         """Returns a copy of the Dataset (to avoid any reference issues)
         Returns:
@@ -148,6 +150,7 @@ class etlDataset:
     def getRowBloc(self, rowIndexfrom, rowIndexTo):
         """ split the current content (by row) and returns the dataset which starts at row index rowIndexfrom and
             end at row index rowIndexTo
+            indexes starts at 0
         Args:
             rowIndexfrom (int): row index start
             rowIndexTo (int): row index end
@@ -156,7 +159,7 @@ class etlDataset:
             _type_: _description_
         """
         newDatasetBloc = etlDataset()
-        newDatasetBloc.__content = self.__content.iloc[rowIndexfrom:rowIndexTo:,:]
+        newDatasetBloc.__content = self.__content.iloc[rowIndexfrom:rowIndexTo+1:,:]
         return newDatasetBloc
 
     def __getitem__(self, item):
@@ -181,4 +184,4 @@ class etlDataset:
     
     def __str__(self):
         return self.__content.__str__()
-        
+    

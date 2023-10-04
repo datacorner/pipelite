@@ -49,12 +49,10 @@ class odbcDS(IDataSource):
             bool: False if error
         """
         try:
-            
             self.connectionString = str(cfg.getParameter(CFGPARAMS_ODBC_CN, C.EMPTY))
             template = SqlTemplate(self.log)
             self.query = template.getQuery(cfg.getParameter(CFGPARAMS_ODBC_QUERY, C.EMPTY), 
                                            cfg.getParameter(CFGPARAMS_QUERY_PARAMETERS, {}))
-            
             # checks
             if (len(self.connectionString) == 0):
                 raise Exception("The ODBC Connection String cannot be null")
@@ -66,7 +64,7 @@ class odbcDS(IDataSource):
             self.log.error("{}".format(e))
             return False
     
-    def extract(self) -> etlDataset:
+    def read_sql(self, sql):
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read
@@ -79,13 +77,13 @@ class odbcDS(IDataSource):
             if (not odbcConnection.closed):
                 self.log.debug("Execute the query: {}".format(self.query))
                 dsExtract.read_sql(odbcConnection=odbcConnection, 
-                                     query=self.query)
+                                     query=sql)
                 odbcConnection.close()
                 self.log.debug("Number of <{}> rows read in the ODBC Data Source".format(dsExtract.shape[0]))
             return dsExtract
         
         except pyodbc.Error as e:
-            self.log.error("odbcDS.extract() -> pyodbc.Error while reading ODBC Data Source: Code: {} - Message: {}".format(e.args[0], e.args[1]))
+            self.log.error("Error while reading ODBC Data Source: Code: {} - Message: {}".format(e.args[0], e.args[1]))
             return etlDataset()
         except Exception as e:
             self.log.error("Exception while reading ODBC Data Source: ".format(e))
@@ -94,3 +92,10 @@ class odbcDS(IDataSource):
             except:
                 pass
             return etlDataset()
+
+    def extract(self) -> etlDataset:
+        """ Returns all the data in a DataFrame format
+        Returns:
+            pd.DataFrame(): dataset read
+        """
+        return self.read_sql(self.query)

@@ -64,8 +64,8 @@ class xesFileDS(IDataSource):
             xmldata = open(self.filename, mode='r').read()
             # Extract/flatten XES data
             events, attributes = self.__extractAll(xmldata)
-            dsExtract.initFromList(events)
-    
+            dsExtract.set(events)
+
             return dsExtract
         except Exception as e:
             self.log.error("{}".format(e))
@@ -120,7 +120,7 @@ class xesFileDS(IDataSource):
             events.append(inter_event)
         return attrs_dict, events
 
-    def __extractAll(self, xml):
+    def __extractAll(self, xml) -> tuple [list, list]:
         """ This functions reads the XES file and extract all the events and attributes
         Args:
             xml (str): XML flow (XES)
