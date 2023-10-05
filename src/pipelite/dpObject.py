@@ -83,13 +83,13 @@ class dpObject:
                 pipelineClass = fullClassPath.split(".")[-1]
 
             # Instantiate the object
-            log.debug("pipelineFactory.instantiate(): Import module -> {}".format(fullClassPath))
+            log.debug("Import module -> {}".format(fullClassPath))
             datasourceObject = importlib.import_module(name=fullClassPath)
-            log.debug("pipelineFactory.instantiate(): Module {} imported, instantiate the class".format(fullClassPath))
+            log.debug("Module {} imported, instantiate the class".format(fullClassPath))
             pipelineClassInst = getattr(datasourceObject, pipelineClass)
             objectInst = pipelineClassInst(config=config, log=log)
             log.info("Class instantiated successfully")
             return objectInst
         except Exception as e:
-            log.error("etlObject.instantiate(): Error when loading the Class: {}".format(str(e)))
+            log.error("Error when loading the Class: {}".format(str(e)))
         return None

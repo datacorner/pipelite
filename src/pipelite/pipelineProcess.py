@@ -64,24 +64,23 @@ class pipelineProcess:
 			# PROCESS THE DATA
 			if (pipeline.initialize()): # init logs here ...
 				pipeline.log.info("pipelite has been initialized successfully")
-				pipeline.log.info("Now, Extract data from Data Source ...")
+				pipeline.log.info("--- EXTRACT ---")
 				E_counts = pipeline.extract()	# EXTRACT (E of ETL)
 				pipeline.log.info("Data extracted successfully: {} rows extracted".format(E_counts))
 				if (E_counts > 0):
-					pipeline.log.info("Transform imported data ...")
+					pipeline.log.info("--- TRANSFORM ---")
 					T_counts = pipeline.transform()	# TRANSFORM (T of ETL)
 					pipeline.log.info("Data transformed successfully, {} rows - after transformation - to import into the Data Source".format(T_counts)) 
-					pipeline.log.info("Load data into the Data Source ...")
+					pipeline.log.info("--- LOAD ---")
 					L_counts = pipeline.load() # LOAD (L of ETL)
 					if (L_counts > 0):
 						pipeline.log.info("Data loaded successfully")
 					pipeline.log.info("Pipeline Stats -> E:{} T:{} L:{}".format(E_counts, T_counts, L_counts))
+					pipeline.log.info("Pipeline Report \n{} ".format(pipeline.report.getFullReport()))
 			else:
 				raise Exception("The Data pipeline has not been initialized properly")
-			
 			pipeline.terminate()
 			return E_counts, T_counts, L_counts
-		
 		except Exception as e:
 			self.log.error("Error when processing the data: {}".format(str(e)))
 			return E_counts, T_counts, L_counts

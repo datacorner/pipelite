@@ -4,11 +4,24 @@ __license__ = "MIT"
 
 import logging
 
+# Global constants
 ENCODING = "utf-8"
 YES = "yes"
 NO = "no"
 EMPTY = ""
 DEFCSVSEP = ","
+
+# Report
+DATE_FORMAT = "%Y-%m-%d %H:%M:%S" 
+SEPRPT = ""
+TABRPT = "\t"
+
+# Log levels
+LOG_LEVEL_DEBUG = "DEBUG"
+LOG_LEVEL_INFO = "INFO"
+LOG_LEVEL_WARNING = "WARNING"
+LOG_LEVEL_ERROR = "ERROR"
+DEFAULT_LOG_FORMAT = "%(asctime)s|%(name)s|%(levelname)s|%(message)s"
 
 # Command line parameters name
 PARAM_PIPELINE_CONFIGFILE = "cfg"                         # pipeline configuration file (json)

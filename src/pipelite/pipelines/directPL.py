@@ -4,10 +4,10 @@ __license__ = "MIT"
 
 from pipelite.interfaces.IPipeline import IPipeline
 from pipelite.etlDatasets import etlDatasets
+from pipelite.utils.etlReports import etlReports
+from pipelite.utils.etlReport import etlReport
 
 class directPL(IPipeline):
-    def __init__(self, config, log):
-        super().__init__(config, log)
 
     def extract(self) -> int: 
         """This method must be surchaged and aims to collect the data from the datasource to provides the corresponding dataframe
@@ -16,11 +16,13 @@ class directPL(IPipeline):
         """
         try:
             totalCountExtracted = 0
-            self.log.info("*** EXTRACT ***")
             for item in self.extractors:
                 self.log.info("Extracting data from the Data Source {}".format(item.name))
+                report = self.report.getFromName(item.name)
+                report.start()
                 dsExtracted = item.extract()    # extract the data from the DataSource
                 dsExtracted.name = item.name
+                report.end(dsExtracted.count)
                 if (dsExtracted.count > 0):
                     self.dsStack.add(dsExtracted)   # Add the Data source content (dataset) in the Dataset stack
                     self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsExtracted.name, dsExtracted.count, dsExtracted.columns))
@@ -37,25 +39,26 @@ class directPL(IPipeline):
             int: Total Number of transformed rows
         """
         try:
-            self.log.info("*** TRANSFORM ***")
             # Select only the Inputs needed for the transformer, initialize the data source stack with all extractors first
             # this dsPipelineStack object will store all the initial datasets (extractors) but also the transformation results.
-            totalCountTransformed = 0
+            rowProcessed = 0
 
             # Execute the Transformers stack on the inputs/extractors
-            for transformerItem in self.transformers:   # Pass through all the Tranformers ...
+            for item in self.transformers:   # Process all the Tranformers ...
+                report = self.report.getFromName(item.name)
+                report.start()
                 dsInputs = etlDatasets()
-                for trName in transformerItem.dsInputs: # datasets in input per transformer
+                for trName in item.dsInputs: # datasets in input per transformer
                     dsInputs.add(self.dsStack.getFromName(trName))
                 if (not dsInputs.empty):
-                    iCountBefore = dsInputs.totalRowCount
-                    dsOutputs = transformerItem.transform(dsInputs)
+                    dsOutputs = item.transform(dsInputs)
                     self.dsStack.merge(dsOutputs)
-                    totalCountTransformed += iCountBefore #- dsOutputs.totalRowCount
-                    self.log.info("Number of rows transformed {} / {}".format(totalCountTransformed, totalCountTransformed))
+                    rowProcessed += dsInputs.totalRowCount #- dsOutputs.totalRowCount
+                    self.log.info("Number of rows processed {} / {}".format(rowProcessed, rowProcessed))
                 else:
-                    self.log.warning("The Tranformer {} has no input, by pass it !".format(transformerItem.name))
-            return totalCountTransformed
+                    self.log.warning("The Tranformer {} has no input, by pass it !".format(item.name))
+                report.end(dsInputs.totalRowCount)
+            return rowProcessed
         except Exception as e:
             self.log.error("{}".format(e))
             return 0
@@ -74,7 +77,6 @@ class directPL(IPipeline):
         """
         try:
             totalCountLoaded = 0
-            self.log.info("*** LOAD ***")
             for item in self.loaders:
                 # Load only the dataset which have a loader
                 dsToLoad = self.dsStack.getFromName(item.name)
@@ -82,8 +84,12 @@ class directPL(IPipeline):
                     self.log.warning("There are no data to load into the Data Source {}".format(item.name))
                 else:
                     self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
-                    totalCountLoaded += item.load(dsToLoad)
-                    self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsToLoad.name, dsToLoad.count, dsToLoad.columns))
+                    report = self.report.getFromName(item.name)
+                    report.start()
+                    dsLoadedCount = item.load(dsToLoad)
+                    report.end(dsLoadedCount)
+                    totalCountLoaded += dsLoadedCount
+                    self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsToLoad.name, dsLoadedCount, dsToLoad.columns))
             return totalCountLoaded
         except Exception as e:
             self.log.error("{}".format(e))

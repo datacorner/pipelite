@@ -46,7 +46,6 @@ class etlDatasets(dpObject):
     @property
     def names(self):
         """ Returns a list with all etlDatasets names like [ "E1", ...., "En"]
-
         Returns:
             list: names list
         """
@@ -63,10 +62,8 @@ class etlDatasets(dpObject):
 
     def getFromName(self, name) -> etlDataset:
         """ Returns the dataset by searching it by id
-
         Args:
             name (str): dataset name/id
-
         Returns:
             etlDataset: dataset
         """

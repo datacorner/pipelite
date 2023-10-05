@@ -7,8 +7,10 @@ from pipelite.dpObject import dpObject
 from abc import abstractmethod
 from pipelite.objConfig import objConfig
 from pipelite.etlDatasets import etlDatasets
+from pipelite.utils.etlReports import etlReports
 
 """ Pipeline Management rules:
+    This interface MUST be inherited to create a pipeline
     1) a pipeline can have 
         * Many Extractors
         * Many Transformers
@@ -17,28 +19,29 @@ from pipelite.etlDatasets import etlDatasets
 class IPipeline(dpObject):
     def __init__(self, config, log):
         super().__init__(config, log)
-        # ETL objects does not contain any data, just the pipeline specifications
-        self.extractors = []    # dpObject list with all extractors
-        self.loaders = []       # dpObject list with all loaders
-        self.transformers = []  # dpObject list with all transformers
-        self.dsStack = etlDatasets()    # data set stack (contains the data)
+        # Note: ETL objects does not contain any data, just the pipeline specifications
+        self.extractors = []            # dpObject list with all extractors
+        self.loaders = []               # dpObject list with all loaders
+        self.transformers = []          # dpObject list with all transformers
+        # datasets stack (contains the data) managed by the pipeline
+        self.dsStack = etlDatasets()   
+        # reports / processing
+        self.__report =  etlReports()
+
+    @property
+    def report(self):
+        return self.__report
 
     def __initETLObjects(self, paramJSONPath) -> list:
-        """ Initialize an set of similar etl object (can be a extractor, loader or transformer)
+        """ Initialize an set the ETL objects one by one considering the configuration (can be a extractor, 
+            loader or transformer) and only for one category:
+                $.extractor
+                $.loaders
+                $.transformers
         Args:
-            etlObjParams (JSON): "$.extractors"
-            Parameters for the etl Object. Look like something like this (below)
-                [{
-                    "name": "...",
-                    "classname": "pipelines.datasources.ObjClassExample",
-                    "parameters": {
-                        "separator": ",",
-                        "filename": "test2.csv",
-                        "path": "/tests/data/",
-                        "encoding": "utf-8"
-                }, { ... } ]
+            paramJSONPath (str): Category in the configuration file 
         Returns:
-            list: list of etl objects initialized
+            list: list of all etl objects initialized per category (E, T or L)
         """
         objectList = []
         try:
@@ -65,17 +68,16 @@ class IPipeline(dpObject):
                 if (not self.validateParametersCfg(valFileCfg, dpConfig.parameters)):
                     raise Exception("The {} parameters are not configured properly, check out the configuration file.".format(dsObj['name']))
                 # some init considering the object
-                if (paramJSONPath == C.PLJSONCFG_TRANSFORMER):
-                    # Only for transformers ...
-                    self.log.debug("Transformer {} initialized successfully".format(dpConfig.className))
+                if (paramJSONPath == C.PLJSONCFG_TRANSFORMER): # Only for transformers ...
                     dsObj.dsInputs = dpConfig.inputs
                     dsObj.dsOutputs = dpConfig.outputs
                 if (dsObj.initialize(dpConfig)):
                     # Add the object in the list
-                    self.log.debug("Data Source {} initialized successfully".format(dpConfig.className))
+                    self.log.debug("ETL Object {} initialized successfully".format(dpConfig.className))
                     dsObj.name = dpConfig.name
                     dsObj.objtype = paramJSONPath
                     objectList.append(dsObj)
+                    self.__report.addEntry(dsObj.name, dsObj.objtype)
                 else:
                     raise Exception("Object {} cannot be initialized properly".format(dpConfig.className))
             return objectList
@@ -84,7 +86,7 @@ class IPipeline(dpObject):
             return objectList
     
     def __initAllETLObjects(self) -> bool:
-        """Initialize the pipeline object by gathering the Pipeline infos and initializing the etl objects
+        """Initialize all the pipeline object by gathering the Pipeline infos and initializing the etl objects
         Returns:
             bool: False if error
         """
@@ -120,10 +122,6 @@ class IPipeline(dpObject):
         try:
             if not(self.__initAllETLObjects()):
                 raise Exception ("All the pipeline objects could not be configured and initialized properly")
-            # TO DO CHECKS here ...
-            #   Check if No Inputs or No outputs
-            #   Warning if Loaders & Extractors have same names
-
             return True
         except Exception as e:
             self.log.error("{}".format(e))
