@@ -4,6 +4,8 @@ __license__ = "MIT"
 
 import pipelite.constants as C
 from .etlReport import etlReport
+import pandas as pd
+import json
 
 class etlReports:
 
@@ -24,33 +26,25 @@ class etlReports:
         report.type = type
         self.reports.append(report)
 
-    def getFullReport(self):
-        # Content
-        report =  C.SEPRPT + "Name" + C.TABRPT
-        report += C.SEPRPT + "Type" + C.TABRPT
-        report += C.SEPRPT + "Start" + C.TABRPT
-        report += C.SEPRPT + "End" + C.TABRPT
-        report += C.SEPRPT + "Duration" + C.TABRPT
-        report += C.SEPRPT + "Rows" + C.TABRPT
-        report +=  C.SEPRPT
-        report += "\n"
-        # Content
+    def __getFullDataFrameReport(self) -> pd.DataFrame:
+        dfRep = pd.DataFrame(columns=["Name", "Type", "Start", "End", "Duration", "Rows Processed"])
         for rep in self.reports:
-            report +=  C.SEPRPT + rep.name + C.TABRPT
-            report += C.SEPRPT + rep.type + C.TABRPT
-            if (rep.startTime != None):
-                report += C.SEPRPT + rep.startTime.strftime(C.DATE_FORMAT) + C.TABRPT
-            else:
-                report += C.SEPRPT + "N.A." + C.TABRPT
-            if (rep.endTime != None):
-                report += C.SEPRPT + rep.endTime.strftime(C.DATE_FORMAT) + C.TABRPT
-            else:
-                report += C.SEPRPT + "N.A." + C.TABRPT
-            report += C.SEPRPT + str(rep.duration) + "s" + C.TABRPT
-            report += C.SEPRPT + str(rep.processedRows) + C.TABRPT
-            report += "\n"
-        return report
+            entry = {"Name" : rep.name, 
+                    "Type" : rep.type, 
+                    "Start" : rep.startTimeFMT,
+                    "End" : rep.endTimeFMT,
+                    "Duration" : str(rep.duration),
+                    "Rows Processed" : str(rep.processedRows)}
+            dfEntry = pd.DataFrame([entry])
+            dfRep = pd.concat([dfRep, dfEntry], ignore_index=True)
+        return dfRep
+    
+    def getFullJSONReport(self) -> json:
+        return json.loads(self.__getFullDataFrameReport().to_json(orient="columns"))
 
+    def getFullSTRReport(self) -> str:
+        return str(self.__getFullDataFrameReport())
+    
     @property
     def names(self):
         """ Returns a list with all etlDatasets names like [ "E1", ...., "En"]

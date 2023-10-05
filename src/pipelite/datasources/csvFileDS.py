@@ -72,7 +72,7 @@ class csvFileDS(IDataSource):
             self.log.error("Error while reading the file: ".format(e))
             return super().extract()
 
-    def load(self, dataset) -> int:
+    def load(self, dataset) -> bool:
         """ write the dataset in the datasource
         Returns:
             int: Number of data rows loaded
@@ -82,7 +82,7 @@ class csvFileDS(IDataSource):
             dataset.write_csv(filename=self.filename, 
                                   encoding=self.encoding,
                                   separator=self.separator)
-            return dataset.count
+            return True
         except Exception as e:
             self.log.error("Error while writing the file: ".format(e))
-            return 0
+            return False

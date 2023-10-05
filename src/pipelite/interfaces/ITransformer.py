@@ -28,7 +28,7 @@ class ITransformer(dpObject):
         return True
 
     @abstractmethod
-    def transform(self, dsTransformerInputs) -> etlDatasets:
+    def transform(self, dsTransformerInputs, outputNames) -> etlDatasets:
         """ MUST BE OVERRIDED !
             Returns all the data in a DataFrame format
             This must:
@@ -36,6 +36,7 @@ class ITransformer(dpObject):
                 2) return the datasets (with the right name)
         Args:
             dsTransformerInputs (etlDatasets): multiple dataframes in source in input for thtis transformer
+            outputNames (array): array of expected output names
         Returns:
             etlDatasets: Output etlDatasets of the transformer(s)
         """

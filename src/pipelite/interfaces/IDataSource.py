@@ -27,15 +27,15 @@ class IDataSource(dpObject):
         Returns:
             etlDataset: Number of data read
         """
-        self.log.error("DataSource.extract() -> This Data sources does not support reading/extracting")
+        self.log.error("This Data sources does not support reading/extracting")
         return etlDataset()
 
     @abstractmethod
-    def load(self, dataset) -> int:
+    def load(self, dataset) -> bool:
         """ MUST BE OVERRIDED !
             write the dataset in the datasource
         Returns:
             int: Number of data rows loaded
         """
-        self.log.error("DataSource.load() -> This Data sources does not support writing/loading")
-        return 0
+        self.log.error("This Data sources does not support writing/loading")
+        return False

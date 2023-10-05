@@ -12,7 +12,6 @@ class testCSVFiles(unittest.TestCase):
         print("Running CSV import Test")
 
     def tearDown(self):
-        print("**** E:{} T:{} L:{} ****".format(self.e, self.t, self.l))
         print("End of CSV import Test")
 
     def processTest(self, configfile):
@@ -23,16 +22,16 @@ class testCSVFiles(unittest.TestCase):
         log = pipelineProcess.getLogger(config)
         return pipelineProcess(config, log).process()
 
-    def checkResults(self, expectedResults):
+    def checkResults(self, expectedResult, result):
         # Check results
-        self.assertTrue(self.e==expectedResults[0] and 
-                        self.t==expectedResults[1] and 
-                        self.l==expectedResults[2])
+        for i in range(len(expectedResult)):
+            self.assertTrue(expectedResult[i]==result[i])
 
     def test_csv2csv_direct(self):
-        results = [3, 0, 3]
-        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_direct.json")
-        self.checkResults(results)
+        expected = {'0': '3', '1': '3', '2': '3'}
+        result = self.processTest("./src/config/pipelines/csv2csv_direct.json")
+        print (result["Rows Processed"])
+        self.checkResults(expected, result)
 
 if __name__ == '__main__':
     unittest.main()

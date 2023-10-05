@@ -49,7 +49,7 @@ class pipelineProcess:
 			return
 		return self.execute(pipeline=pipeline)
 
-	def execute(self, pipeline):
+	def execute(self, pipeline) -> str:
 		""" Execute the pipeline in this order:
 				1) Extract the data sources
 				2) Process the transformations
@@ -59,31 +59,30 @@ class pipelineProcess:
 			int: Number of rows transformed
 			int: Number of rows loaded
 		"""
-		E_counts, T_counts, L_counts = 0, 0, 0
 		try:
 			# PROCESS THE DATA
 			if (pipeline.initialize()): # init logs here ...
 				pipeline.log.info("pipelite has been initialized successfully")
 				pipeline.log.info("--- EXTRACT ---")
-				E_counts = pipeline.extract()	# EXTRACT (E of ETL)
-				pipeline.log.info("Data extracted successfully: {} rows extracted".format(E_counts))
-				if (E_counts > 0):
+				# EXTRACT (E of ETL)
+				if (pipeline.extract()):
+					pipeline.log.info("Data extracted successfully")
 					pipeline.log.info("--- TRANSFORM ---")
-					T_counts = pipeline.transform()	# TRANSFORM (T of ETL)
-					pipeline.log.info("Data transformed successfully, {} rows - after transformation - to import into the Data Source".format(T_counts)) 
-					pipeline.log.info("--- LOAD ---")
-					L_counts = pipeline.load() # LOAD (L of ETL)
-					if (L_counts > 0):
-						pipeline.log.info("Data loaded successfully")
-					pipeline.log.info("Pipeline Stats -> E:{} T:{} L:{}".format(E_counts, T_counts, L_counts))
-					pipeline.log.info("Pipeline Report \n{} ".format(pipeline.report.getFullReport()))
+					if (pipeline.transform()):	# TRANSFORM (T of ETL)
+						pipeline.log.info("Data transformed successfully") 
+						pipeline.log.info("--- LOAD ---")
+						if (pipeline.load()): # LOAD (L of ETL)
+							pipeline.log.info("Data loaded successfully")
 			else:
 				raise Exception("The Data pipeline has not been initialized properly")
 			pipeline.terminate()
-			return E_counts, T_counts, L_counts
+			return pipeline.report.getFullJSONReport()
 		except Exception as e:
 			self.log.error("Error when processing the data: {}".format(str(e)))
-			return E_counts, T_counts, L_counts
+			try:
+				return pipeline.report.getFullJSONReport()
+			except:
+				return "{}"
 
 	def create(self) -> IPipeline:
 		""" This function dynamically instanciate the right data pipeline (manages ETL) class to create a pipeline object. 

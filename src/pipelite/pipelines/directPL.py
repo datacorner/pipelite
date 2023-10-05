@@ -4,18 +4,15 @@ __license__ = "MIT"
 
 from pipelite.interfaces.IPipeline import IPipeline
 from pipelite.etlDatasets import etlDatasets
-from pipelite.utils.etlReports import etlReports
-from pipelite.utils.etlReport import etlReport
 
 class directPL(IPipeline):
 
-    def extract(self) -> int: 
+    def extract(self) -> bool: 
         """This method must be surchaged and aims to collect the data from the datasource to provides the corresponding dataframe
         Returns:
             pd.DataFrame: Dataset in a pd.Dataframe object
         """
         try:
-            totalCountExtracted = 0
             for item in self.extractors:
                 self.log.info("Extracting data from the Data Source {}".format(item.name))
                 report = self.report.getFromName(item.name)
@@ -26,23 +23,18 @@ class directPL(IPipeline):
                 if (dsExtracted.count > 0):
                     self.dsStack.add(dsExtracted)   # Add the Data source content (dataset) in the Dataset stack
                     self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsExtracted.name, dsExtracted.count, dsExtracted.columns))
-                    totalCountExtracted += dsExtracted.count
-            return totalCountExtracted
+            return True
         except Exception as e:
             self.log.error("{}".format(e))
-            return 0
+            return False
         
-    def transform(self): 
+    def transform(self) -> bool: 
         """ Make some modifications in the Dataset(s) after gathering the data and before loading
         Returns:
             pd.DataFrame: Output Dataframe
             int: Total Number of transformed rows
         """
         try:
-            # Select only the Inputs needed for the transformer, initialize the data source stack with all extractors first
-            # this dsPipelineStack object will store all the initial datasets (extractors) but also the transformation results.
-            rowProcessed = 0
-
             # Execute the Transformers stack on the inputs/extractors
             for item in self.transformers:   # Process all the Tranformers ...
                 report = self.report.getFromName(item.name)
@@ -53,17 +45,16 @@ class directPL(IPipeline):
                 if (not dsInputs.empty):
                     dsOutputs = item.transform(dsInputs)
                     self.dsStack.merge(dsOutputs)
-                    rowProcessed += dsInputs.totalRowCount #- dsOutputs.totalRowCount
-                    self.log.info("Number of rows processed {} / {}".format(rowProcessed, rowProcessed))
+                    self.log.info("Number of rows processed {} by {}".format(dsInputs.totalRowCount, item.name))
                 else:
                     self.log.warning("The Tranformer {} has no input, by pass it !".format(item.name))
                 report.end(dsInputs.totalRowCount)
-            return rowProcessed
+            return True
         except Exception as e:
             self.log.error("{}".format(e))
-            return 0
+            return False
         
-    def load(self) -> int:
+    def load(self) -> bool:
         """ Load the dataset transformed in one or more loaders.
             Only load the datasets which are referenced as Data Source Load and are in the Stack.
             Be Careful: the loaders are not in the stack by default (because they don't still have data)
@@ -76,7 +67,6 @@ class directPL(IPipeline):
             bool: False if error
         """
         try:
-            totalCountLoaded = 0
             for item in self.loaders:
                 # Load only the dataset which have a loader
                 dsToLoad = self.dsStack.getFromName(item.name)
@@ -86,11 +76,17 @@ class directPL(IPipeline):
                     self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
                     report = self.report.getFromName(item.name)
                     report.start()
-                    dsLoadedCount = item.load(dsToLoad)
-                    report.end(dsLoadedCount)
-                    totalCountLoaded += dsLoadedCount
-                    self.log.info(" <{}> Rows: {} | Columns: {} ".format(dsToLoad.name, dsLoadedCount, dsToLoad.columns))
-            return totalCountLoaded
+                    if (not item.load(dsToLoad)):
+                        raise Exception ("The Data Source {} could not be loaded properly".format(item.name))
+                    report.end(dsToLoad.count)
+                    self.log.info(" {} ({},{}) Rows/Columns:  ".format(dsToLoad.name, dsToLoad.count, dsToLoad.columns))
+            return True
         except Exception as e:
             self.log.error("{}".format(e))
-            return 0
+            return False
+        
+    def terminate(self) -> bool:
+        # Display report
+        self.log.info("Pipeline Report \n{} ".format(self.report.getFullSTRReport()))
+        self.log.info("*** End of Job treatment ***")
+        return True

@@ -11,7 +11,7 @@
         }   
     } ],
     "loaders" : [ {
-        "name": "S1",
+        "name": "S2",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -20,7 +20,13 @@
             "encoding": "utf-8"
         }   
     } ],
-    "transformers":  [ ],
+    "transformers":  [     
+    { 
+        "name": "T",
+        "classname": "pipelite.transformers.donothingTR",
+        "inputs" : [ "S1" ],
+        "outputs" : [ "S2" ]
+    }],
     "parameters":{
         "mode": "full"
     },

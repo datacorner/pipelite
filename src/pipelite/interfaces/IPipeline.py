@@ -133,24 +133,24 @@ class IPipeline(dpObject):
         return True
     
     @abstractmethod
-    def extract(self) -> int: 
+    def extract(self) -> bool: 
         """This method must be surchaged and aims to collect the data from the datasources to provides the corresponding datasets
         Returns:
-            int: Total Number of read rows
+            bool: True if successful
         """
-        return 0
+        return True
         
     @abstractmethod
-    def transform(self) -> int: 
+    def transform(self) -> bool: 
         """ Make some modifications in the Dataset(s) after gathering the data and before loading
         Returns:
             etlDataset: Output dataset
-            int: Total Number of transformed rows
+            bool: True if successful
         """
-        return 0
+        return True
     
     @abstractmethod
-    def load(self) -> int:
+    def load(self) -> bool:
         """ Load the dataset transformed in one or more loaders.
             Only load the datasets which are referenced as Data Source Load and are in the Stack.
             Be Careful: the loaders are not in the stack by default (because they don't still have data)
@@ -162,4 +162,4 @@ class IPipeline(dpObject):
         Returns:
             bool: False if error
         """
-        return 0
+        return True

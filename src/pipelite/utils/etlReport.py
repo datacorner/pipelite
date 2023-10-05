@@ -12,10 +12,24 @@ class etlReport:
         self.__timestampEnd = None
         self.name = C.EMPTY
         self.description = C.EMPTY
-        self.type = C.EMPTY # E, T or L
+        self.__type = C.EMPTY
         self.__processedRowsCount = 0
         self.status = "NOT STARTED"
         pass
+
+    @property
+    def type(self):
+        return self.__type
+    @type.setter
+    def type(self, value):
+        if (value == C.PLJSONCFG_EXTRACTOR):
+            self.__type = "Extractor"
+        elif (value == C.PLJSONCFG_LOADER):
+            self.__type = "Loader"
+        elif (value == C.PLJSONCFG_TRANSFORMER):
+            self.__type = "Transformer"
+        else:
+            self.__type = "Other"
 
     def start(self):
         if (self.__timestampStart == None):
@@ -29,11 +43,23 @@ class etlReport:
     @property
     def startTime(self) -> datetime:
         return self.__timestampStart
-    
+    @property
+    def startTimeFMT(self) -> datetime:
+        try:
+            return self.__timestampStart.strftime(C.DATE_FORMAT)
+        except:
+            return C.EMPTY
+        
     @property
     def endTime(self) -> datetime:
         return self.__timestampEnd
-
+    @property
+    def endTimeFMT(self) -> datetime:
+        try:
+            return self.__timestampEnd.strftime(C.DATE_FORMAT)
+        except:
+            return C.EMPTY
+    
     @property
     def processedRows(self) -> int:
         return self.__processedRowsCount
