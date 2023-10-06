@@ -9,10 +9,10 @@ from pipelite.config.cmdLineConfig import cmdLineConfig
 
 class testCSVFiles(unittest.TestCase):
     def setUp(self):
-        print("Running CSV import Test")
+        print("Running Test")
 
     def tearDown(self):
-        print("End of CSV import Test")
+        print("End of Test")
 
     def processTest(self, configfile):
         print("Process Test")
@@ -29,7 +29,9 @@ class testCSVFiles(unittest.TestCase):
             self.assertTrue(expectedResult[key]==value)
 
     def test_csv2csv_direct(self):
-        expected = {'S1': '3', 'S2': '3', 'T': '3'}
+        expected = {'S1': '3', 
+                    'S2': '3', 
+                    'T': '3'}
         result = self.processTest("./src/config/pipelines/csv2csv_direct.json")
         self.checkResults(expected, result["Rows Processed"])
 

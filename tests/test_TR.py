@@ -9,11 +9,10 @@ from pipelite.config.cmdLineConfig import cmdLineConfig
 
 class testTransformers(unittest.TestCase):
     def setUp(self):
-        print("Running CSV import Test")
+        print("Running  import Test")
 
     def tearDown(self):
-        print("**** E:{} T:{} L:{} ****".format(self.e, self.t, self.l))
-        print("End of CSV import Test")
+        print("End of  import Test")
 
     def processTest(self, configfile):
         print("Process Test")
@@ -23,36 +22,54 @@ class testTransformers(unittest.TestCase):
         log = pipelineProcess.getLogger(config)
         return pipelineProcess(config, log).process()
 
-    def checkResults(self, expectedResults):
+    def checkResults(self, expectedResult, result):
         # Check results
-        self.assertTrue(self.e==expectedResults[0] and 
-                        self.t==expectedResults[1] and 
-                        self.l==expectedResults[2])
+        for key, value in result.items():
+            print(key, "->", value)
+            self.assertTrue(expectedResult[key]==value)
 
     def test_csv2csv_extractstr(self):
-        results = [1394, 1394, 1394]
-        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_extractstr.json")
-        self.checkResults(results)
+        expected = {'S1': '1394', 
+                    'S2': '1394', 
+                    'T2': '1394'}
+        result = self.processTest("./src/config/pipelines/csv2csv_extractstr.json")
+        self.checkResults(expected, result["Rows Processed"])
 
     def test_csv2csv_concat(self):
-        results = [7, 7, 7]
-        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_concat.json")
-        self.checkResults(results)
+        expected = {'E1': '3', 
+                    'E2': '4', 
+                    'L1': '7', 
+                    'T1': '7', 
+                    'T2': '0'}
+        result = self.processTest("./src/config/pipelines/csv2csv_concat.json")
+        self.checkResults(expected, result["Rows Processed"])
 
     def test_csv2csv_lookup(self):
-        results = [10, 10, 2]
-        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_lookup.json")
-        self.checkResults(results)
+        expected = {'E1': '3', 
+                    'E2': '7', 
+                    'L1': '2', 
+                    'T1': '9', 
+                    'T2': '0'}
+        result = self.processTest("./src/config/pipelines/csv2csv_lookup.json")
+        self.checkResults(expected, result["Rows Processed"])
 
     def test_csv2csv_concat_lookup(self):
-        results = [14, 21, 4]
-        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_concat_lookup.json")
-        self.checkResults(results)
+        expected = {'I1': '3', 
+                    'I2': '4', 
+                    'I3': '7', 
+                    'O2': '4', 
+                    'T1': '7', 
+                    'T2': '11', 
+                    'T3': '0'}
+        result = self.processTest("./src/config/pipelines/csv2csv_concat_lookup.json")
+        self.checkResults(expected, result["Rows Processed"])
 
     def test_csv2csv_renamecol(self):
-        results = [1394, 1394, 1394]
-        self.e, self.t, self.l = self.processTest("./src/config/pipelines/csv2csv_renamecol.json")
-        self.checkResults(results)
+        expected = {'S1': '1394', 
+                    'S2': '1394', 
+                    'T1': '1394'}
+        result = self.processTest("./src/config/pipelines/csv2csv_renamecol.json")
+        self.checkResults(expected, result["Rows Processed"])
 
 if __name__ == '__main__':
     unittest.main()

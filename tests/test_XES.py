@@ -9,11 +9,10 @@ from pipelite.config.cmdLineConfig import cmdLineConfig
 
 class testXES(unittest.TestCase):
     def setUp(self):
-        print("Running XES Test")
+        print("Running Test")
 
     def tearDown(self):
-        print("**** E:{} T:{} L:{} ****".format(self.e, self.t, self.l))
-        print("End of XES Test")
+        print("End of Test")
 
     def processTest(self, configfile):
         print("Process Test")
@@ -22,16 +21,18 @@ class testXES(unittest.TestCase):
         log = pipelineProcess.getLogger(config)
         return pipelineProcess(config, log).process()
 
-    def checkResults(self, expectedResults):
+    def checkResults(self, expectedResult, result):
         # Check results
-        self.assertTrue(self.e==expectedResults[0] and 
-                        self.t==expectedResults[1] and 
-                        self.l==expectedResults[2])
+        for key, value in result.items():
+            print(key, "->", value)
+            self.assertTrue(expectedResult[key]==value)
 
     def test_xes2csv_direct(self):
-        results = [1394, 1394, 1394]
-        self.e, self.t, self.l = self.processTest("./src/config/pipelines/xes2csv_direct.json")
-        self.checkResults(results)
+        expected = {'S1': '1394', 
+                    'S2': '1394', 
+                    'T': '1394'}
+        result = self.processTest("./src/config/pipelines/xes2csv_direct.json")
+        self.checkResults(expected, result["Rows Processed"])
 
 if __name__ == '__main__':
     unittest.main()
