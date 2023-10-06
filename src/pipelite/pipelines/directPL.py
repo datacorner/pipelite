@@ -23,8 +23,7 @@ class directPL(IPipeline):
             for item in self.extractors:
                 self.log.info("Extracting data from the Data Source {}".format(item.name))
                 report = self.report.getFromName(item.name)
-                report.start()
-                report.order = self.__getNextOrderIndex()
+                report.start(self.__getNextOrderIndex())
                 dsExtracted = item.extract()    # extract the data from the DataSource
                 dsExtracted.name = item.name
                 report.end(dsExtracted.count)
@@ -46,8 +45,7 @@ class directPL(IPipeline):
             # Execute the Transformers stack on the inputs/extractors
             for item in self.transformers:   # Process all the Tranformers ...
                 report = self.report.getFromName(item.name)
-                report.start()
-                report.order = self.__getNextOrderIndex()
+                report.start(self.__getNextOrderIndex())
                 dsInputs = etlDatasets()
                 for trName in item.dsInputs: # datasets in input per transformer
                     dsInputs.add(self.dsStack.getFromName(trName))
@@ -84,8 +82,7 @@ class directPL(IPipeline):
                 else:
                     self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
                     report = self.report.getFromName(item.name)
-                    report.start()
-                    report.order = self.__getNextOrderIndex()
+                    report.start(self.__getNextOrderIndex())
                     if (not item.load(dsToLoad)):
                         raise Exception ("The Data Source {} could not be loaded properly".format(item.name))
                     report.end(dsToLoad.count)

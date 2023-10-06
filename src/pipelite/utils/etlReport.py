@@ -36,7 +36,8 @@ class etlReport:
         else:
             self.__type = "Other"
 
-    def start(self):
+    def start(self, order=0):
+        self.order = order
         if (self.__timestampStart == None):
             self.__timestampStart = datetime.datetime.now()
 
