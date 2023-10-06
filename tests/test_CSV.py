@@ -24,14 +24,14 @@ class testCSVFiles(unittest.TestCase):
 
     def checkResults(self, expectedResult, result):
         # Check results
-        for i in range(len(expectedResult)):
-            self.assertTrue(expectedResult[i]==result[i])
+        for key, value in result.items():
+            print(key, "->", value)
+            self.assertTrue(expectedResult[key]==value)
 
     def test_csv2csv_direct(self):
-        expected = {'0': '3', '1': '3', '2': '3'}
+        expected = {'S1': '3', 'S2': '3', 'T': '3'}
         result = self.processTest("./src/config/pipelines/csv2csv_direct.json")
-        print (result["Rows Processed"])
-        self.checkResults(expected, result)
+        self.checkResults(expected, result["Rows Processed"])
 
 if __name__ == '__main__':
     unittest.main()

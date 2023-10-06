@@ -27,16 +27,21 @@ class etlReports:
         self.reports.append(report)
 
     def __getFullDataFrameReport(self) -> pd.DataFrame:
-        dfRep = pd.DataFrame(columns=["Name", "Type", "Start", "End", "Duration", "Rows Processed"])
+        dfRep = pd.DataFrame() #columns=["Name", "Type", "Start", "End", "Duration", "Rows Processed", "id"])
         for rep in self.reports:
             entry = {"Name" : rep.name, 
                     "Type" : rep.type, 
                     "Start" : rep.startTimeFMT,
                     "End" : rep.endTimeFMT,
                     "Duration" : str(rep.duration),
-                    "Rows Processed" : str(rep.processedRows)}
+                    "Rows Processed" : str(rep.processedRows),
+                    "id" : rep.id}
             dfEntry = pd.DataFrame([entry])
-            dfRep = pd.concat([dfRep, dfEntry], ignore_index=True)
+            dfEntry = dfEntry.set_index("id")
+            if (not dfRep.empty):
+                dfRep = pd.concat([dfRep, dfEntry])
+            else:
+                dfRep = dfEntry
         return dfRep
     
     def getFullJSONReport(self) -> json:

@@ -81,3 +81,6 @@ class etlDatasets(dpObject):
             object: data
         """
         return self.dataset.__getitem__(item)
+    
+    def __iter__(self):
+        return iter(self.dataset)

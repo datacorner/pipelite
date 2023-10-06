@@ -107,7 +107,6 @@ class IPipeline(dpObject):
             # 3) init Transformers
             self.log.info("Initializing Transformer(s) ...")
             self.transformers = self.__initETLObjects(C.PLJSONCFG_TRANSFORMER)
-
             self.log.info("There is/are {} Transformers(s)".format(len(self.transformers)))
             return True
         except Exception as e:
@@ -120,6 +119,16 @@ class IPipeline(dpObject):
             bool: False if error
         """
         try:
+            # CHECK that all the objects names are unique here
+            objects = [C.PLJSONCFG_EXTRACTOR, C.PLJSONCFG_LOADER, C.PLJSONCFG_TRANSFORMER]
+            allDS = []
+            for objType in objects:
+                objTree = self.config.getParameter(objType, C.EMPTY)
+                for ObjItem in objTree:
+                    allDS.append(ObjItem['name'])
+            if len(set(allDS)) != len(allDS):
+                raise Exception ("Each pipeline objects must have a unique name in the configuration file")
+            # Initialize the ETL Objects
             if not(self.__initAllETLObjects()):
                 raise Exception ("All the pipeline objects could not be configured and initialized properly")
             return True

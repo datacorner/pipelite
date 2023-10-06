@@ -187,3 +187,5 @@ class etlDataset:
     def __str__(self):
         return self.__content.__str__()
     
+    def __iter__(self):
+        return iter(self.__content)

@@ -18,6 +18,11 @@ class etlReport:
         pass
 
     @property
+    def id(self):
+        return self.name
+        #return self.__type[0:1] + "-" + self.name
+
+    @property
     def type(self):
         return self.__type
     @type.setter

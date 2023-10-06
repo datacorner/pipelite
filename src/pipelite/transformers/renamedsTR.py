@@ -5,10 +5,10 @@ __license__ = "MIT"
 from pipelite.interfaces.ITransformer import ITransformer
 from pipelite.etlDatasets import etlDatasets
 
-class donothingTR(ITransformer):
+class renamedsTR(ITransformer):
 
     def transform(self, dsTransformerInputs) -> etlDatasets:
-        """ Just do nothing !
+        """ Just rename the datasource (pass through)
         Args:
             inputDataFrames (etlDatasets): multiple dataset in a collection
             outputNames (array): output names list
@@ -16,7 +16,8 @@ class donothingTR(ITransformer):
             etlDatasets: same as input
         """
         i=0
-        for item in dsTransformerInputs:
-            item.name = self.dsOutputs[i]
-            i=+1
+        if (len(self.dsOutputs) == dsTransformerInputs.count):
+            for item in dsTransformerInputs:
+                item.name = self.dsOutputs[i]
+                i=+1
         return dsTransformerInputs

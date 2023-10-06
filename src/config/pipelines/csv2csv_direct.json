@@ -23,7 +23,7 @@
     "transformers":  [     
     { 
         "name": "T",
-        "classname": "pipelite.transformers.donothingTR",
+        "classname": "pipelite.transformers.renamedsTR",
         "inputs" : [ "S1" ],
         "outputs" : [ "S2" ]
     }],

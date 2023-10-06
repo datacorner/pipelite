@@ -63,7 +63,7 @@
     },
     { 
         "name": "T3",
-        "classname": "pipelite.transformers.donothingTR"
+        "classname": "pipelite.transformers.renamedsTR"
     } ],
     "parameters":{
         "mode": "full"
