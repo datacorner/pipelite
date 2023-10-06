@@ -10,7 +10,8 @@ import json
 class etlReports:
 
     def __init__(self):
-        self.reports = [] # Array of etlReport
+        self.reports = []   # Array of etlReport
+        self.orderIndex = 1      # call ordering
 
     @property
     def count(self) -> int:
@@ -27,7 +28,7 @@ class etlReports:
         self.reports.append(report)
 
     def __getFullDataFrameReport(self) -> pd.DataFrame:
-        dfRep = pd.DataFrame() #columns=["Name", "Type", "Start", "End", "Duration", "Rows Processed", "id"])
+        dfRep = pd.DataFrame() 
         for rep in self.reports:
             entry = {"Name" : rep.name, 
                     "Type" : rep.type, 
@@ -35,6 +36,7 @@ class etlReports:
                     "End" : rep.endTimeFMT,
                     "Duration" : str(rep.duration),
                     "Rows Processed" : str(rep.processedRows),
+                    "Order" : str(rep.order),
                     "id" : rep.id}
             dfEntry = pd.DataFrame([entry])
             dfEntry = dfEntry.set_index("id")
@@ -42,6 +44,7 @@ class etlReports:
                 dfRep = pd.concat([dfRep, dfEntry])
             else:
                 dfRep = dfEntry
+            dfRep = dfRep.sort_values(by = 'Order')
         return dfRep
     
     def getFullJSONReport(self) -> json:

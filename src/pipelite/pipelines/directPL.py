@@ -6,6 +6,13 @@ from pipelite.interfaces.IPipeline import IPipeline
 from pipelite.etlDatasets import etlDatasets
 
 class directPL(IPipeline):
+    def __init__(self, config, log):
+        super().__init__(config, log)
+        self.dsOrderIndex = 0
+
+    def __getNextOrderIndex(self):
+        self.dsOrderIndex += 1
+        return self.dsOrderIndex
 
     def extract(self) -> bool: 
         """This method must be surchaged and aims to collect the data from the datasource to provides the corresponding dataframe
@@ -17,6 +24,7 @@ class directPL(IPipeline):
                 self.log.info("Extracting data from the Data Source {}".format(item.name))
                 report = self.report.getFromName(item.name)
                 report.start()
+                report.order = self.__getNextOrderIndex()
                 dsExtracted = item.extract()    # extract the data from the DataSource
                 dsExtracted.name = item.name
                 report.end(dsExtracted.count)
@@ -39,6 +47,7 @@ class directPL(IPipeline):
             for item in self.transformers:   # Process all the Tranformers ...
                 report = self.report.getFromName(item.name)
                 report.start()
+                report.order = self.__getNextOrderIndex()
                 dsInputs = etlDatasets()
                 for trName in item.dsInputs: # datasets in input per transformer
                     dsInputs.add(self.dsStack.getFromName(trName))
@@ -76,6 +85,7 @@ class directPL(IPipeline):
                     self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
                     report = self.report.getFromName(item.name)
                     report.start()
+                    report.order = self.__getNextOrderIndex()
                     if (not item.load(dsToLoad)):
                         raise Exception ("The Data Source {} could not be loaded properly".format(item.name))
                     report.end(dsToLoad.count)

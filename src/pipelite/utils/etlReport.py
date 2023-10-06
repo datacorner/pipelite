@@ -15,7 +15,7 @@ class etlReport:
         self.__type = C.EMPTY
         self.__processedRowsCount = 0
         self.status = "NOT STARTED"
-        pass
+        self.order = 0
 
     @property
     def id(self):
