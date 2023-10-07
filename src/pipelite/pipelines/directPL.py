@@ -85,8 +85,8 @@ class directPL(IPipeline):
                     self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
                     report = self.report.getFromName(item.name)
                     reportDesc = "{} -> Input: [{}]".format(item.__module__.split(".")[-1], item.name)
-                    report.write(self.__getNextOrderIndex(), reportDesc)
-                    if (not item.load(dsToLoad)):
+                    report.start(self.__getNextOrderIndex(), reportDesc)
+                    if (not item.write(dsToLoad)):
                         raise Exception ("The Data Source {} could not be loaded properly".format(item.name))
                     report.end(dsToLoad.count)
                     self.log.info(" {} ({},{}) Rows/Columns:  ".format(dsToLoad.name, dsToLoad.count, dsToLoad.columns))
