@@ -27,6 +27,9 @@ class etlReports:
         report.type = type
         self.reports.append(report)
 
+    def globalDuration(self):
+        return sum([item.duration for item in self.reports])
+
     def __getFullDataFrameReport(self) -> pd.DataFrame:
         dfRep = pd.DataFrame() 
         for rep in self.reports:
@@ -52,7 +55,10 @@ class etlReports:
         return json.loads(self.__getFullDataFrameReport().to_json(orient="columns"))
 
     def getFullSTRReport(self) -> str:
-        return str(self.__getFullDataFrameReport())
+        finalReport = "--- PIPELITE REPORT ---\n"
+        finalReport += str(self.__getFullDataFrameReport())
+        finalReport += "\n\nTotal Duration {} sec\n".format(self.globalDuration())
+        return finalReport
     
     @property
     def names(self):
