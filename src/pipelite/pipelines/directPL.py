@@ -23,8 +23,9 @@ class directPL(IPipeline):
             for item in self.extractors:
                 self.log.info("Extracting data from the Data Source {}".format(item.name))
                 report = self.report.getFromName(item.name)
-                report.start(self.__getNextOrderIndex())
-                dsExtracted = item.extract()    # extract the data from the DataSource
+                reportDesc = "{} -> Output: [{}]".format(item.__module__.split(".")[-1], item.name)
+                report.start(self.__getNextOrderIndex(), reportDesc)
+                dsExtracted = item.read()    # extract the data from the DataSource
                 dsExtracted.name = item.name
                 report.end(dsExtracted.count)
                 if (dsExtracted.count > 0):
@@ -45,12 +46,13 @@ class directPL(IPipeline):
             # Execute the Transformers stack on the inputs/extractors
             for item in self.transformers:   # Process all the Tranformers ...
                 report = self.report.getFromName(item.name)
-                report.start(self.__getNextOrderIndex())
+                reportDesc = "{} -> Inputs: [{}] / Outputs: [{}]".format(item.__module__.split(".")[-1], ",".join(item.dsInputs), ",".join(item.dsOutputs))
+                report.start(self.__getNextOrderIndex(), reportDesc)
                 dsInputs = etlDatasets()
                 for trName in item.dsInputs: # datasets in input per transformer
                     dsInputs.add(self.dsStack.getFromName(trName))
                 if (not dsInputs.empty):
-                    dsOutputs = item.transform(dsInputs)
+                    dsOutputs = item.process(dsInputs)
                     self.dsStack.merge(dsOutputs)
                     self.log.info("Number of rows processed {} by {}".format(dsInputs.totalRowCount, item.name))
                 else:
@@ -82,7 +84,8 @@ class directPL(IPipeline):
                 else:
                     self.log.info("Loading content to the Data Source {}".format(dsToLoad.name))
                     report = self.report.getFromName(item.name)
-                    report.start(self.__getNextOrderIndex())
+                    reportDesc = "{} -> Input: [{}]".format(item.__module__.split(".")[-1], item.name)
+                    report.write(self.__getNextOrderIndex(), reportDesc)
                     if (not item.load(dsToLoad)):
                         raise Exception ("The Data Source {} could not be loaded properly".format(item.name))
                     report.end(dsToLoad.count)
@@ -94,6 +97,6 @@ class directPL(IPipeline):
         
     def terminate(self) -> bool:
         # Display report
-        self.log.info("Pipeline Report \n{} ".format(self.report.getFullSTRReport()))
+        self.log.info("Pipeline Report \n\n{}\n ".format(self.report.getFullSTRReport()))
         self.log.info("*** End of Job treatment ***")
         return True

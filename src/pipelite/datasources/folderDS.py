@@ -47,7 +47,7 @@ class folderDS(IDataSource):
             self.log.error("{}".format(e))
             return False
 
-    def extract(self) -> etlDataset:
+    def read(self) -> etlDataset:
         """ Several tasks to do in this order:
             1) List the folder content
             2) filter out the interresting files 

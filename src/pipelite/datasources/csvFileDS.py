@@ -56,7 +56,7 @@ class csvFileDS(IDataSource):
             self.log.error("{}".format(e))
             return False
     
-    def extract(self) -> etlDataset:
+    def read(self) -> etlDataset:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read
@@ -69,20 +69,20 @@ class csvFileDS(IDataSource):
                                  separator=self.separator)
             return dsExtract
         except Exception as e:
-            self.log.error("Error while reading the file: ".format(e))
+            self.log.error("Error while reading the file: {}".format(e))
             return super().extract()
 
-    def load(self, dataset) -> bool:
+    def write(self, dataset) -> bool:
         """ write the dataset in the datasource
         Returns:
             int: Number of data rows loaded
         """
         try:
-            self.log.info("Load  the Dataset into the file: {}".format(self.filename))
+            self.log.info("Load the Dataset into the file: {}".format(self.filename))
             dataset.write_csv(filename=self.filename, 
                                   encoding=self.encoding,
                                   separator=self.separator)
             return True
         except Exception as e:
-            self.log.error("Error while writing the file: ".format(e))
+            self.log.error("Error while writing the file: {}".format(e))
             return False

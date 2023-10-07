@@ -47,7 +47,7 @@ class excelFileDS(IDataSource):
             self.log.error("{}".format(e))
             return False
     
-    def extract(self) -> etlDataset:
+    def read(self) -> etlDataset:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read

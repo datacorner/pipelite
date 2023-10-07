@@ -21,7 +21,7 @@ class IDataSource(dpObject):
         return True
 
     @abstractmethod
-    def extract(self) -> etlDataset:
+    def read(self) -> etlDataset:
         """ MUST BE OVERRIDED !
             Returns all the data in a DataFrame format
         Returns:
@@ -31,7 +31,7 @@ class IDataSource(dpObject):
         return etlDataset()
 
     @abstractmethod
-    def load(self, dataset) -> bool:
+    def write(self, dataset) -> bool:
         """ MUST BE OVERRIDED !
             write the dataset in the datasource
         Returns:

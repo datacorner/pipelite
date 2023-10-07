@@ -25,7 +25,7 @@ class concatTR(ITransformer):
         """
         return True
     
-    def transform(self, dsTransformerInputs) -> etlDatasets:
+    def process(self, dsTransformerInputs) -> etlDatasets:
         """ Concatenate 2 or more datasets together
         Args:
             dsStack (etlDatasets): multiple datasets to concat in a collection

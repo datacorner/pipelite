@@ -28,14 +28,14 @@ class ITransformer(dpObject):
         return True
 
     @abstractmethod
-    def transform(self, dsTransformerInputs, outputNames) -> etlDatasets:
+    def process(self, dsTransformerInputs, outputNames) -> etlDatasets:
         """ MUST BE OVERRIDED !
             Returns all the data in a DataFrame format
             This must:
                 1) get from the dsStack list the input datasets
                 2) return the datasets (with the right name)
         Args:
-            dsTransformerInputs (etlDatasets): multiple dataframes in source in input for thtis transformer
+            dsTransformerInputs (etlDatasets): multiple dataset in input for the transformer
             outputNames (array): array of expected output names
         Returns:
             etlDatasets: Output etlDatasets of the transformer(s)

@@ -41,7 +41,7 @@ class extractstrTR(ITransformer):
         return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_TRANSFORMERS, 
                                     file=CFGFILES_DSOBJECT)
     
-    def transform(self, dsTransformerInputs) -> etlDatasets:
+    def process(self, dsTransformerInputs) -> etlDatasets:
         """ extract a string from a given column and replace the result
         Args:
             inputDataFrames (etlDatasets): multiple dataset in a collection

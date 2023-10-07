@@ -93,7 +93,7 @@ class odbcDS(IDataSource):
                 pass
             return etlDataset()
 
-    def extract(self) -> etlDataset:
+    def read(self) -> etlDataset:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read

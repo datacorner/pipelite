@@ -38,7 +38,7 @@ class renamecolTR(ITransformer):
         return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_TRANSFORMERS, 
                                     file=CFGFILES_DSOBJECT)
     
-    def transform(self, dsTransformerInputs) -> etlDatasets:
+    def process(self, dsTransformerInputs) -> etlDatasets:
         """ rename the column in all datasets configured for this transformation
         Args:
             inputDataFrames (etlDatasets): multiple dataset in a collection

@@ -32,6 +32,7 @@ class etlReports:
         for rep in self.reports:
             entry = {"Name" : rep.name, 
                     "Type" : rep.type, 
+                    "Description" : rep.description,
                     "Start" : rep.startTimeFMT,
                     "End" : rep.endTimeFMT,
                     "Duration" : str(rep.duration),

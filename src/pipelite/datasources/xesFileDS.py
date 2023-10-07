@@ -53,7 +53,7 @@ class xesFileDS(IDataSource):
             self.log.error("{}".format(e))
             return False
     
-    def extract(self) -> etlDataset:
+    def read(self) -> etlDataset:
         """ flaten the XES (XML format) and returns all the data in a etlDataset format
         Returns:
             etlDataset: data set

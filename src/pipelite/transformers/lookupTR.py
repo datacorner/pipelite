@@ -57,7 +57,7 @@ class lookupTR(ITransformer):
             self.log.error("{}".format(str(e)))
             return False
     
-    def transform(self, dsTransformerInputs) -> etlDatasets:
+    def process(self, dsTransformerInputs) -> etlDatasets:
         """ Returns all the data in a etlDataset format
         Args:
             inputDataFrames (etlDatasets): multiple datasets (inputs)

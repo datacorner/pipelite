@@ -127,7 +127,7 @@ class sapRfcTableDS(IDataSource):
             self.log.error("{}".format(e))
             return etlDataset()
 
-    def extract(self) -> etlDataset:
+    def read(self) -> etlDataset:
         """ flaten the XES (XML format) and returns all the data in a etlDataset format
         Returns:
             etlDataset: data set

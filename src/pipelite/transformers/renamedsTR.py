@@ -7,7 +7,7 @@ from pipelite.etlDatasets import etlDatasets
 
 class renamedsTR(ITransformer):
 
-    def transform(self, dsTransformerInputs) -> etlDatasets:
+    def process(self, dsTransformerInputs) -> etlDatasets:
         """ Just rename the datasource (pass through)
         Args:
             inputDataFrames (etlDatasets): multiple dataset in a collection
