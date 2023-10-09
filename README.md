@@ -7,14 +7,14 @@ The way this solution is built is also totally extensible and enables all develo
 🚀 Currently this solution provides data access and load from these data sources :  
 
 ✅  External file (csv)  
-✅  External Excel Spreadsheet (xls, xlsx, xlsm, xlsb, odf, ods and odt) (in Progress)  
-✅  External XES File (in Progress)  
+✅  External Excel Spreadsheet (xls, xlsx, xlsm, xlsb, odf, ods and odt) (read only)
+✅  External XES File (read only)
 ✅  ODBC Data Sources (checked with SQL Server, SQLite) by using an configurable SQL query (Read Only)  
-✅  SAP Read Table via SAP RFC (Read Only / In Progress)  
+✅  SAP Read Table via SAP RFC (Read Only)  
 
 🚀 And provides those transformers
 
-✅ Nothing !  
+✅ change the Data Sources names (input/output) !  
 ✅ Concat 2 Data sources  
 ✅ Lookup with 2 data sources  
 ✅ Substring from a column  
