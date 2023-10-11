@@ -4,7 +4,7 @@ __license__ = "MIT"
 
 import pipelite.constants as C
 from pipelite.baseobjs.BOTransformer import BOTransformer
-from pipelite.etlDatasets import etlDatasets
+from pipelite.plDatasets import plDatasets
 import re
 
 CFGFILES_DSOBJECT = "extractstrTR.json"
@@ -41,7 +41,7 @@ class extractstrTR(BOTransformer):
         return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_TRANSFORMERS, 
                                     file=CFGFILES_DSOBJECT)
     
-    def process(self, dsTransformerInputs) -> etlDatasets:
+    def process(self, dsTransformerInputs) -> plDatasets:
         """ extract a string from a given column and replace the result
         Args:
             inputDataFrames (etlDatasets): multiple dataset in a collection

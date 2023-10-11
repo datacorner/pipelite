@@ -3,20 +3,20 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.dpObject import dpObject
+from pipelite.etlBaseObject import etlBaseObject
 from abc import abstractmethod
-from pipelite.objConfig import objConfig
-from pipelite.etlDatasets import etlDatasets
+from pipelite.plConfig import plConfig
+from pipelite.plDatasets import plDatasets
 from pipelite.utils.etlReports import etlReports
 
 """ Pipeline Management rules:
-    This interface MUST be inherited to create a pipeline
+    This Base Object MUST be inherited to create a pipeline
     1) a pipeline can have 
         * Many Extractors
         * Many Transformers
         * Many Loaders
 """
-class BOPipeline(dpObject):
+class BOPipeline(etlBaseObject):
     def __init__(self, config, log):
         super().__init__(config, log)
         # Note: ETL objects does not contain any data, just the pipeline specifications 
@@ -24,7 +24,7 @@ class BOPipeline(dpObject):
         self.loaders = []               # dpObject list with all loaders        (type -> pipelite.datasources.BODataSource)
         self.transformers = []          # dpObject list with all transformers   (type -> pipelite.datasources.BOTransformer)
         # datasets stack (contains the data) managed by the pipeline
-        self.dsStack = etlDatasets()   
+        self.dsStack = plDatasets()   
         # reports / processing
         self.__report =  etlReports()
 
@@ -53,7 +53,7 @@ class BOPipeline(dpObject):
             self.log.debug("Intantiate needs and configured objects ...")
             # Initialize the Extractors/transformers
             for ObjItem in etlObjParams:
-                dpConfig = objConfig(self.config, self.log, paramJSONPath, ObjItem)
+                dpConfig = plConfig(self.config, self.log, paramJSONPath, ObjItem)
                 self.log.debug("Validate and initialize Object...")
                 if not dpConfig.validate():
                     raise Exception("Impossible to validate the object configuration")
@@ -61,7 +61,7 @@ class BOPipeline(dpObject):
                     raise Exception("Impossible to initialize the object")
                 # instantiate & Init the object
                 self.log.info("Instantiate Object: {}".format(dpConfig.className))
-                dsObj = dpObject.instantiate(dpConfig.className, self.config, self.log)
+                dsObj = etlBaseObject.instantiate(dpConfig.className, self.config, self.log)
                 self.log.debug("Initialize Object: {}".format(dpConfig.className))
                 # Check the parameter (json) structure against the json scheme provided (if any, otherwise try to get the one by default)
                 valFileCfg = dpConfig.validation if dpConfig.validation != None else dsObj.parametersValidationFile

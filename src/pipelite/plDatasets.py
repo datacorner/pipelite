@@ -2,10 +2,10 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from .dpObject import dpObject
-from .etlDataset import etlDataset
+from .etlBaseObject import etlBaseObject
+from .plDataset import plDataset
 
-class etlDatasets(dpObject):
+class plDatasets(etlBaseObject):
     """ Manages a collection of etlDatasets
     Args:
         etlObject (app Object type): must be a Datasource object
@@ -60,7 +60,7 @@ class etlDatasets(dpObject):
             if (not dsItem.name in self.names): 
                 self.add(dsItem)
 
-    def getFromName(self, name) -> etlDataset:
+    def getFromName(self, name) -> plDataset:
         """ Returns the dataset by searching it by id
         Args:
             name (str): dataset name/id

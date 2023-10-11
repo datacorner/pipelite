@@ -5,7 +5,7 @@ __license__ = "MIT"
 from pipelite.baseobjs.BODataSource import BODataSource 
 import pipelite.constants as C
 import os
-from pipelite.etlDataset import etlDataset
+from pipelite.plDataset import plDataset
 
 CFGPARAMS_PATH = "path"
 CFGPARAMS_FILENAME = "filename"
@@ -47,14 +47,14 @@ class excelFileDS(BODataSource):
             self.log.error("{}".format(e))
             return False
     
-    def read(self) -> etlDataset:
+    def read(self) -> plDataset:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read
         """
         try:
             self.log.info("Extract the Dataset from the file: {}".format(self.filename))
-            dsExtract = etlDataset()
+            dsExtract = plDataset()
             dsExtract.read_excel(self.filename, sheet_name=self.sheet)
             return dsExtract
         except Exception as e:

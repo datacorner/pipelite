@@ -4,9 +4,9 @@ __license__ = "MIT"
 
 from pipelite.baseobjs.BODataSource import BODataSource 
 import pipelite.constants as C
-from pipelite.etlDataset import etlDataset
+from pipelite.plDataset import plDataset
 from pyrfc import Connection, ABAPApplicationError, ABAPRuntimeError, LogonError, CommunicationError
-from pipelite.etlDataset import etlDataset
+from pipelite.plDataset import plDataset
 
 # json validation Configuration 
 CFGFILES_DSOBJECT = "sapRfcTableDS.json"
@@ -88,7 +88,7 @@ class sapRfcTableDS(BODataSource):
             self.log.error("ABAPApplicationError / ABAPRuntimeError")
         return None
 
-    def __callRFCReadTable__(self, conn) -> etlDataset:
+    def __callRFCReadTable__(self, conn) -> plDataset:
         """ Call the RFC_READ_TABLE BAPI and get the dataset as result
         Args:
             conn (_type_): SAP Connection via pyrfc
@@ -119,25 +119,25 @@ class sapRfcTableDS(BODataSource):
                     field_value = str(entry["WA"][idx:idx+length])
                     record[field_name] = field_value
                 records.append(record)
-            res = etlDataset()
+            res = plDataset()
             res.set(records, defaultype=str)
             return res
 
         except Exception as e:
             self.log.error("{}".format(e))
-            return etlDataset()
+            return plDataset()
 
-    def read(self) -> etlDataset:
+    def read(self) -> plDataset:
         """ flaten the XES (XML format) and returns all the data in a etlDataset format
         Returns:
             etlDataset: data set
         """
         try:
-            dsExtract = etlDataset()
+            dsExtract = plDataset()
             sapConn = self.__connectToSAP__()
             if (sapConn != None):
                 dsExtract = self.__callRFCReadTable(sapConn)
             return dsExtract
         except Exception as e:
             self.log.error("sapRfcDS.extract() Error while accessing the SAP RFC Table: ".format(e))
-            return etlDataset()
+            return plDataset()

@@ -7,7 +7,7 @@ from pipelite.baseobjs.BODataSource import BODataSource
 import pipelite.constants as C
 import os
 from json import dumps, loads
-from pipelite.etlDataset import etlDataset
+from pipelite.plDataset import plDataset
 
 # Highly inspired by https://github.com/FrankBGao/read_xes/tree/master ;-)
 DATATYPES = ['string',  'int', 'date', 'float', 'boolean', 'id']
@@ -53,13 +53,13 @@ class xesFileDS(BODataSource):
             self.log.error("{}".format(e))
             return False
     
-    def read(self) -> etlDataset:
+    def read(self) -> plDataset:
         """ flaten the XES (XML format) and returns all the data in a etlDataset format
         Returns:
             etlDataset: data set
         """
         try:
-            dsExtract = etlDataset()
+            dsExtract = plDataset()
             # Get the XES content (XML format)
             xmldata = open(self.filename, mode='r').read()
             # Extract/flatten XES data
@@ -69,7 +69,7 @@ class xesFileDS(BODataSource):
             return dsExtract
         except Exception as e:
             self.log.error("{}".format(e))
-            return etlDataset()
+            return plDataset()
          
     def __getEventDetails(self, event, id):
         """ returns all columns for one event (in a list)

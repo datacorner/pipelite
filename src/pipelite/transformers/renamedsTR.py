@@ -3,11 +3,11 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.baseobjs.BOTransformer import BOTransformer
-from pipelite.etlDatasets import etlDatasets
+from pipelite.plDatasets import plDatasets
 
 class renamedsTR(BOTransformer):
 
-    def process(self, dsTransformerInputs) -> etlDatasets:
+    def process(self, dsTransformerInputs) -> plDatasets:
         """ Just rename the datasource (pass through)
         Args:
             inputDataFrames (etlDatasets): multiple dataset in a collection

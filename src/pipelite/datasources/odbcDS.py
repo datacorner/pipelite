@@ -6,7 +6,7 @@ from pipelite.baseobjs.BODataSource import BODataSource
 import pipelite.constants as C
 import pyodbc
 from pipelite.utils.SqlTemplate import SqlTemplate
-from pipelite.etlDataset import etlDataset
+from pipelite.plDataset import plDataset
 
 # json validation Configuration 
 CFGFILES_DSOBJECT = "odbcDS.json"
@@ -70,7 +70,7 @@ class odbcDS(BODataSource):
             pd.DataFrame(): dataset read
         """
         try:
-            dsExtract = etlDataset()
+            dsExtract = plDataset()
             self.log.info("Connect to the ODBC Datasource ...")
             odbcConnection = pyodbc.connect(self.connectionString)
             self.log.info("Connected to ODBC Data source")
@@ -84,16 +84,16 @@ class odbcDS(BODataSource):
         
         except pyodbc.Error as e:
             self.log.error("Error while reading ODBC Data Source: Code: {} - Message: {}".format(e.args[0], e.args[1]))
-            return etlDataset()
+            return plDataset()
         except Exception as e:
             self.log.error("Exception while reading ODBC Data Source: ".format(e))
             try:
                 odbcConnection.close()
             except:
                 pass
-            return etlDataset()
+            return plDataset()
 
-    def read(self) -> etlDataset:
+    def read(self) -> plDataset:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read

@@ -7,7 +7,7 @@ from jsonschema import validate
 import json
 import importlib.resources
 
-class objConfig:
+class plConfig:
     def __init__(self, config, log, type, objconfig):
         self.log = log
         self.config = config

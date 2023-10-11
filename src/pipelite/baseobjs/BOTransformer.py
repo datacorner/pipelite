@@ -3,10 +3,10 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from abc import abstractmethod
-from pipelite.etlDatasets import etlDatasets
-from pipelite.dpObject import dpObject
+from pipelite.plDatasets import plDatasets
+from pipelite.etlBaseObject import etlBaseObject
 
-class BOTransformer(dpObject):
+class BOTransformer(etlBaseObject):
     """ The First transformer can manage several extractors but not the next. Transformers works in stack.
         Dataframe is after the 1st the way to manage the dataset in transformation.
     Args:
@@ -28,7 +28,7 @@ class BOTransformer(dpObject):
         return True
 
     @abstractmethod
-    def process(self, dsTransformerInputs, outputNames) -> etlDatasets:
+    def process(self, dsTransformerInputs, outputNames) -> plDatasets:
         """ MUST BE OVERRIDED !
             Returns all the data in a DataFrame format
             This must:
@@ -40,4 +40,4 @@ class BOTransformer(dpObject):
         Returns:
             etlDatasets: Output etlDatasets of the transformer(s)
         """
-        return etlDatasets()
+        return plDatasets()

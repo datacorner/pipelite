@@ -5,7 +5,7 @@ __license__ = "MIT"
 import pandas as pd
 import pipelite.constants as C
 
-class etlDataset:
+class plDataset:
     """ This class encapsulate the data set management (currently Pandas DataFrames) 
         (here it's currently managed by using Pandas DataFrame)
     """
@@ -41,7 +41,7 @@ class etlDataset:
         Returns:
             etlDataset: strict copy of the current dataset
         """
-        newDS = etlDataset()
+        newDS = plDataset()
         newDS.name = self.name
         newDS.__content = self.__content.copy(deep=True)
         return newDS
@@ -160,7 +160,7 @@ class etlDataset:
         Returns:
             _type_: _description_
         """
-        newDatasetBloc = etlDataset()
+        newDatasetBloc = plDataset()
         newDatasetBloc.__content = self.__content.iloc[rowIndexfrom:rowIndexTo+1:,:]
         return newDatasetBloc
 

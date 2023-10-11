@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 from pipelite.baseobjs.BOPipeline import BOPipeline
-from pipelite.etlDatasets import etlDatasets
+from pipelite.plDatasets import plDatasets
 from pipelite.utils.etlReports import etlReports
 
 class etlPL(BOPipeline):
@@ -85,7 +85,7 @@ class etlPL(BOPipeline):
                 report = self.report.getFromName(item.name)
                 reportDesc = "{} -> Inputs: [{}] / Outputs: [{}]".format(item.__module__.split(".")[-1], ",".join(item.dsInputs), ",".join(item.dsOutputs))
                 report.start(self.__getNextOrderIndex(), reportDesc)
-                dsInputs = etlDatasets()
+                dsInputs = plDatasets()
                 for trName in item.dsInputs: # datasets in input per transformer
                     dsInputs.add(self.dsStack.getFromName(trName))
                 if (not dsInputs.empty):

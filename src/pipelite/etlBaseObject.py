@@ -8,7 +8,7 @@ from jsonschema import validate
 import json
 import importlib.resources
 
-class dpObject:
+class etlBaseObject:
     def __init__(self, config, log):
         self.log = log
         self.config = config

@@ -10,7 +10,7 @@ import os
 from .csvFileDS import csvFileDS
 from .excelFileDS import excelFileDS
 from .xesFileDS import xesFileDS
-from pipelite.etlDataset import etlDataset
+from pipelite.plDataset import plDataset
 
 FILE_EXT_CSV = ".CSV"
 FILE_EXT_EXCEL = ".XLSX"
@@ -47,7 +47,7 @@ class folderDS(BODataSource):
             self.log.error("{}".format(e))
             return False
 
-    def read(self) -> etlDataset:
+    def read(self) -> plDataset:
         """ Several tasks to do in this order:
             1) List the folder content
             2) filter out the interresting files 
@@ -57,7 +57,7 @@ class folderDS(BODataSource):
             bool: False is any trouble when reading
             Only support xlsx, csv and xes files
         """
-        globaldf = etlDataset()
+        globaldf = plDataset()
         try:
             # Get the whole list of files to read
             fileList = [f for f in Path(self.folder).glob(self.files)]
@@ -89,4 +89,4 @@ class folderDS(BODataSource):
         
         except Exception as e:
             self.log.error("{}".format(e))
-            return etlDataset()
+            return plDataset()

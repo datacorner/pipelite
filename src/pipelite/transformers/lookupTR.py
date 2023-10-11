@@ -4,7 +4,7 @@ __license__ = "MIT"
 
 import pipelite.constants as C
 from pipelite.baseobjs.BOTransformer import BOTransformer
-from pipelite.etlDatasets import etlDatasets
+from pipelite.plDatasets import plDatasets
 
 CFGFILES_DSOBJECT = "lookupTR.json"
 PARAM_LOOKUP = "lookup"
@@ -57,7 +57,7 @@ class lookupTR(BOTransformer):
             self.log.error("{}".format(str(e)))
             return False
     
-    def process(self, dsTransformerInputs) -> etlDatasets:
+    def process(self, dsTransformerInputs) -> plDatasets:
         """ Returns all the data in a etlDataset format
         Args:
             inputDataFrames (etlDatasets): multiple datasets (inputs)
@@ -89,7 +89,7 @@ class lookupTR(BOTransformer):
             if (iNbRemoved != 0):
                 self.log.warning("{} records have been removed by the transformation (no lookup)".format(iNbRemoved))
             # Return the output as a collection with only one item with the excepted name
-            dsOutputs = etlDatasets()
+            dsOutputs = plDatasets()
             # Create from the source another instance of the data
             dsMain.name = self.dsOutputs[0]
             dsOutputs.add(dsMain)

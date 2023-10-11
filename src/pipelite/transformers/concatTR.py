@@ -4,8 +4,8 @@ __license__ = "MIT"
 
 import pipelite.constants as C
 from pipelite.baseobjs.BOTransformer import BOTransformer
-from pipelite.etlDataset import etlDataset
-from pipelite.etlDatasets import etlDatasets
+from pipelite.plDataset import plDataset
+from pipelite.plDatasets import plDatasets
 
 CFGFILES_DSOBJECT = "concatTR.json"
 
@@ -25,7 +25,7 @@ class concatTR(BOTransformer):
         """
         return True
     
-    def process(self, dsTransformerInputs) -> etlDatasets:
+    def process(self, dsTransformerInputs) -> plDatasets:
         """ Concatenate 2 or more datasets together
         Args:
             dsStack (etlDatasets): multiple datasets to concat in a collection
@@ -34,13 +34,13 @@ class concatTR(BOTransformer):
             int: Number of rows transformed
         """
         try:
-            output = etlDataset()
+            output = plDataset()
             self.log.info("There are {} datasets to concatenate".format(dsTransformerInputs.count))
             for obj in dsTransformerInputs:
                 self.log.debug("Adding {} rows from the dataset {}".format(obj.count, obj.name))
                 output.concatWith(obj)
             # Return the output as a collection with only one item with the excepted name
-            dsOutputs = etlDatasets()
+            dsOutputs = plDatasets()
             # Create from the source another instance of the data
             output.name = self.dsOutputs[0]
             dsOutputs.add(output)
