@@ -2,10 +2,11 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.interfaces.IPipeline import IPipeline
+from pipelite.baseobjs.BOPipeline import BOPipeline
 from pipelite.etlDatasets import etlDatasets
+from pipelite.utils.etlReports import etlReports
 
-class directPL(IPipeline):
+class etlPL(BOPipeline):
     def __init__(self, config, log):
         super().__init__(config, log)
         self.dsOrderIndex = 0
@@ -13,6 +14,42 @@ class directPL(IPipeline):
     def __getNextOrderIndex(self):
         self.dsOrderIndex += 1
         return self.dsOrderIndex
+
+    def execute(self) -> etlReports:
+        """ Execute the pipeline in this order:
+				1) Extract the data sources
+				2) Process the transformations
+				3) load the data sources
+		Returns:
+			int: Number of rows read
+			int: Number of rows transformed
+			int: Number of rows loaded
+		"""
+        try:
+			# PROCESS THE DATA
+            if (self.initialize()): # init logs here ...
+                self.log.info("pipelite has been initialized successfully")
+                self.log.info("--- EXTRACT ---")
+            	# EXTRACT (E of ETL)
+                if (self.extract()):
+                    self.log.info("Data extracted successfully")
+                    self.log.info("--- TRANSFORM ---")
+                    if (self.transform()):	# TRANSFORM (T of ETL)
+                        self.log.info("Data transformed successfully") 
+                        self.log.info("--- LOAD ---")
+                        if (self.load()): # LOAD (L of ETL)
+                            self.log.info("Data loaded successfully")
+            else:
+                raise Exception("The Data pipeline has not been initialized properly")
+            self.terminate()
+            return self.report
+    
+        except Exception as e:
+            self.log.error("Error when processing the data: {}".format(str(e)))
+            try:
+                return self.report
+            except:
+                return etlReports()
 
     def extract(self) -> bool: 
         """This method must be surchaged and aims to collect the data from the datasource to provides the corresponding dataframe

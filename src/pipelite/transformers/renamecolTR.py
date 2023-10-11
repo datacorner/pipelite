@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.interfaces.ITransformer import ITransformer
+from pipelite.baseobjs.BOTransformer import BOTransformer
 from pipelite.etlDatasets import etlDatasets
 import re
 
@@ -11,7 +11,7 @@ CFGFILES_DSOBJECT = "renamecolTR.json"
 PARAM_COLUMN = "column-name"
 PARAM_NEW = "new-name"
 
-class renamecolTR(ITransformer):
+class renamecolTR(BOTransformer):
 
     def __init__(self, config, log):
         super().__init__(config, log)

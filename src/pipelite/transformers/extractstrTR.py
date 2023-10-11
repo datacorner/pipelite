@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.interfaces.ITransformer import ITransformer
+from pipelite.baseobjs.BOTransformer import BOTransformer
 from pipelite.etlDatasets import etlDatasets
 import re
 
@@ -12,7 +12,7 @@ PARAM_COLUMN = "column"
 PARAM_START = "start"
 PARAM_LENGTH = "length"
 
-class extractstrTR(ITransformer):
+class extractstrTR(BOTransformer):
 
     def __init__(self, config, log):
         super().__init__(config, log)

@@ -2,7 +2,7 @@ __author__ = "Benoit CAYLA"
 __email__ = "benoit@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.interfaces.IDataSource import IDataSource 
+from pipelite.baseobjs.BODataSource import BODataSource 
 import pipelite.constants as C
 from pathlib import Path
 import os
@@ -17,7 +17,7 @@ FILE_EXT_EXCEL = ".XLSX"
 FILE_EXT_XES = ".XES"
 CFGFILES_DSOBJECT = "folderDS.json"
 
-class folderDS(IDataSource):
+class folderDS(BODataSource):
     def __init__(self, config, log):
         super().__init__(config, log)
         self.folder = C.EMPTY

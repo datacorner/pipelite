@@ -16,13 +16,13 @@ from pipelite.utils.etlReports import etlReports
         * Many Transformers
         * Many Loaders
 """
-class IPipeline(dpObject):
+class BOPipeline(dpObject):
     def __init__(self, config, log):
         super().__init__(config, log)
-        # Note: ETL objects does not contain any data, just the pipeline specifications
-        self.extractors = []            # dpObject list with all extractors
-        self.loaders = []               # dpObject list with all loaders
-        self.transformers = []          # dpObject list with all transformers
+        # Note: ETL objects does not contain any data, just the pipeline specifications 
+        self.extractors = []            # dpObject list with all extractors     (type -> pipelite.datasources.BODataSource)
+        self.loaders = []               # dpObject list with all loaders        (type -> pipelite.datasources.BODataSource)
+        self.transformers = []          # dpObject list with all transformers   (type -> pipelite.datasources.BOTransformer)
         # datasets stack (contains the data) managed by the pipeline
         self.dsStack = etlDatasets()   
         # reports / processing
@@ -114,13 +114,16 @@ class IPipeline(dpObject):
             return False
 
     def initialize(self) -> bool:
-        """Initialize the pipeline object by gathering the Pipeline infos and initializing the etl objects
+        """Initialize the pipeline object by gathering the Pipeline infos and initializing all the etl objects and putting them in the 
+        self.extractors, self.loaders and self.transformers arrays
         Returns:
             bool: False if error
         """
         try:
             # CHECK that all the objects names are unique here
-            objects = [C.PLJSONCFG_EXTRACTOR, C.PLJSONCFG_LOADER, C.PLJSONCFG_TRANSFORMER]
+            objects = [C.PLJSONCFG_EXTRACTOR, 
+                       C.PLJSONCFG_LOADER, 
+                       C.PLJSONCFG_TRANSFORMER]
             allDS = []
             for objType in objects:
                 objTree = self.config.getParameter(objType, C.EMPTY)
@@ -136,39 +139,19 @@ class IPipeline(dpObject):
             self.log.error("{}".format(e))
             return False
 
+    @abstractmethod
     def terminate(self) -> bool:
-        # For surcharge
-        self.log.info("*** End of Job treatment ***")
         return True
     
     @abstractmethod
-    def extract(self) -> bool: 
-        """This method must be surchaged and aims to collect the data from the datasources to provides the corresponding datasets
-        Returns:
-            bool: True if successful
-        """
-        return True
-        
+    def execute(self) -> etlReports:
+        return None
+    
     @abstractmethod
-    def transform(self) -> bool: 
-        """ Make some modifications in the Dataset(s) after gathering the data and before loading
-        Returns:
-            etlDataset: Output dataset
-            bool: True if successful
-        """
+    def beforeProcess(self) -> bool:
         return True
     
     @abstractmethod
-    def load(self) -> bool:
-        """ Load the dataset transformed in one or more loaders.
-            Only load the datasets which are referenced as Data Source Load and are in the Stack.
-            Be Careful: the loaders are not in the stack by default (because they don't still have data)
-            so To load, 2 options:
-                1) Use a name which exists in the extractors
-                2) Use a Tranformer to create a new dataset
-        Args:
-            dfDataset (etlDataset): dataset with the Data to load in one or several data sources
-        Returns:
-            bool: False if error
-        """
+    def afterProcess(self) -> bool:
         return True
+    

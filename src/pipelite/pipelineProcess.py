@@ -3,9 +3,10 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.interfaces.IPipeline import IPipeline
+from pipelite.baseobjs.BOPipeline import BOPipeline
 from pipelite.utils.log import log
 from pipelite.dpObject import dpObject
+from pipelite.utils.etlReports import etlReports
 
 class pipelineProcess:
 	def __init__(self, config, log):
@@ -31,60 +32,28 @@ class pipelineProcess:
 		else:
 			raise Exception ("Configuration failed, impossible to create the logger.")
 
-	def process(self):
+	def process(self) -> etlReports:
 		""" Initialize the process and execute the pipeline
 		Returns:
 			int: Number of rows read
 			int: Number of rows transformed
 			int: Number of rows loaded
 		"""
+		reports = etlReports()
 		try:
-			# INSTANCIATE ONLY THE NEEDED CLASS / DATA SOURCE TYPE
 			self.log.info("pipelite initialisation ...")
-			pipeline = self.create()
-			if (pipeline == None):
+			pl = self.create()
+			if (pl == None):
 				raise Exception ("The Data pipeline has not been created successfully")
+			if (pl.beforeProcess()):
+				reports = pl.execute()
+			pl.afterProcess()
+			return reports
 		except Exception as e:
 			self.log.error("pipelite cannot be initialized: {}".format(str(e)))
-			return
-		return self.execute(pipeline=pipeline)
+			return reports
 
-	def execute(self, pipeline) -> str:
-		""" Execute the pipeline in this order:
-				1) Extract the data sources
-				2) Process the transformations
-				3) load the data sources
-		Returns:
-			int: Number of rows read
-			int: Number of rows transformed
-			int: Number of rows loaded
-		"""
-		try:
-			# PROCESS THE DATA
-			if (pipeline.initialize()): # init logs here ...
-				pipeline.log.info("pipelite has been initialized successfully")
-				pipeline.log.info("--- EXTRACT ---")
-				# EXTRACT (E of ETL)
-				if (pipeline.extract()):
-					pipeline.log.info("Data extracted successfully")
-					pipeline.log.info("--- TRANSFORM ---")
-					if (pipeline.transform()):	# TRANSFORM (T of ETL)
-						pipeline.log.info("Data transformed successfully") 
-						pipeline.log.info("--- LOAD ---")
-						if (pipeline.load()): # LOAD (L of ETL)
-							pipeline.log.info("Data loaded successfully")
-			else:
-				raise Exception("The Data pipeline has not been initialized properly")
-			pipeline.terminate()
-			return pipeline.report.getFullJSONReport()
-		except Exception as e:
-			self.log.error("Error when processing the data: {}".format(str(e)))
-			try:
-				return pipeline.report.getFullJSONReport()
-			except:
-				return "{}"
-
-	def create(self) -> IPipeline:
+	def create(self) -> BOPipeline:
 		""" This function dynamically instanciate the right data pipeline (manages ETL) class to create a pipeline object. 
 			This to avoid in loading all the connectors (if any of them failed for example) when making a global import, 
 			by this way only the needed import is done on the fly

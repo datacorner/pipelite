@@ -2,10 +2,10 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.interfaces.ITransformer import ITransformer
+from pipelite.baseobjs.BOTransformer import BOTransformer
 from pipelite.etlDatasets import etlDatasets
 
-class renamedsTR(ITransformer):
+class renamedsTR(BOTransformer):
 
     def process(self, dsTransformerInputs) -> etlDatasets:
         """ Just rename the datasource (pass through)

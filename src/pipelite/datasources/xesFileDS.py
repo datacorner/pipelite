@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import xmltodict
-from pipelite.interfaces.IDataSource import IDataSource 
+from pipelite.baseobjs.BODataSource import BODataSource 
 import pipelite.constants as C
 import os
 from json import dumps, loads
@@ -18,7 +18,7 @@ CFGFILES_DSOBJECT = "xesFileDS.json"
 CFGPARAMS_PATH = "path"
 CFGPARAMS_FILENAME = "filename"
 
-class xesFileDS(IDataSource):
+class xesFileDS(BODataSource):
 
     def __init__(self, config, log):
         super().__init__(config, log)

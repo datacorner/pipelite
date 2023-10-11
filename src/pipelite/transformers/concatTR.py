@@ -3,13 +3,13 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.interfaces.ITransformer import ITransformer
+from pipelite.baseobjs.BOTransformer import BOTransformer
 from pipelite.etlDataset import etlDataset
 from pipelite.etlDatasets import etlDatasets
 
 CFGFILES_DSOBJECT = "concatTR.json"
 
-class concatTR(ITransformer):
+class concatTR(BOTransformer):
 
     @property
     def parametersValidationFile(self):

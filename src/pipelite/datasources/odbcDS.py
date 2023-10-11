@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.interfaces.IDataSource import IDataSource 
+from pipelite.baseobjs.BODataSource import BODataSource 
 import pipelite.constants as C
 import pyodbc
 from pipelite.utils.SqlTemplate import SqlTemplate
@@ -14,7 +14,7 @@ CFGPARAMS_QUERY_PARAMETERS = "query-parameters"
 CFGPARAMS_ODBC_CN = "connectionstring"
 CFGPARAMS_ODBC_QUERY = "query"
 
-class odbcDS(IDataSource):
+class odbcDS(BODataSource):
 
     def __init__(self, config, log):
         super().__init__(config, log)

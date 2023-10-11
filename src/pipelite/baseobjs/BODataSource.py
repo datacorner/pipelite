@@ -6,9 +6,7 @@ from pipelite.dpObject import dpObject
 from pipelite.etlDataset import etlDataset
 from abc import abstractmethod
 
-class IDataSource(dpObject):
-    def __init__(self, config, log):
-        super().__init__(config, log)
+class BODataSource(dpObject):
 
     @abstractmethod
     def initialize(self, cfg) -> bool:
