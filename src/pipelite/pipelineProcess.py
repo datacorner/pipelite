@@ -6,7 +6,7 @@ import pipelite.constants as C
 from pipelite.baseobjs.BOPipeline import BOPipeline
 from pipelite.utils.log import log
 from pipelite.etlBaseObject import etlBaseObject
-from pipelite.utils.etlReports import etlReports
+from pipelite.utils.plReports import plReports
 
 class pipelineProcess:
 	def __init__(self, config, log):
@@ -32,22 +32,23 @@ class pipelineProcess:
 		else:
 			raise Exception ("Configuration failed, impossible to create the logger.")
 
-	def process(self) -> etlReports:
+	def process(self) -> plReports:
 		""" Initialize the process and execute the pipeline
 		Returns:
 			int: Number of rows read
 			int: Number of rows transformed
 			int: Number of rows loaded
 		"""
-		reports = etlReports()
+		reports = plReports()
 		try:
 			self.log.info("pipelite initialisation ...")
 			pl = self.create()
 			if (pl == None):
 				raise Exception ("The Data pipeline has not been created successfully")
-			if (pl.beforeProcess()):
-				reports = pl.execute()
-			pl.afterProcess()
+			if (pl.prepare()):
+				if (pl.beforeProcess()):
+					reports = pl.execute()
+				pl.afterProcess()
 			return reports
 		except Exception as e:
 			self.log.error("pipelite cannot be initialized: {}".format(str(e)))

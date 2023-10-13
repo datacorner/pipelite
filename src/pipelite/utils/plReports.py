@@ -3,11 +3,11 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from .etlReport import etlReport
+from .plReport import plReport
 import pandas as pd
 import json
 
-class etlReports:
+class plReports:
 
     def __init__(self):
         self.reports = []   # Array of etlReport
@@ -22,7 +22,7 @@ class etlReports:
         return len(self.reports)
     
     def addEntry(self, name, type):
-        report = etlReport()
+        report = plReport()
         report.name = name
         report.type = type
         self.reports.append(report)
@@ -68,7 +68,7 @@ class etlReports:
         """
         return [ ds.name for ds in self.reports ]
     
-    def getFromName(self, name) -> etlReport:
+    def getFromName(self, name) -> plReport:
         """ Returns the rerport by searching it by id
         Args:
             name (str): dataset name/id

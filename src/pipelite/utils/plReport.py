@@ -5,7 +5,7 @@ __license__ = "MIT"
 import pipelite.constants as C
 import datetime
 
-class etlReport:
+class plReport:
 
     def __init__(self):
         self.__timestampStart = None

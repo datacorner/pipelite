@@ -4,9 +4,17 @@ __license__ = "MIT"
 
 from pipelite.baseobjs.BOPipeline import BOPipeline
 from pipelite.plDatasets import plDatasets
-from pipelite.utils.etlReports import etlReports
+from pipelite.utils.plReports import plReports
 
 class etlPL(BOPipeline):
+    """ This class executes a pipeline like an ETL
+        execute calls in this order:
+            1) all the extractions in a bundle
+            2) all the transformers (depending on their in/out)
+            1) all the loaders in a bundle 
+    Args:
+        BOPipeline (BOPipeline): pipeline template class processed by pipelineProcess
+    """
     def __init__(self, config, log):
         super().__init__(config, log)
         self.dsOrderIndex = 0
@@ -15,7 +23,12 @@ class etlPL(BOPipeline):
         self.dsOrderIndex += 1
         return self.dsOrderIndex
 
-    def execute(self) -> etlReports:
+    def prepare(self) -> bool:
+        # go through all the Transformer and check if each extractor is used
+        #
+        return True
+
+    def execute(self) -> plReports:
         """ Execute the pipeline in this order:
 				1) Extract the data sources
 				2) Process the transformations
@@ -49,7 +62,7 @@ class etlPL(BOPipeline):
             try:
                 return self.report
             except:
-                return etlReports()
+                return plReports()
 
     def extract(self) -> bool: 
         """This method must be surchaged and aims to collect the data from the datasource to provides the corresponding dataframe
