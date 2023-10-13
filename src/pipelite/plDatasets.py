@@ -60,6 +60,19 @@ class plDatasets(etlBaseObject):
             if (not dsItem.name in self.names): 
                 self.add(dsItem)
 
+    def isInside(self, name) -> bool:
+        """Returns True if the dataset (via name) exists in the collection
+        Args:
+            name (str): plDataset name
+
+        Returns:
+            bool: True is in the collection
+        """
+        for ds in self.dataset:
+            if (ds.name == name):
+                return True
+        return False
+
     def getFromName(self, name) -> plDataset:
         """ Returns the dataset by searching it by id
         Args:

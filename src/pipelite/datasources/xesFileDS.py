@@ -45,7 +45,7 @@ class xesFileDS(BODataSource):
             self.filename = os.path.join(cfg.getParameter(CFGPARAMS_PATH, C.EMPTY), 
                                          cfg.getParameter(CFGPARAMS_FILENAME, C.EMPTY))
             # Checks ...
-            if (self.ojbType == C.PLJSONCFG_LOADER):
+            if (self.objtype == C.PLJSONCFG_LOADER):
                 if (not os.path.isfile(self.filename)):
                     raise Exception("The XES file {} does not exist or is not accessible.".format(self.filename))
             return True

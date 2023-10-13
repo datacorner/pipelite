@@ -32,7 +32,7 @@ class testXES(unittest.TestCase):
                     'S2': '1394', 
                     'T': '1394'}
         result = self.processTest("./src/config/pipelines/xes2csv_direct.json")
-        self.checkResults(expected, result["Rows Processed"])
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
 if __name__ == '__main__':
     unittest.main()

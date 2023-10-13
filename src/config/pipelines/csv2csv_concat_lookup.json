@@ -1,5 +1,5 @@
 {
-    "classname" : "pipelite.pipelines.etlPL",
+    "classname" : "pipelite.pipelines.sequentialPL",
     "extractors" : [ 
     {
         "name": "I1",
@@ -42,12 +42,7 @@
             "encoding": "utf-8"
         }   
     } ],
-    "transformers":  [ { 
-        "name": "T1",
-        "classname": "pipelite.transformers.concatTR",
-        "inputs" : [ "I1", "I2" ],
-        "outputs" : [ "TO1" ]
-    },
+    "transformers":  [ 
     { 
         "name": "T2",
         "classname": "pipelite.transformers.lookupTR",
@@ -55,16 +50,19 @@
         "outputs" : [ "O2" ],
         "parameters" : {
             "main" : { "ds-name" : "TO1", 
-                       "key" : "col2"},
+                        "key" : "col2"},
             "lookup" :  { "ds-name" : "I3", 
-                          "key" : "tcol1", 
-                          "keep" : "tcol2"}
+                            "key" : "tcol1", 
+                            "keep" : "tcol2"}
             }
     },
     { 
-        "name": "T3",
-        "classname": "pipelite.transformers.renamedsTR"
-    } ],
+        "name": "T1",
+        "classname": "pipelite.transformers.concatTR",
+        "inputs" : [ "I1", "I2" ],
+        "outputs" : [ "TO1" ]
+    }
+    ],
     "parameters":{
         "mode": "full"
     },

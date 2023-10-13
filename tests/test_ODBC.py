@@ -32,14 +32,14 @@ class testODBC(unittest.TestCase):
                     'S2': '6', 
                     'T1': '6'}
         result = self.processTest("./src/config/pipelines/odbc2csv_direct.json")
-        self.checkResults(expected, result["Rows Processed"])
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
     def test_odbc2csv_direct_filequery(self):
         expected = {'S1': '6', 
                     'S2': '6', 
                     'T1': '6'}
         result = self.processTest("./src/config/pipelines/odbc2csv_direct_filequery.json")
-        self.checkResults(expected, result["Rows Processed"])
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
 if __name__ == '__main__':
     unittest.main()

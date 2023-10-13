@@ -48,7 +48,7 @@ class csvFileDS(BODataSource):
                                          cfg.getParameter(CFGPARAMS_FILENAME, C.EMPTY))
             self.encoding = cfg.getParameter(CFGPARAMS_ENCODING, C.EMPTY)
             # Checks ...
-            if (self.ojbType == C.PLJSONCFG_LOADER):
+            if (self.objtype == C.PLJSONCFG_LOADER):
                 if (not os.path.isfile(self.filename)):
                     raise Exception("The file {} does not exist or is not accessible.".format(self.filename))
             return True

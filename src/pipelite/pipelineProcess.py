@@ -42,13 +42,16 @@ class pipelineProcess:
 		reports = plReports()
 		try:
 			self.log.info("pipelite initialisation ...")
-			pl = self.create()
+			pl = self.create()		# instantiate the pipeline
 			if (pl == None):
 				raise Exception ("The Data pipeline has not been created successfully")
-			if (pl.prepare()):
+			if not pl.initialize():	# check & initialize all the pipeline objects
+				raise Exception ("The Data pipeline could not be initialized properly")
+			if pl.prepare():		# prepare the pipeline for execution (like the flow)
 				if (pl.beforeProcess()):
-					reports = pl.execute()
+					reports = pl.execute()	# process the pipeline
 				pl.afterProcess()
+			pl.terminate()
 			return reports
 		except Exception as e:
 			self.log.error("pipelite cannot be initialized: {}".format(str(e)))

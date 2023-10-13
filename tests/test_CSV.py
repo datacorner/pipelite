@@ -33,7 +33,7 @@ class testCSVFiles(unittest.TestCase):
                     'S2': '3', 
                     'T': '3'}
         result = self.processTest("./src/config/pipelines/csv2csv_direct.json")
-        self.checkResults(expected, result["Rows Processed"])
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
 if __name__ == '__main__':
     unittest.main()

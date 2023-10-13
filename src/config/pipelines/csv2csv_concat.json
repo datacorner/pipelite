@@ -1,5 +1,5 @@
 {
-    "classname" : "pipelite.pipelines.etlPL",
+    "classname" : "pipelite.pipelines.sequentialPL",
     "extractors" : [ {
         "name": "E1",
         "classname": "pipelite.datasources.csvFileDS",

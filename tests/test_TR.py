@@ -33,7 +33,7 @@ class testTransformers(unittest.TestCase):
                     'S2': '1394', 
                     'T2': '1394'}
         result = self.processTest("./src/config/pipelines/csv2csv_extractstr.json")
-        self.checkResults(expected, result["Rows Processed"])
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
     def test_csv2csv_concat(self):
         expected = {'E1': '3', 
@@ -42,7 +42,7 @@ class testTransformers(unittest.TestCase):
                     'T1': '7', 
                     'T2': '0'}
         result = self.processTest("./src/config/pipelines/csv2csv_concat.json")
-        self.checkResults(expected, result["Rows Processed"])
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
     def test_csv2csv_lookup(self):
         expected = {'E1': '3', 
@@ -51,7 +51,7 @@ class testTransformers(unittest.TestCase):
                     'T1': '9', 
                     'T2': '0'}
         result = self.processTest("./src/config/pipelines/csv2csv_lookup.json")
-        self.checkResults(expected, result["Rows Processed"])
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
     def test_csv2csv_concat_lookup(self):
         expected = {'I1': '3', 
@@ -62,14 +62,14 @@ class testTransformers(unittest.TestCase):
                     'T2': '11', 
                     'T3': '0'}
         result = self.processTest("./src/config/pipelines/csv2csv_concat_lookup.json")
-        self.checkResults(expected, result["Rows Processed"])
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
     def test_csv2csv_renamecol(self):
         expected = {'S1': '1394', 
                     'S2': '1394', 
                     'T1': '1394'}
         result = self.processTest("./src/config/pipelines/csv2csv_renamecol.json")
-        self.checkResults(expected, result["Rows Processed"])
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
 if __name__ == '__main__':
     unittest.main()

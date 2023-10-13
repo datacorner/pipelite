@@ -9,6 +9,8 @@ from pipelite.plConfig import plConfig
 from pipelite.plDatasets import plDatasets
 from pipelite.utils.plReports import plReports
 
+ALL_OBJECTS = [C.PLJSONCFG_EXTRACTOR, C.PLJSONCFG_LOADER, C.PLJSONCFG_TRANSFORMER]
+
 """ Pipeline Management rules:
     This Base Object MUST be inherited to create a pipeline
     1) a pipeline can have 
@@ -20,13 +22,49 @@ class BOPipeline(etlBaseObject):
     def __init__(self, config, log):
         super().__init__(config, log)
         # Note: ETL objects does not contain any data, just the pipeline specifications 
-        self.extractors = []            # etlBaseObject list with all extractors     (type -> pipelite.datasources.BODataSource)
-        self.loaders = []               # etlBaseObject list with all loaders        (type -> pipelite.datasources.BODataSource)
-        self.transformers = []          # etlBaseObject list with all transformers   (type -> pipelite.datasources.BOTransformer)
+        self.etlObjects = []   # all etlBaseObject (ETL)
         # datasets stack (contains the data) managed by the pipeline
         self.dsStack = plDatasets()   
         # reports / processing
         self.__report =  plReports()
+
+    @property
+    def transformers(self):
+        return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
+    @property
+    def transformersNotExecuted(self):
+        return [ item for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and not item.executed) ]
+    @property
+    def transformersNotOrdered(self):
+        return [ item for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and item.order == 0) ] 
+    @property
+    def loaders(self):
+        return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER ] 
+    @property
+    def extractors(self):
+        return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
+
+    @property
+    def transformersNames(self):
+        return [ item.name for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
+    @property
+    def transformersNamesNotExecuted(self):
+        return [ item.name for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and not item.executed) ]
+    @property
+    def transformersNamesNotOrdered(self):
+        return [ item.name for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and item.order == 0) ] 
+    @property
+    def loadersNames(self):
+        return [ item.name for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER ] 
+    @property
+    def extractorsNames(self):
+        return [ item.name for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
+    
+    def getObjectFromName(self, name): 
+        for item in self.etlObjects:
+            if (item.name == name):
+                return item
+        return None
 
     @property
     def report(self):
@@ -51,6 +89,8 @@ class BOPipeline(etlBaseObject):
             # instantiate & Init the object
             self.log.info("Instantiate Object: {}".format(dpConfig.className))
             dsObj = etlBaseObject.instantiate(dpConfig.className, self.config, self.log)
+            dsObj.name = dpConfig.name
+            dsObj.objtype = paramJSONPath
             self.log.debug("Initialize Object: {}".format(dpConfig.className))
             # Check the parameter (json) structure against the json scheme provided (if any, otherwise try to get the one by default)
             valFileCfg = dpConfig.validation if dpConfig.validation != None else dsObj.parametersValidationFile
@@ -63,8 +103,6 @@ class BOPipeline(etlBaseObject):
             if (dsObj.initialize(dpConfig)):
                 # Add the object in the list
                 self.log.debug("ETL Object {} instantiated and initialized successfully".format(dpConfig.className))
-                dsObj.name = dpConfig.name
-                dsObj.objtype = paramJSONPath
                 self.__report.addEntry(dsObj.name, dsObj.objtype)
             else:
                 raise Exception("Object {} cannot be initialized properly".format(dpConfig.className))
@@ -73,7 +111,7 @@ class BOPipeline(etlBaseObject):
             self.log.error("{}".format(e))
             return None
 
-    def __instantiateETLObjectsByCategory(self, paramJSONPath) -> list:
+    def __instantiateETLObjectsByCategory(self, paramJSONPath) -> bool:
         """ Initialize an set the ETL objects one by one considering the configuration (can be a extractor, 
             loader or transformer) and only for one category:
                 $.extractor
@@ -84,10 +122,8 @@ class BOPipeline(etlBaseObject):
         Returns:
             list: list of all etl objects initialized per category (E, T or L)
         """
-        objectList = []
         try:
             etlObjParams = self.config.getParameter(paramJSONPath, C.EMPTY)
-            # DS or TR to init
             self.log.info("There is/are {} [{}] objects(es)".format(len(etlObjParams), paramJSONPath))
             if (len(etlObjParams) < 1):
                 raise Exception("At least one Object is needed for processing the pipeline!")
@@ -95,35 +131,9 @@ class BOPipeline(etlBaseObject):
             # Initialize the Extractors/Transformers/Loaders
             for ObjItem in etlObjParams:
                 etlobj = self.__instantiateETLObject(paramJSONPath, ObjItem)
-                objectList.append(etlobj)
-            return objectList
-        except Exception as e:
-            self.log.error("{}".format(e))
-            return objectList
-    
-    def __instantiateAllETLObjects(self) -> bool:
-        """Initialize all the pipeline object by gathering the Pipeline infos and initializing the etl objects
-        Returns:
-            bool: False if error
-        """
-        try:
-            self.log.info("*** Starting pipeline processing ***")
-            # 1) init Extractors
-            self.log.info("Initializing Extractor(s) ...")
-            self.extractors = self.__instantiateETLObjectsByCategory(C.PLJSONCFG_EXTRACTOR)
-            if (len(self.extractors) == 0):
-                raise Exception("Extractor(s) has/have not been initialized properly")
-            self.log.info("There is/are {} extractor(s)".format(len(self.extractors)))
-            # 2) init Loaders
-            self.log.info("Initializing Loaders(s) ...")
-            self.loaders = self.__instantiateETLObjectsByCategory(C.PLJSONCFG_LOADER)
-            if (len(self.loaders) == 0):
-                raise Exception("Loader(s) has/have not been initialized properly")
-            self.log.info("There is/are {} loader(s)".format(len(self.loaders)))
-            # 3) init Transformers
-            self.log.info("Initializing Transformer(s) ...")
-            self.transformers = self.__instantiateETLObjectsByCategory(C.PLJSONCFG_TRANSFORMER)
-            self.log.info("There is/are {} Transformers(s)".format(len(self.transformers)))
+                if (etlobj == None):
+                    raise Exception("At least one pipeline object could not be initialized.")
+                self.etlObjects.append(etlobj)
             return True
         except Exception as e:
             self.log.error("{}".format(e))
@@ -137,19 +147,17 @@ class BOPipeline(etlBaseObject):
         """
         try:
             # CHECK that all the objects names are unique here
-            objects = [C.PLJSONCFG_EXTRACTOR, 
-                       C.PLJSONCFG_LOADER, 
-                       C.PLJSONCFG_TRANSFORMER]
             allDS = []
-            for objType in objects:
+            for objType in ALL_OBJECTS:
                 objTree = self.config.getParameter(objType, C.EMPTY)
                 for ObjItem in objTree:
                     allDS.append(ObjItem['name'])
             if len(set(allDS)) != len(allDS):
                 raise Exception ("Each pipeline objects must have a unique name in the configuration file")
-            # Initialize the ETL Objects
-            if not(self.__instantiateAllETLObjects()):
-                raise Exception ("All the pipeline objects could not be configured and initialized properly")
+            # Instantiate all the ETL Objects (without flow ordering)
+            for objType in ALL_OBJECTS:
+                if not(self.__instantiateETLObjectsByCategory(objType)):
+                    raise Exception ("All the pipeline objects could not be configured and initialized properly")
             return True
         except Exception as e:
             self.log.error("{}".format(e))
