@@ -20,9 +20,13 @@ class sequentialPL(BOPipeline):
     """
     def __init__(self, config, log):
         super().__init__(config, log)
+        # Index of execution
         self.objExecutionIndex = 1
+        # Objects sorted
         self.objListOrdered = []
-
+        # datasets stack (contains the data) managed by the pipeline
+        self.dsStack = plDatasets()   
+    
     def __addToExecutionList(self, object):
         if (object.order == 0):
             self.objListOrdered.append(object)
@@ -43,7 +47,8 @@ class sequentialPL(BOPipeline):
             bool: No problem if True
         """
         try:
-            availableDS = []
+            self.log.debug("Pipeline preparation")
+            objToExec = []
             iterationNb = 1
             # go through all the Transformer and check if each extractor is used
             # result = any(item in test_list for item in test_list)
@@ -54,7 +59,7 @@ class sequentialPL(BOPipeline):
                     trReady = True
                     trAvailableDS = []
                     for dsin in tr.dsInputs:    # check if the DS in inputs is already referenced or is in the extractors
-                        if (availableDS.count(dsin) > 0):
+                        if (objToExec.count(dsin) > 0):
                             # Transformer is ready to exec
                             pass
                         elif (self.extractorsNames.count(dsin) > 0):
@@ -68,17 +73,20 @@ class sequentialPL(BOPipeline):
                         for item in trAvailableDS:  # add the datasources to the order list
                             obj = self.getObjectFromName(item)
                             self.__addToExecutionList(obj)
-                        availableDS += trAvailableDS
+                        objToExec += trAvailableDS
                         self.__addToExecutionList(tr) # add the transformer to the order list
-                        availableDS += tr.dsOutputs # Also add the transformer output in the available list now
+                        objToExec += tr.dsOutputs # Also add the transformer output in the available list now
                         trOrderIndex += 1
                 iterationNb +=1
+            if (iterationNb >= ITERATION_MAX): # That means some of the transformers inputs do not exists ...
+                self.log.warning("Some of the objects may not be properly configured in the configuration file, some of the transformers inputs may not exists for example.")
             # Manage the loaders now
             for ds in self.loaders:
-                if (availableDS.count(ds.name) > 0):
+                if (objToExec.count(ds.name) > 0):
                     self.__addToExecutionList(ds)
+            self.log.info("Pipeline prepared successfully, execution in this order: [{}]".format(" -> ".join(objToExec)))
             return True
-        
+
         except Exception as e:
             self.log.error("Error when preparing the pipeline: {}".format(str(e)))
             return False
@@ -131,7 +139,6 @@ class sequentialPL(BOPipeline):
                         self.log.warning("The Tranformer {} has no input, by pass it !".format(obj.name))
                         report.end(0)
             return self.report
-
         except Exception as e:
             self.log.error("Error when processing the data: {}".format(str(e)))
             try:

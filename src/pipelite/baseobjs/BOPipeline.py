@@ -23,8 +23,6 @@ class BOPipeline(etlBaseObject):
         super().__init__(config, log)
         # Note: ETL objects does not contain any data, just the pipeline specifications 
         self.etlObjects = []   # all etlBaseObject (ETL)
-        # datasets stack (contains the data) managed by the pipeline
-        self.dsStack = plDatasets()   
         # reports / processing
         self.__report =  plReports()
 
