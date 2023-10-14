@@ -21,6 +21,9 @@ class plDataset:
         """
         return self.__content.columns
 
+    def applyTrans(self, toColumn, function, axis=1):
+        self.__content[toColumn] = self.__content.apply(function, axis=axis)
+
     def set(self, value, defaultype=None):
         """ initialize a dataset from a list ofr another Dataframe
 

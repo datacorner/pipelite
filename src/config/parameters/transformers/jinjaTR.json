@@ -1,0 +1,18 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Jinja column Transformer Parameters",
+      "type" : "object",
+       "properties" : { 
+             "main": {
+              "type" : "object",
+              "properties" : { 
+                    "template": {"type" : "string"},
+                    "column-name": {"type" : "string"},
+                    "constants": {"type" : "object"}
+                }
+          }
+        },
+       "required": ["column-name", 
+                  "template"]
+  }

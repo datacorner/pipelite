@@ -1,0 +1,48 @@
+{
+    "classname" : "pipelite.pipelines.sequentialPL",
+    "extractors" : [ {
+        "id": "S1",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ",",
+            "filename": "a.csv",
+            "path": "tests/data/",
+            "encoding": "utf-8"
+        }   
+    } ],
+    "loaders" : [ {
+        "id": "S2",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ",",
+            "filename": "a-d.csv",
+            "path": "tests/data/out",
+            "encoding": "utf-8"
+        }   
+    } ],
+    "transformers":  [     
+    { 
+        "id": "T",
+        "classname": "pipelite.transformers.jinjaTR",
+        "inputs" : [ "S1" ],
+        "outputs" : [ "S2" ],
+        "parameters": {
+            "template": "{{ col1 }}{{ C2 }}{{ col2 }}",
+            "column-name": "col1",
+            "constants" : { "C1" : 1, 
+                            "C2": "|"}
+        }  
+    }],
+    "parameters":{
+        "mode": "full"
+    },
+    "config": {
+        "logger" : {
+            "level": "DEBUG",
+            "format" : "%(asctime)s|%(name)s|%(levelname)s|%(message)s",
+            "path": "logs/",
+            "filename" : "pipe_csv2csv.log",
+            "maxbytes" : 1000000
+        }
+    }
+} 
