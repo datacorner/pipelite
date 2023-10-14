@@ -71,5 +71,12 @@ class testTransformers(unittest.TestCase):
         result = self.processTest("./src/config/pipelines/csv2csv_renamecol.json")
         self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
+    def test_csv2csv_jinja(self):
+        expected = {'S1': '3', 
+                    'T': '3', 
+                    'S2': '3'}
+        result = self.processTest("./src/config/pipelines/csv2csv_jinja.json")
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
+
 if __name__ == '__main__':
     unittest.main()
