@@ -21,9 +21,9 @@ class plReports:
         """
         return len(self.reports)
     
-    def addEntry(self, name, type):
+    def addEntry(self, id, type):
         report = plReport()
-        report.name = name
+        report.id = id
         report.type = type
         self.reports.append(report)
 
@@ -33,7 +33,7 @@ class plReports:
     def __getFullDataFrameReport(self) -> pd.DataFrame:
         dfRep = pd.DataFrame() 
         for rep in self.reports:
-            entry = {"Name" : rep.name, 
+            entry = {"id" : rep.id, 
                     "Type" : rep.type, 
                     "Description" : rep.description,
                     "Start" : rep.startTimeFMT,
@@ -68,7 +68,7 @@ class plReports:
         """
         return [ ds.name for ds in self.reports ]
     
-    def getFromName(self, name) -> plReport:
+    def getFromId(self, id) -> plReport:
         """ Returns the rerport by searching it by id
         Args:
             name (str): dataset name/id
@@ -76,7 +76,7 @@ class plReports:
             etlReport: rerport
         """
         for rep in self.reports:
-            if (rep.name == name):
+            if (rep.id == id):
                 return rep
         return None
     

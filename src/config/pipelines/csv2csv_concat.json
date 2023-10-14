@@ -1,7 +1,7 @@
 {
     "classname" : "pipelite.pipelines.sequentialPL",
     "extractors" : [ {
-        "name": "E1",
+        "id": "E1",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -11,7 +11,7 @@
         }
     },
     {
-        "name": "E2",
+        "id": "E2",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -21,7 +21,7 @@
         }
     } ],
     "loaders" : [ {
-        "name": "L1",
+        "id": "L1",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -31,14 +31,14 @@
         }   
     } ],
     "transformers":  [ { 
-        "name": "T1",
+        "id": "T1",
         "inputs" : [ "E1", "E2" ],
         "outputs" : [ "L1" ],
         "classname": "pipelite.transformers.concatTR"
     },
     { 
-        "name": "T2",
-        "classname": "pipelite.transformers.renamedsTR"
+        "id": "T2",
+        "classname": "pipelite.transformers.passthroughTR"
     } ],
     "parameters":{
         "mode": "full"

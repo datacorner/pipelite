@@ -4,11 +4,11 @@
     "title": "ETL objects main configuration structure",
     "type" : "object",
       "properties" : { 
-            "name": {"type" : "string"},
+            "id": {"type" : "string"},
             "classname": {"type" : "string"},
             "validation": {"type" : "string"},
             "parameters": { "type" : "object"}
         },
-      "required": ["name", 
+      "required": ["id", 
                   "classname"]
   }

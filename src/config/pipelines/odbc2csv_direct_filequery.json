@@ -1,7 +1,7 @@
 {
     "classname" : "pipelite.pipelines.sequentialPL",
     "extractors" : [ {
-        "name": "S1",
+        "id": "S1",
         "classname": "pipelite.datasources.odbcDS",
         "validation": "src/config/parameters/datasources/odbcDS.json",
         "parameters": {
@@ -14,7 +14,7 @@
         } 
     } ],
     "loaders" : [ {
-        "name": "S2",
+        "id": "S2",
         "classname": "pipelite.datasources.csvFileDS",
         "validation": "src/config/parameters/datasources/csvFileDS.json",
         "parameters": {
@@ -26,8 +26,8 @@
     } ],
     "transformers":  [
     { 
-        "name": "T1",
-        "classname": "pipelite.transformers.renamedsTR",
+        "id": "T1",
+        "classname": "pipelite.transformers.passthroughTR",
         "inputs" : [ "S1" ],
         "outputs" : [ "S2" ]
     } ],

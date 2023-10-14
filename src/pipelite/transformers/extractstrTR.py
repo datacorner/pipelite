@@ -51,6 +51,6 @@ class extractstrTR(BOTransformer):
         i=0
         for dsItem in dsTransformerInputs:  # go through each dataset in entry
             dsItem.subString(self.columnName, self.start, self.length)
-            dsItem.name = self.dsOutputs[i]
+            dsItem.id = self.dsOutputs[i]
             i+=1
         return dsTransformerInputs

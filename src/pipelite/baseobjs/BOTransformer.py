@@ -13,8 +13,8 @@ class BOTransformer(etlBaseObject):
         etlObject: Basic ETL object interface
     """
     def __init__(self, config, log):
-        self.dsInputs = []    # Input Dataset name List
-        self.dsOutputs = []   # Output Dataset name List
+        self.dsInputs = []    # Input Dataset id List
+        self.dsOutputs = []   # Output Dataset id List
         super().__init__(config, log)
 
     @abstractmethod
@@ -33,7 +33,7 @@ class BOTransformer(etlBaseObject):
             Returns all the data in a DataFrame format
             This must:
                 1) get from the dsStack list the input datasets
-                2) return the datasets (with the right name)
+                2) return the datasets (with the right id)
         Args:
             dsTransformerInputs (etlDatasets): multiple dataset in input for the transformer
             outputNames (array): array of expected output names

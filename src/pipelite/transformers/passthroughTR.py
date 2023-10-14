@@ -5,7 +5,7 @@ __license__ = "MIT"
 from pipelite.baseobjs.BOTransformer import BOTransformer
 from pipelite.plDatasets import plDatasets
 
-class renamedsTR(BOTransformer):
+class passthroughTR(BOTransformer):
 
     def process(self, dsTransformerInputs) -> plDatasets:
         """ Just rename the datasource (pass through)
@@ -18,6 +18,6 @@ class renamedsTR(BOTransformer):
         i=0
         if (len(self.dsOutputs) == dsTransformerInputs.count):
             for item in dsTransformerInputs:
-                item.name = self.dsOutputs[i]
+                item.id = self.dsOutputs[i]
                 i=+1
         return dsTransformerInputs

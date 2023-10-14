@@ -44,23 +44,23 @@ class BOPipeline(etlBaseObject):
 
     @property
     def transformersNames(self):
-        return [ item.name for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
+        return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
     @property
     def transformersNamesNotExecuted(self):
-        return [ item.name for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and not item.executed) ]
+        return [ item.id for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and not item.executed) ]
     @property
     def transformersNamesNotOrdered(self):
-        return [ item.name for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and item.order == 0) ] 
+        return [ item.id for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and item.order == 0) ] 
     @property
     def loadersNames(self):
-        return [ item.name for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER ] 
+        return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER ] 
     @property
     def extractorsNames(self):
-        return [ item.name for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
+        return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
     
-    def getObjectFromName(self, name): 
+    def getObjectFromName(self, id): 
         for item in self.etlObjects:
-            if (item.name == name):
+            if (item.id == id):
                 return item
         return None
 
@@ -87,13 +87,13 @@ class BOPipeline(etlBaseObject):
             # instantiate & Init the object
             self.log.info("Instantiate Object: {}".format(dpConfig.className))
             dsObj = etlBaseObject.instantiate(dpConfig.className, self.config, self.log)
-            dsObj.name = dpConfig.name
+            dsObj.id = dpConfig.id
             dsObj.objtype = paramJSONPath
             self.log.debug("Initialize Object: {}".format(dpConfig.className))
             # Check the parameter (json) structure against the json scheme provided (if any, otherwise try to get the one by default)
             valFileCfg = dpConfig.validation if dpConfig.validation != None else dsObj.parametersValidationFile
             if (not self.validateParametersCfg(valFileCfg, dpConfig.parameters)):
-                raise Exception("The {} parameters are not configured properly, check out the configuration file.".format(dsObj['name']))
+                raise Exception("The {} parameters are not configured properly, check out the configuration file.".format(dsObj['id']))
             # some init considering the object
             if (paramJSONPath == C.PLJSONCFG_TRANSFORMER): # Only for transformers ...
                 dsObj.dsInputs = dpConfig.inputs
@@ -101,7 +101,7 @@ class BOPipeline(etlBaseObject):
             if (dsObj.initialize(dpConfig)):
                 # Add the object in the list
                 self.log.debug("ETL Object {} instantiated and initialized successfully".format(dpConfig.className))
-                self.__report.addEntry(dsObj.name, dsObj.objtype)
+                self.__report.addEntry(dsObj.id, dsObj.objtype)
             else:
                 raise Exception("Object {} cannot be initialized properly".format(dpConfig.className))
             return dsObj
@@ -149,9 +149,9 @@ class BOPipeline(etlBaseObject):
             for objType in ALL_OBJECTS:
                 objTree = self.config.getParameter(objType, C.EMPTY)
                 for ObjItem in objTree:
-                    allDS.append(ObjItem['name'])
+                    allDS.append(ObjItem['id'])
             if len(set(allDS)) != len(allDS):
-                raise Exception ("Each pipeline objects must have a unique name in the configuration file")
+                raise Exception ("Each pipeline objects must have a unique id in the configuration file")
             # Instantiate all the ETL Objects (without flow ordering)
             for objType in ALL_OBJECTS:
                 if not(self.__instantiateETLObjectsByCategory(objType)):

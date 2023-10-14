@@ -10,7 +10,7 @@ class plDataset:
         (here it's currently managed by using Pandas DataFrame)
     """
     def __init__(self):
-        self.name = C.EMPTY
+        self.id = C.EMPTY
         self.__content = pd.DataFrame() # encapsulate DataFrame
 
     @property
@@ -42,7 +42,7 @@ class plDataset:
             etlDataset: strict copy of the current dataset
         """
         newDS = plDataset()
-        newDS.name = self.name
+        newDS.id = self.id
         newDS.__content = self.__content.copy(deep=True)
         return newDS
 

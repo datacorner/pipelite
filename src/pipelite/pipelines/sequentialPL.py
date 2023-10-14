@@ -10,7 +10,9 @@ import pipelite.constants as C
 ITERATION_MAX = 10
 
 class sequentialPL(BOPipeline):
-    """ This class executes a pipeline like an ETL
+    """ This class executes a pipeline like an ETL. It  takes each transformers in the order and try to execute it if the data are already extracted
+    if not it goes to the next (and will retry later the non exetecuted ones). It can chain several transformers in sequence and manage temparoraries
+    datasets (created in output by the transformer).
         execute calls in this order:
             1) all the extractions in a bundle
             2) all the transformers (depending on their in/out)
@@ -82,11 +84,10 @@ class sequentialPL(BOPipeline):
                 self.log.warning("Some of the objects may not be properly configured in the configuration file, some of the transformers inputs may not exists for example.")
             # Manage the loaders now
             for ds in self.loaders:
-                if (objToExec.count(ds.name) > 0):
+                if (objToExec.count(ds.id) > 0):
                     self.__addToExecutionList(ds)
             self.log.info("Pipeline prepared successfully, execution in this order: [{}]".format(" -> ".join(objToExec)))
             return True
-
         except Exception as e:
             self.log.error("Error when preparing the pipeline: {}".format(str(e)))
             return False
@@ -103,40 +104,40 @@ class sequentialPL(BOPipeline):
 		"""
         try:
             for obj in self.objListOrdered:
-                report = self.report.getFromName(obj.name)
+                report = self.report.getFromId(obj.id)
                 # -- EXTRACT
                 if (obj.objtype == C.PLJSONCFG_EXTRACTOR):
-                    reportDesc = "{} -> Output: [{}]".format(obj.__module__.split(".")[-1], obj.name)
+                    reportDesc = "{} -> Output: [{}]".format(obj.__module__.split(".")[-1], obj.id)
                     report.start(obj.order, reportDesc)
                     dsExtracted = obj.read()
                     report.end(dsExtracted.count)
-                    dsExtracted.name = obj.name
+                    dsExtracted.id = obj.id
                     self.dsStack.add(dsExtracted)
-                    self.log.info("[ EXTRACT {} - Rows: {} - Columns: {} ]".format(dsExtracted.name, dsExtracted.count, dsExtracted.columns))
+                    self.log.info("[ EXTRACT {} - Rows: {} - Columns: {} ]".format(dsExtracted.id, dsExtracted.count, dsExtracted.columns))
                 # -- LOAD
                 elif(obj.objtype == C.PLJSONCFG_LOADER):
-                    dsToLoad = self.dsStack.getFromName(obj.name)
-                    reportDesc = "{} -> Input: [{}]".format(obj.__module__.split(".")[-1], obj.name)
+                    dsToLoad = self.dsStack.getFromId(obj.id)
+                    reportDesc = "{} -> Input: [{}]".format(obj.__module__.split(".")[-1], obj.id)
                     report.start(obj.order, reportDesc)
                     if (not obj.write(dsToLoad)):
-                        raise Exception ("The Data Source {} could not be loaded properly".format(obj.name))
+                        raise Exception ("The Data Source {} could not be loaded properly".format(obj.id))
                     report.end(dsToLoad.count)
-                    self.log.info("[ LOAD {} - Rows: {} - Columns: {} ]".format(dsToLoad.name, dsToLoad.count, dsToLoad.columns))
+                    self.log.info("[ LOAD {} - Rows: {} - Columns: {} ]".format(dsToLoad.id, dsToLoad.count, dsToLoad.columns))
                 # -- TRANSFORM
                 elif(obj.objtype == C.PLJSONCFG_TRANSFORMER):
                     dsInputs = plDatasets()
                     reportDesc = "{} -> Inputs: [{}] / Outputs: [{}]".format(obj.__module__.split(".")[-1], ",".join(obj.dsInputs), ",".join(obj.dsOutputs))
                     report.start(obj.order, reportDesc)
                     for trName in obj.dsInputs: # datasets in input per transformer
-                        dsInputs.add(self.dsStack.getFromName(trName))
+                        dsInputs.add(self.dsStack.getFromId(trName))
                     if (not dsInputs.empty):
                         dsOutputs = obj.process(dsInputs)
-                        self.log.info("[ TRANSFORM {} - Rows: {} ]".format(obj.name, dsInputs.totalRowCount))
+                        self.log.info("[ TRANSFORM {} - Rows: {} ]".format(obj.id, dsInputs.totalRowCount))
                         report.end(dsInputs.totalRowCount)
                         self.dsStack.merge(dsOutputs)
-                        self.log.info("Number of rows processed {} by {}".format(dsInputs.totalRowCount, obj.name))
+                        self.log.info("Number of rows processed {} by {}".format(dsInputs.totalRowCount, obj.id))
                     else:
-                        self.log.warning("The Tranformer {} has no input, by pass it !".format(obj.name))
+                        self.log.warning("The Tranformer {} has no input, by pass it !".format(obj.id))
                         report.end(0)
             return self.report
         except Exception as e:

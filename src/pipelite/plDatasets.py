@@ -49,7 +49,7 @@ class plDatasets(etlBaseObject):
         Returns:
             list: names list
         """
-        return [ ds.name for ds in self.dataset ]
+        return [ ds.id for ds in self.dataset ]
 
     def merge(self, etlOtherDatasets):
         """ merge 2 datasets together
@@ -57,31 +57,31 @@ class plDatasets(etlBaseObject):
             etlOtherDatasets (etlDataset): dataset to merge with
         """
         for dsItem in etlOtherDatasets:
-            if (not dsItem.name in self.names): 
+            if (not dsItem.id in self.names): 
                 self.add(dsItem)
 
-    def isInside(self, name) -> bool:
-        """Returns True if the dataset (via name) exists in the collection
+    def isInside(self, id) -> bool:
+        """Returns True if the dataset (via id) exists in the collection
         Args:
-            name (str): plDataset name
+            id (str): plDataset id
 
         Returns:
             bool: True is in the collection
         """
         for ds in self.dataset:
-            if (ds.name == name):
+            if (ds.id == id):
                 return True
         return False
 
-    def getFromName(self, name) -> plDataset:
+    def getFromId(self, id) -> plDataset:
         """ Returns the dataset by searching it by id
         Args:
-            name (str): dataset name/id
+            id (str): dataset id/id
         Returns:
             etlDataset: dataset
         """
         for ds in self.dataset:
-            if (ds.name == name):
+            if (ds.id == id):
                 return ds
         return None
 
@@ -89,7 +89,7 @@ class plDatasets(etlBaseObject):
         """ Makes the Data column accessible via [] array
             example: df['colName']
         Args:
-            item (str): attribute/column name
+            item (str): attribute/column id
         Returns:
             object: data
         """

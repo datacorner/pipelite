@@ -37,12 +37,12 @@ class concatTR(BOTransformer):
             output = plDataset()
             self.log.info("There are {} datasets to concatenate".format(dsTransformerInputs.count))
             for obj in dsTransformerInputs:
-                self.log.debug("Adding {} rows from the dataset {}".format(obj.count, obj.name))
+                self.log.debug("Adding {} rows from the dataset {}".format(obj.count, obj.id))
                 output.concatWith(obj)
-            # Return the output as a collection with only one item with the excepted name
+            # Return the output as a collection with only one item with the excepted id
             dsOutputs = plDatasets()
             # Create from the source another instance of the data
-            output.name = self.dsOutputs[0]
+            output.id = self.dsOutputs[0]
             dsOutputs.add(output)
             return dsOutputs
         

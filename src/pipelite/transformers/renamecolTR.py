@@ -48,6 +48,6 @@ class renamecolTR(BOTransformer):
         i=0
         for dsItem in dsTransformerInputs:  # go through each dataset in entry
             dsItem.renameColumn(self.columnName,self.newName)
-            dsItem.name = self.dsOutputs[i]
+            dsItem.id = self.dsOutputs[i]
             i+=1
         return dsTransformerInputs

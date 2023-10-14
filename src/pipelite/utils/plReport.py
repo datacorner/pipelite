@@ -10,17 +10,12 @@ class plReport:
     def __init__(self):
         self.__timestampStart = None
         self.__timestampEnd = None
-        self.name = C.EMPTY
+        self.id = C.EMPTY
         self.description = C.EMPTY
         self.__type = C.EMPTY
         self.__processedRowsCount = 0
         self.status = "NOT STARTED"
         self.order = 0
-
-    @property
-    def id(self):
-        return self.name
-        #return self.__type[0:1] + "-" + self.name
 
     @property
     def type(self):

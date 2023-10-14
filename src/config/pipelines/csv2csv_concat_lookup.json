@@ -2,7 +2,7 @@
     "classname" : "pipelite.pipelines.sequentialPL",
     "extractors" : [ 
     {
-        "name": "I1",
+        "id": "I1",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -12,7 +12,7 @@
         }
     },
     {
-        "name": "I2",
+        "id": "I2",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -22,7 +22,7 @@
         }
     },
     {
-        "name": "I3",
+        "id": "I3",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -33,7 +33,7 @@
     } 
     ],
     "loaders" : [ {
-        "name": "O2",
+        "id": "O2",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -44,7 +44,7 @@
     } ],
     "transformers":  [ 
     { 
-        "name": "T2",
+        "id": "T2",
         "classname": "pipelite.transformers.lookupTR",
         "inputs" : [ "TO1", "I3" ],
         "outputs" : [ "O2" ],
@@ -57,7 +57,7 @@
             }
     },
     { 
-        "name": "T1",
+        "id": "T1",
         "classname": "pipelite.transformers.concatTR",
         "inputs" : [ "I1", "I2" ],
         "outputs" : [ "TO1" ]

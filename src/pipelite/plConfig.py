@@ -55,7 +55,7 @@ class plConfig:
             self.inputs = self.getVal(self.objConfig, C.PLJSONCFG_TRANSF_IN, [])
             self.outputs = self.getVal(self.objConfig, C.PLJSONCFG_TRANSF_OUT, [])
             self.validation = self.getVal(self.objConfig, C.PLJSONCFG_PROP_VALIDATION, None)
-            self.name = self.getVal(self.objConfig, C.PLJSONCFG_PROP_NAME, C.EMPTY)
+            self.id = self.getVal(self.objConfig, C.PLJSONCFG_PROP_NAME, C.EMPTY)
             return True
         except Exception as e:
             self.log.error("{}".format(e))
