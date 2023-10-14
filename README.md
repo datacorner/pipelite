@@ -18,7 +18,7 @@ The way this solution is built is also totally extensible and enables all develo
 ✅ Concat 2 Data sources  
 ✅ Lookup with 2 data sources  
 ✅ Substring from a column  
-✅ Changing column names 
+✅ Changing column names  
 ✅ Managing column transformation (by using jinja)  
 
 [Jump to the wiki from here](https://github.com/datacorner/pipelite/wiki)

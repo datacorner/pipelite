@@ -6,8 +6,8 @@ import pipelite.constants as C
 from pipelite.etlBaseObject import etlBaseObject
 from abc import abstractmethod
 from pipelite.plConfig import plConfig
-from pipelite.plDatasets import plDatasets
 from pipelite.utils.plReports import plReports
+from pipelite.etlBaseObject import etlBaseObject
 
 ALL_OBJECTS = [C.PLJSONCFG_EXTRACTOR, C.PLJSONCFG_LOADER, C.PLJSONCFG_TRANSFORMER]
 
@@ -30,10 +30,7 @@ class BOPipeline(etlBaseObject):
     def transformers(self):
         return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
     @property
-    def transformersNotExecuted(self):
-        return [ item for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and not item.executed) ]
-    @property
-    def transformersNotOrdered(self):
+    def transformersNotSorted(self):
         return [ item for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and item.order == 0) ] 
     @property
     def loaders(self):
@@ -41,15 +38,11 @@ class BOPipeline(etlBaseObject):
     @property
     def extractors(self):
         return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
-
     @property
     def transformersNames(self):
         return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
     @property
-    def transformersNamesNotExecuted(self):
-        return [ item.id for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and not item.executed) ]
-    @property
-    def transformersNamesNotOrdered(self):
+    def transformersNamesNotSorted(self):
         return [ item.id for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and item.order == 0) ] 
     @property
     def loadersNames(self):
@@ -58,12 +51,18 @@ class BOPipeline(etlBaseObject):
     def extractorsNames(self):
         return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
     
-    def getObjectFromName(self, id): 
+    def getObjectFromId(self, id) -> etlBaseObject:
+        """Returns the object with the id in parameter
+        Args:
+            id (str): object id(in the config file)
+        Returns:
+            etlBaseObject: etl Object
+        """
         for item in self.etlObjects:
             if (item.id == id):
                 return item
         return None
-
+    
     @property
     def report(self):
         return self.__report

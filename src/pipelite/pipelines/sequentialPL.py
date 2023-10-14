@@ -26,14 +26,22 @@ class sequentialPL(BOPipeline):
         self.objExecutionIndex = 1
         # Objects sorted
         self.objListOrdered = []
-        # datasets stack (contains the data) managed by the pipeline
-        self.dsStack = plDatasets()   
+        # datasets pool: contains all the datasets managed by the pipeline
+        self.dsPool = plDatasets()   
     
     def __addToExecutionList(self, object):
+        """Used when the flow path is calculated to add the next object in the stack (for execution flow)
+        Args:
+            object (etlBaseObject): etl object
+        """
         if (object.order == 0):
             self.objListOrdered.append(object)
             object.order = self.objExecutionIndex
             self.objExecutionIndex += 1
+
+    def getSortedFlow(self):
+        flow = [ item.id for item in self.objListOrdered ]
+        return "{}".format(" > ".join(flow))
 
     def prepare(self) -> bool:
         """ Calcultate the order of execution for each object in the pipeline. Each object.order property is updated
@@ -51,12 +59,11 @@ class sequentialPL(BOPipeline):
         try:
             self.log.debug("Pipeline preparation")
             objToExec = []
-            iterationNb = 1
+            iterCounter = 1
+            idx = 1
             # go through all the Transformer and check if each extractor is used
-            # result = any(item in test_list for item in test_list)
-            trOrderIndex = 1
-            while (len(self.transformersNamesNotOrdered) > 0 and iterationNb <= ITERATION_MAX):
-                trsIteration = self.transformersNotOrdered
+            while (len(self.transformersNamesNotSorted) > 0 and iterCounter <= ITERATION_MAX):
+                trsIteration = self.transformersNotSorted
                 for tr in trsIteration:  # Go through all the transformers
                     trReady = True
                     trAvailableDS = []
@@ -65,7 +72,7 @@ class sequentialPL(BOPipeline):
                             # Transformer is ready to exec
                             pass
                         elif (self.extractorsNames.count(dsin) > 0):
-                            trAvailableDS.append(dsin) #self.getObjectFromName(dsin))
+                            trAvailableDS.append(dsin) 
                         else:
                             # transformer is not ready to execute, go to next
                             trReady = False
@@ -73,20 +80,20 @@ class sequentialPL(BOPipeline):
                     # if the transformer can be executed ...
                     if (trReady):
                         for item in trAvailableDS:  # add the datasources to the order list
-                            obj = self.getObjectFromName(item)
+                            obj = self.getObjectFromId(item)
                             self.__addToExecutionList(obj)
                         objToExec += trAvailableDS
                         self.__addToExecutionList(tr) # add the transformer to the order list
                         objToExec += tr.dsOutputs # Also add the transformer output in the available list now
-                        trOrderIndex += 1
-                iterationNb +=1
-            if (iterationNb >= ITERATION_MAX): # That means some of the transformers inputs do not exists ...
+                        idx += 1
+                iterCounter +=1
+            if (iterCounter >= ITERATION_MAX): # That means some of the transformers inputs do not exists ...
                 self.log.warning("Some of the objects may not be properly configured in the configuration file, some of the transformers inputs may not exists for example.")
             # Manage the loaders now
             for ds in self.loaders:
                 if (objToExec.count(ds.id) > 0):
                     self.__addToExecutionList(ds)
-            self.log.info("Pipeline prepared successfully, execution in this order: [{}]".format(" -> ".join(objToExec)))
+            self.log.info("Pipeline prepared successfully. Flow -> [{}]".format(self.getSortedFlow()))
             return True
         except Exception as e:
             self.log.error("Error when preparing the pipeline: {}".format(str(e)))
@@ -107,38 +114,13 @@ class sequentialPL(BOPipeline):
                 report = self.report.getFromId(obj.id)
                 # -- EXTRACT
                 if (obj.objtype == C.PLJSONCFG_EXTRACTOR):
-                    reportDesc = "{} -> Output: [{}]".format(obj.__module__.split(".")[-1], obj.id)
-                    report.start(obj.order, reportDesc)
-                    dsExtracted = obj.read()
-                    report.end(dsExtracted.count)
-                    dsExtracted.id = obj.id
-                    self.dsStack.add(dsExtracted)
-                    self.log.info("[ EXTRACT {} - Rows: {} - Columns: {} ]".format(dsExtracted.id, dsExtracted.count, dsExtracted.columns))
+                    self.extract(report, obj)
                 # -- LOAD
                 elif(obj.objtype == C.PLJSONCFG_LOADER):
-                    dsToLoad = self.dsStack.getFromId(obj.id)
-                    reportDesc = "{} -> Input: [{}]".format(obj.__module__.split(".")[-1], obj.id)
-                    report.start(obj.order, reportDesc)
-                    if (not obj.write(dsToLoad)):
-                        raise Exception ("The Data Source {} could not be loaded properly".format(obj.id))
-                    report.end(dsToLoad.count)
-                    self.log.info("[ LOAD {} - Rows: {} - Columns: {} ]".format(dsToLoad.id, dsToLoad.count, dsToLoad.columns))
+                    self.load(report, obj)
                 # -- TRANSFORM
                 elif(obj.objtype == C.PLJSONCFG_TRANSFORMER):
-                    dsInputs = plDatasets()
-                    reportDesc = "{} -> Inputs: [{}] / Outputs: [{}]".format(obj.__module__.split(".")[-1], ",".join(obj.dsInputs), ",".join(obj.dsOutputs))
-                    report.start(obj.order, reportDesc)
-                    for trName in obj.dsInputs: # datasets in input per transformer
-                        dsInputs.add(self.dsStack.getFromId(trName))
-                    if (not dsInputs.empty):
-                        dsOutputs = obj.process(dsInputs)
-                        self.log.info("[ TRANSFORM {} - Rows: {} ]".format(obj.id, dsInputs.totalRowCount))
-                        report.end(dsInputs.totalRowCount)
-                        self.dsStack.merge(dsOutputs)
-                        self.log.info("Number of rows processed {} by {}".format(dsInputs.totalRowCount, obj.id))
-                    else:
-                        self.log.warning("The Tranformer {} has no input, by pass it !".format(obj.id))
-                        report.end(0)
+                    self.transform(report, obj)
             return self.report
         except Exception as e:
             self.log.error("Error when processing the data: {}".format(str(e)))
@@ -146,7 +128,56 @@ class sequentialPL(BOPipeline):
                 return self.report
             except:
                 return plReports()
-        
+            
+    def extract(self, report, obj):
+        """ Manage extraction objects
+        Args:
+            report (plReport): report
+            obj (etlBaseObject): Object to execute
+        """
+        reportDesc = "{} -> Output: [{}]".format(obj.__module__.split(".")[-1], obj.id)
+        report.start(obj.order, reportDesc)
+        dsExtracted = obj.read()
+        report.end(dsExtracted.count)
+        dsExtracted.id = obj.id
+        self.dsPool.add(dsExtracted)
+        self.log.info("[ EXTRACT {} - Rows: {} - Columns: {} ]".format(dsExtracted.id, dsExtracted.count, dsExtracted.columns))
+
+    def transform(self, report, obj):
+        """ Manage transformation objects
+        Args:
+            report (plReport): report
+            obj (etlBaseObject): Object to execute
+        """
+        dsInputs = plDatasets()
+        reportDesc = "{} -> Inputs: [{}] / Outputs: [{}]".format(obj.__module__.split(".")[-1], ",".join(obj.dsInputs), ",".join(obj.dsOutputs))
+        report.start(obj.order, reportDesc)
+        for trName in obj.dsInputs: # datasets in input per transformer
+            dsInputs.add(self.dsPool.getFromId(trName))
+        if (not dsInputs.empty):
+            dsOutputs = obj.process(dsInputs)
+            self.log.info("[ TRANSFORM {} - Rows: {} ]".format(obj.id, dsInputs.totalRowCount))
+            report.end(dsInputs.totalRowCount)
+            self.dsPool.merge(dsOutputs)
+            self.log.info("Number of rows processed {} by {}".format(dsInputs.totalRowCount, obj.id))
+        else:
+            self.log.warning("The Tranformer {} has no input, by pass it !".format(obj.id))
+            report.end(0)
+
+    def load(self, report, obj):
+        """ Manage load objects
+        Args:
+            report (plReport): report
+            obj (etlBaseObject): Object to execute
+        """
+        dsToLoad = self.dsPool.getFromId(obj.id)
+        reportDesc = "{} -> Input: [{}]".format(obj.__module__.split(".")[-1], obj.id)
+        report.start(obj.order, reportDesc)
+        if (not obj.write(dsToLoad)):
+            raise Exception ("The Data Source {} could not be loaded properly".format(obj.id))
+        report.end(dsToLoad.count)
+        self.log.info("[ LOAD {} - Rows: {} - Columns: {} ]".format(dsToLoad.id, dsToLoad.count, dsToLoad.columns))
+
     def terminate(self) -> bool:
         # Display report
         self.log.info("Pipeline Report \n\n{}\n ".format(self.report.getFullSTRReport()))
