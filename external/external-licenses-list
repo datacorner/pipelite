@@ -1,0 +1,12 @@
+List all the external packages used by pipelite with their license
+------------------------------------------------------------------
+Package         License
+jinja2          BSD-3-Clause license
+jsonschema      MIT License (MIT)
+jsonpath-ng     Apache Software License (Apache 2.0)
+xmltodict       MIT License (MIT)
+requests        Apache Software License (Apache 2.0)
+pyrfc           Apache Software License (Apache 2.0)
+pyodbc          MIT License (MIT)
+openpyxl        MIT License (MIT)
+pandas          BSD 3-Clause License
