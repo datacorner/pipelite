@@ -38,7 +38,7 @@ class excelFileDS(BODataSource):
                                          cfg.getParameter(CFGPARAMS_FILENAME, C.EMPTY))
 
             # Checks ...
-            if (self.objType == C.PLJSONCFG_LOADER):
+            if (self.objtype == C.PLJSONCFG_EXTRACTOR):
                 if (not os.path.isfile(self.filename)):
                     raise Exception("The file {} does not exist or is not accessible.".format(self.filename))
             
@@ -55,7 +55,7 @@ class excelFileDS(BODataSource):
         try:
             self.log.info("Extract the Dataset from the file: {}".format(self.filename))
             dsExtract = plDataset()
-            dsExtract.read_excel(self.filename, sheet_name=self.sheet)
+            dsExtract.read_excel(self.filename, sheet=self.sheet)
             return dsExtract
         except Exception as e:
             self.log.error("{}".format(e))
