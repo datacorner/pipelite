@@ -21,8 +21,8 @@ class plDataset:
         """
         return self.__content.columns
 
-    def applyTrans(self, toColumn, function, axis=1):
-        self.__content[toColumn] = self.__content.apply(function, axis=axis)
+    def applyTrans(self, toColumn, function):
+        self.__content[toColumn] = self.__content.apply(function, axis=1)
 
     def set(self, value, defaultype=None):
         """ initialize a dataset from a list ofr another Dataframe
@@ -110,16 +110,34 @@ class plDataset:
             etlDatasetB (etlDataset): other dataset to concat
             keys (str, optional): key to concat. Defaults to None.
         """
-        self.__content = pd.concat([self.__content, etlDatasetB], 
-                                 keys=keys)
+        self.__content = pd.concat([self.__content, etlDatasetB], keys=keys)
     
-    def lookupWith(self, dsLookup, mapColName):
-        """ Makes a lookup from the current dataset and the givent one. the join is made on the mapColName which must exists in both sides
+    def leftJoin(self, ds, mapColName):
+        """ Makes a left join from the current dataset and the given one. 
+        the join is made on the mapColName which must exists in both sides
         Args:
             dsLookup (etlDataset): lookup dataset
             mapColName (str): column name on both side
         """
-        self.__content = pd.merge(self.__content, dsLookup, on=mapColName, how ="inner")
+        self.__content = pd.merge(self.__content, ds, on=mapColName, how ="left")
+
+    def rightJoin(self, ds, mapColName):
+        """ Makes a right join from the current dataset and the given one. 
+        the join is made on the mapColName which must exists in both sides
+        Args:
+            dsLookup (etlDataset): lookup dataset
+            mapColName (str): column name on both side
+        """
+        self.__content = pd.merge(self.__content, ds, on=mapColName, how ="right")
+
+    def innerJoin(self, ds, mapColName):
+        """ Makes a inner join from the current dataset and the given one. 
+        the join is made on the mapColName which must exists in both sides
+        Args:
+            dsLookup (etlDataset): lookup dataset
+            mapColName (str): column name on both side
+        """
+        self.__content = pd.merge(self.__content, ds, on=mapColName, how ="inner")
 
     def dropLineNaN(self, column):
         """ Drops all rows if the column value is NaN

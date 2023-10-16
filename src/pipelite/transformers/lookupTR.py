@@ -65,7 +65,6 @@ class lookupTR(BOTransformer):
             etlDatasets: Output etlDatasets of the transformer(s)
             int: Number of rows transformed
         """
-
         try:
             # identify the main & the lookup dataset first
             dsMain = dsTransformerInputs.getFromId(self.mainDSId)
@@ -79,7 +78,7 @@ class lookupTR(BOTransformer):
             dsLookup.renameColumn(self.lookupDatasetColKey, self.mainColKey)
             originalRecCount = dsMain.count
             self.log.debug("There are {} records in the main dataset stream".format(originalRecCount))
-            dsMain.lookupWith(dsLookup, self.mainColKey) # Effective lookup
+            dsMain.innerJoin(dsLookup, self.mainColKey) # Effective lookup
             dsMain.dropLineNaN(self.lookupDatasetColKeep) # drop the NA values (lookup failed / no values as result)
             # Reshape the dataset (columns changes)
             dsMain.dropColumn(self.mainColKey)
@@ -94,7 +93,6 @@ class lookupTR(BOTransformer):
             dsMain.id = self.dsOutputs[0]
             dsOutputs.add(dsMain)
             return dsOutputs
-        
         except Exception as e:
             self.log.error("{}".format(e))
             return dsTransformerInputs

@@ -68,10 +68,10 @@ class sequentialPL(BOPipeline):
                     trReady = True
                     trAvailableDS = []
                     for dsin in tr.dsInputs:    # check if the DS in inputs is already referenced or is in the extractors
-                        if (objToExec.count(dsin) > 0):
+                        if (objToExec.count(dsin) > 0): # datasource already managed ?
                             # Transformer is ready to exec
                             pass
-                        elif (self.extractorsNames.count(dsin) > 0):
+                        elif (self.extractorsNames.count(dsin) > 0): # Datasource in the the extractors
                             trAvailableDS.append(dsin) 
                         else:
                             # transformer is not ready to execute, go to next
