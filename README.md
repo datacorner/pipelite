@@ -5,11 +5,10 @@ The purpose of this solution is to build and execute Data Pipelines. Nothing new
 The way this solution is built is also totally extensible and enables all developers to extend its capabilities by addin new Data connectors and/or data pipelite.transformers.  
 
 🚀 Currently this solution provides data access and load from these data sources :  
-
-✅  External file (csv)  
-✅  External Excel Spreadsheet (xls, xlsx, xlsm, xlsb, odf, ods and odt) (read only)  
-✅  External XES File (read only)  
-✅  ODBC Data Sources (checked with SQL Server, SQLite) by using an configurable SQL query (Read Only)  
+✅  [External file (csv)](https://github.com/datacorner/pipelite/wiki/csvFileDS)  
+✅  [External Excel Spreadsheet (xls, xlsx, xlsm, xlsb, odf, ods and odt) (read only)](https://github.com/datacorner/pipelite/wiki/excelFileDS) 
+✅  [External XES File (read only)](https://github.com/datacorner/pipelite/wiki/xesFileDS)  
+✅  [ODBC Data Sources (checked with SQL Server, SQLite) by using an configurable SQL query (Read Only)](https://github.com/datacorner/pipelite/wiki/odbcDS)  
 ✅  SAP Read Table via SAP RFC (Read Only)  
 
 🚀 And provides those transformers
