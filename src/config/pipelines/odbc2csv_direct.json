@@ -3,7 +3,6 @@
     "extractors" : [ {
         "id": "S1",
         "classname": "pipelite.datasources.odbcDS",
-        "validation": "src/config/parameters/datasources/odbcDS.json",
         "parameters": {
             "connectionstring": "DRIVER={SQLite3};Database=tests/data/dbsample.sqlite",
             "query": "SELECT customer_id, first_name, birthdate FROM Customers;"
@@ -12,7 +11,6 @@
     "loaders" : [ {
         "id": "S2",
         "classname": "pipelite.datasources.csvFileDS",
-        "validation": "src/config/parameters/datasources/csvFileDS.json",
         "parameters": {
             "separator": ",",
             "filename": "db-Customers.csv",
@@ -27,9 +25,6 @@
         "inputs" : [ "S1" ],
         "outputs" : [ "S2" ]
     } ],
-    "parameters":{
-        "mode": "full"
-    },
     "config": {
         "logger" : {
             "level": "DEBUG",

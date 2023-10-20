@@ -4,6 +4,8 @@ __license__ = "MIT"
 
 import pandas as pd
 import pipelite.constants as C
+import json
+from collections import Counter
 
 class plDataset:
     """ This class encapsulate the data set management (currently Pandas DataFrames) 
@@ -167,6 +169,26 @@ class plDataset:
         newDatasetBloc = plDataset()
         newDatasetBloc.__content = self.__content.iloc[rowIndexfrom:rowIndexTo+1:,:]
         return newDatasetBloc
+
+    def profile(self, maxvaluecounts=10):
+        profile = {}
+        # Get stats per columns
+        profileColumns = []
+        for col in self.__content.columns:
+            profileCol = {}
+            profileCol['name'] = col
+            profileCol['type'] = str(self.__content[col].dtypes)
+            profileCol['inferred type'] = str(self.__content[col].infer_objects().dtypes)
+            profileCol['NaN count'] = int(self.__content[col].isna().sum())
+            profileCol['Null count'] = int(self.__content[col].isnull().sum())
+            profileCol['stats'] = self.__content[col].describe().to_dict()
+            counts = self.__content[col].value_counts().to_dict()
+            profileCol['counts'] = dict(Counter(counts).most_common(maxvaluecounts))
+            profileColumns.append(profileCol)
+        profile["rows count"] = self.count
+        profile["columns count"] = len(self.__content.columns)
+        profile["columns"] = profileColumns
+        return profile
 
     def __getitem__(self, item):
         """ Makes the Data column accessible via [] array

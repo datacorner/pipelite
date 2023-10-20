@@ -64,7 +64,7 @@ class odbcDS(BODataSource):
             self.log.error("{}".format(e))
             return False
     
-    def read_sql(self, sql):
+    def read_sql(self, sql) -> plDataset:
         """ Returns all the data in a DataFrame format
         Returns:
             pd.DataFrame(): dataset read

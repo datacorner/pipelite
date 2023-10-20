@@ -19,6 +19,7 @@ The way this solution is built is also totally extensible and enables all develo
 ✅ Substring from a column  
 ✅ Changing column names  
 ✅ Managing column transformation (by using jinja)  
+✅ Dataset profiling   
 
 [Jump to the wiki from here](https://github.com/datacorner/pipelite/wiki)
 

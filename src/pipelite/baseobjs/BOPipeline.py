@@ -122,8 +122,6 @@ class BOPipeline(etlBaseObject):
         try:
             etlObjParams = self.config.getParameter(paramJSONPath, C.EMPTY)
             self.log.info("There is/are {} [{}] objects(es)".format(len(etlObjParams), paramJSONPath))
-            if (len(etlObjParams) < 1):
-                raise Exception("At least one Object is needed for processing the pipeline!")
             self.log.debug("Intantiate needs and configured objects ...")
             # Initialize the Extractors/Transformers/Loaders
             for ObjItem in etlObjParams:
