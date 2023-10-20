@@ -1,0 +1,25 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Join Transformer Parameters",
+      "type" : "object",
+       "properties" : { 
+             "join": {"type" : "string"},
+             "left": {
+              "type" : "object",
+              "properties" : { 
+                    "dsid": {"type" : "string"},
+                    "keys": {"type" : "array"}
+                }
+          }, "right": {
+              "type" : "object",
+              "properties" : { 
+                    "dsid": {"type" : "string"},
+                    "keys": {"type" : "array"}
+                }
+          }
+         },
+       "required": ["left", 
+                    "right",
+                    "join"]
+  }

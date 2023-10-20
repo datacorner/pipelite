@@ -7,7 +7,7 @@ import json, jsonpath_ng
 
 SECTION_PARAM_SEP = "."
 
-class dpConfig():
+class plConfig():
     """This class contains all the configuration needed and loaded mainly from the INI file
     """
     

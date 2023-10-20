@@ -112,32 +112,15 @@ class plDataset:
         """
         self.__content = pd.concat([self.__content, etlDatasetB], keys=keys)
     
-    def leftJoin(self, ds, mapColName):
-        """ Makes a left join from the current dataset and the given one. 
-        the join is made on the mapColName which must exists in both sides
-        Args:
-            dsLookup (etlDataset): lookup dataset
-            mapColName (str): column name on both side
-        """
-        self.__content = pd.merge(self.__content, ds, on=mapColName, how ="left")
-
-    def rightJoin(self, ds, mapColName):
-        """ Makes a right join from the current dataset and the given one. 
-        the join is made on the mapColName which must exists in both sides
-        Args:
-            dsLookup (etlDataset): lookup dataset
-            mapColName (str): column name on both side
-        """
-        self.__content = pd.merge(self.__content, ds, on=mapColName, how ="right")
-
-    def innerJoin(self, ds, mapColName):
+    def joinWith(self, ds, on, how ="inner"):
         """ Makes a inner join from the current dataset and the given one. 
         the join is made on the mapColName which must exists in both sides
         Args:
             dsLookup (etlDataset): lookup dataset
             mapColName (str): column name on both side
+            how (str) : join type -> inner (default), left, right or outer
         """
-        self.__content = pd.merge(self.__content, ds, on=mapColName, how ="inner")
+        self.__content = pd.merge(self.__content, ds, on=on, how=how)
 
     def dropLineNaN(self, column):
         """ Drops all rows if the column value is NaN

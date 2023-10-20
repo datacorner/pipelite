@@ -9,7 +9,7 @@ from pipelite.plDatasets import plDatasets
 CFGFILES_DSOBJECT = "lookupTR.json"
 PARAM_LOOKUP = "lookup"
 PARAM_MAIN = "main"
-PARAM_DS_NAME = "ds-name"
+PARAM_DS_NAME = "dsid"
 PARAM_KEY = "key"
 PARAM_LOOKUP_KEEP = "keep"
 
@@ -78,7 +78,7 @@ class lookupTR(BOTransformer):
             dsLookup.renameColumn(self.lookupDatasetColKey, self.mainColKey)
             originalRecCount = dsMain.count
             self.log.debug("There are {} records in the main dataset stream".format(originalRecCount))
-            dsMain.innerJoin(dsLookup, self.mainColKey) # Effective lookup
+            dsMain.joinWith(dsLookup, self.mainColKey, how="inner") # Effective lookup
             dsMain.dropLineNaN(self.lookupDatasetColKeep) # drop the NA values (lookup failed / no values as result)
             # Reshape the dataset (columns changes)
             dsMain.dropColumn(self.mainColKey)

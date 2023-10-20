@@ -1,8 +1,7 @@
 {
     "classname" : "pipelite.pipelines.sequentialPL",
-    "extractors" : [ 
-    {
-        "id": "I1",
+    "extractors" : [ {
+        "id": "E1",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -12,17 +11,7 @@
         }
     },
     {
-        "id": "I2",
-        "classname": "pipelite.datasources.csvFileDS",
-        "parameters": {
-            "separator": ",",
-            "filename": "b.csv",
-            "path": "tests/data/",
-            "encoding": "utf-8"
-        }
-    },
-    {
-        "id": "I3",
+        "id": "E2",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
@@ -30,42 +19,30 @@
             "path": "tests/data/",
             "encoding": "utf-8"
         }
-    } 
-    ],
+    } ],
     "loaders" : [ {
-        "id": "O2",
+        "id": "L1",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
-            "filename": "tcl.csv",
+            "filename": "join.csv",
             "path": "tests/data/out/",
             "encoding": "utf-8"
         }   
     } ],
-    "transformers":  [ 
-    { 
-        "id": "T2",
-        "classname": "pipelite.transformers.lookupTR",
-        "inputs" : [ "TO1", "I3" ],
-        "outputs" : [ "O2" ],
-        "parameters" : {
-            "main" : { "dsid" : "TO1", 
-                        "key" : "col2"},
-            "lookup" :  { "dsid" : "I3", 
-                            "key" : "tcol1", 
-                            "keep" : "tcol2"}
-            }
-    },
-    { 
+    "transformers":  [ { 
         "id": "T1",
-        "classname": "pipelite.transformers.concatTR",
-        "inputs" : [ "I1", "I2" ],
-        "outputs" : [ "TO1" ]
-    }
-    ],
-    "parameters":{
-        "mode": "full"
-    },
+        "classname": "pipelite.transformers.joinTR",
+        "inputs" : [ "E1", "E2" ],
+        "outputs" : [ "L1" ],
+        "parameters" : {
+            "join" : "inner",
+            "left" : { "dsid" : "E1", 
+                       "keys" : ["col2"] },
+            "right" :  { "dsid" : "E2", 
+                          "keys" : ["tcol1"] }
+            }
+    } ],
     "config": {
         "logger" : {
             "level": "DEBUG",

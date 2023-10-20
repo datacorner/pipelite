@@ -3,7 +3,7 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.config.dpConfig import dpConfig
+from pipelite.config.plConfig import plConfig
 
 class cmdLineConfig:
 	
@@ -15,7 +15,7 @@ class cmdLineConfig:
 		Returns:
 			appConfig: cinfiguration object
 		"""
-		config = dpConfig()
+		config = plConfig()
 		# Load configuration via the INI file
 		if (args[C.PARAM_PIPELINE_CONFIGFILE] != 0):
 			config.load(args[C.PARAM_PIPELINE_CONFIGFILE])
@@ -58,7 +58,7 @@ class cmdLineConfig:
 			string: Data Source Tag (command line)
 		"""
 		try:
-			config = dpConfig()
+			config = plConfig()
 			# Check Data Source Type
 			args = dict(cfg=cfg)
 			config = cmdLineConfig.manageArgs(args)

@@ -37,20 +37,13 @@
         "inputs" : [ "E1", "E2" ],
         "outputs" : [ "L1" ],
         "parameters" : {
-            "main" : { "ds-name" : "E1", 
+            "main" : { "dsid" : "E1", 
                        "key" : "col2"},
-            "lookup" :  { "ds-name" : "E2", 
+            "lookup" :  { "dsid" : "E2", 
                           "key" : "tcol1", 
                           "keep" : "tcol2"}
             }
-    },
-    { 
-        "id": "T2",
-        "classname": "pipelite.transformers.passthroughTR"
     } ],
-    "parameters":{
-        "mode": "full"
-    },
     "config": {
         "logger" : {
             "level": "DEBUG",

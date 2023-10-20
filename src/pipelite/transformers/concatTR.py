@@ -16,15 +16,6 @@ class concatTR(BOTransformer):
         return self.getResourceFile(package=C.RESOURCE_PKGFOLDER_TRANSFORMERS, 
                                     file=CFGFILES_DSOBJECT)
     
-    def initialize(self, params) -> bool:
-        """ Initialize and makes some checks (params) for that transformer
-        Args:
-            params (json): parameters
-        Returns:
-            bool: False if error
-        """
-        return True
-    
     def process(self, dsTransformerInputs) -> plDatasets:
         """ Concatenate 2 or more datasets together
         Args:
