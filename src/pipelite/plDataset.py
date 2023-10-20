@@ -170,20 +170,27 @@ class plDataset:
         newDatasetBloc.__content = self.__content.iloc[rowIndexfrom:rowIndexTo+1:,:]
         return newDatasetBloc
 
-    def profile(self, maxvaluecounts=10):
+    def profile(self, maxvaluecounts=10) -> dict:
+        """Build a JSON whcih contains many basic profiling informations
+        Args:
+            maxvaluecounts (int, optional): Limits the number of value_counts() return. Defaults to 10.
+        Returns:
+            _type_: _description_
+        """
         profile = {}
         # Get stats per columns
         profileColumns = []
         for col in self.__content.columns:
             profileCol = {}
+            counts = self.__content[col].value_counts()
             profileCol['name'] = col
             profileCol['type'] = str(self.__content[col].dtypes)
             profileCol['inferred type'] = str(self.__content[col].infer_objects().dtypes)
-            profileCol['NaN count'] = int(self.__content[col].isna().sum())
-            profileCol['Null count'] = int(self.__content[col].isnull().sum())
+            profileCol['distincts'] = int(len(counts))
+            profileCol['nan'] = int(self.__content[col].isna().sum())
+            profileCol['null'] = int(self.__content[col].isnull().sum())
             profileCol['stats'] = self.__content[col].describe().to_dict()
-            counts = self.__content[col].value_counts().to_dict()
-            profileCol['counts'] = dict(Counter(counts).most_common(maxvaluecounts))
+            profileCol['value counts'] = dict(Counter(counts.to_dict()).most_common(maxvaluecounts))
             profileColumns.append(profileCol)
         profile["rows count"] = self.count
         profile["columns count"] = len(self.__content.columns)

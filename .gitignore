@@ -5,4 +5,4 @@ exe/*
 .pypirc
 logs/*
 logs/pipe_csv2csv.log.1
-tests/data/a.profile
+tests/data/testtp.profile

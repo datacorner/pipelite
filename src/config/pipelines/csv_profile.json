@@ -5,7 +5,7 @@
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ",",
-            "filename": "test.csv",
+            "filename": "testtp.csv",
             "path": "tests/data/",
             "encoding": "utf-8"
         }   
@@ -17,7 +17,7 @@
         "inputs" : [ "S" ],
         "outputs" : [ ],
         "parameters": {
-            "filename" : "tests/data/a.profile",
+            "filename" : "tests/data/out/testtp.profile",
             "maxvaluecounts": 20
         }
     }],

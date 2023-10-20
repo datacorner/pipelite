@@ -1,0 +1,15 @@
+id,concept:name,lifecycle:transition,org:resource,time:timestamp,RESOURCE,ROUND,EVENTID,ACTIVITY,STAGE,VIDEOSTART,VIDEOEND,case:concept:name,case:variant,case:variant-index,case:creator
+0,Hand washing,start,R_13_1C,2018-10-11 12:00:00+00:00,R_13_1C,Pre,1539301115461,Hand washing,Operator and Patient Preparation,55,67,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+1,,complete,R_13_1C,2018-10-11 12:01:00+00:00,R_13_1C,Pre,1539301115461,Hand washing,Operator and Patient Preparation,55,67,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+2,Ultrasound configuration,start,R_13_1C,2018-10-11 12:01:00+00:00,R_13_1C,Pre,1539301145312,Ultrasound configuration,Ultrasound Preparation,84,137,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+3,Ultrasound configuration,complete,R_13_1C,2018-10-11 12:02:00+00:00,R_13_1C,Pre,1539301145312,Ultrasound configuration,Ultrasound Preparation,84,137,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+4,Anatomic identification,start,R_13_1C,2018-10-11 12:02:00+00:00,R_13_1C,Pre,1539301204591,,Locate Structures,143,143,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+5,Anatomic identification,,R_13_1C,2018-10-11 12:02:00+00:00,R_13_1C,Pre,1539301204591,,,143,143,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+,,start,R_13_1C,2018-10-11 12:02:00+00:00,R_13_1C,Pre,1539301214887,Compression identification,Locate Structures,154,154,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+7,,complete,R_13_1C,2018-10-11 12:02:00+00:00,R_13_1C,Pre,1539301214887,Compression identification,Locate Structures,154,154,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+8,Gel in probe,start,R_13_1C,2018-10-11 12:03:00+00:00,R_13_1C,Pre,1539301252286,Gel in probe,Ultrasound Preparation,191,198,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+9,Gel in probe,complete,R_13_1C,2018-10-11 12:03:00+00:00,R_13_1C,Pre,1539301252286,Gel in probe,Ultrasound Preparation,191,198,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+10,Get in sterile clothes,start,R_13_1C,2018-10-11 12:03:00+00:00,R_13_1C,Pre,1539301297253,Get in sterile clothes,Operator and Patient Preparation,236,244,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+,Get in sterile clothes,,R_13_1C,,,Pre,1539301297253,Get in sterile clothes,Operator and Patient Preparation,236,244,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+12,Hand washing,start,R_13_1C,2018-10-11 12:04:00+00:00,R_13_1C,Pre,1539301310093,Hand washing,Operator and Patient Preparation,249,254,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco
+13,Hand washing,complete,R_13_1C,2018-10-11 12:04:00+00:00,R_13_1C,Pre,1539301310093,Hand washing,Operator and Patient Preparation,249,254,1539302414925-video_1.3_CVC,Variant 1,1,Fluxicon Disco

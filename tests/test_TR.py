@@ -86,5 +86,11 @@ class testTransformers(unittest.TestCase):
         result = self.processTest(CONFIG_FOLDER + "csv2csv_join.json")
         self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
+    def test_csv_profile(self):
+        expected = {'S': '14', 
+                    'T': '14'}
+        result = self.processTest(CONFIG_FOLDER + "csv_profile.json")
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
+
 if __name__ == '__main__':
     unittest.main()
