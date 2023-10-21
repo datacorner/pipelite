@@ -10,7 +10,7 @@ import json
 CFGFILES_DSOBJECT = "profileTR.json"
 PARAM_PROFILEFILE = "filename"
 PARAM_MAXVALUECOUNTS = "maxvaluecounts"
-DEFAULT_PROFILEFILE = "default.profile"
+DEFAULT_PROFILEFILE = "pipelite.profile"
 
 class profileTR(BOTransformer):
 

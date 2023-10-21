@@ -4,8 +4,16 @@ __license__ = "MIT"
 
 import pandas as pd
 import pipelite.constants as C
-import json
 from collections import Counter
+import re
+import datetime
+import math
+
+REGEX_CARS = r'[a-zA-Z]'
+REGEX_NUMS = r'\d'
+REGEX_NOISE = r'[µ&#@^~]'
+REGEX_SPECCARS = r'[<>µ+=*&\'"#{}()|/\\@][]^~]'
+REGEX_PONCT = r'[,.;:?!]'
 
 class plDataset:
     """ This class encapsulate the data set management (currently Pandas DataFrames) 
@@ -170,15 +178,51 @@ class plDataset:
         newDatasetBloc.__content = self.__content.iloc[rowIndexfrom:rowIndexTo+1:,:]
         return newDatasetBloc
 
+    def getStringPattern(self, string):
+        """Returns the data pattern by replacing strings by S, digits by N and noises (special characters) by ?
+        Args:
+            string (str): data in input
+        Returns:
+            str: pattern
+        """
+        if (string == 'nan'):
+            return "NULL"
+        mystr = re.sub(REGEX_CARS, 'C', string)
+        mystr = re.sub(REGEX_NUMS, 'N', mystr)
+        mystr = re.sub(REGEX_NOISE, '?', mystr)
+        #mystr = re.sub(REGEX_PONCT, 'P', mystr)
+        return mystr
+
+    def getType(self, value):
+        """Returns the data type on the value in input
+        Args:
+            value (object): data
+        Returns:
+            str: type namen can be [ null, number, date, string, unknown]
+        """
+        if value is None:
+            return "null"
+        if isinstance(value, (int, float)):
+            if math.isnan(value):
+                return "null"
+            else:
+                return "number"
+        elif isinstance(value, str):
+            return "string"
+        elif isinstance(value, datetime.datetime):
+            return "date"
+        else:
+            return "unknown"
+
     def profile(self, maxvaluecounts=10) -> dict:
-        """Build a JSON whcih contains many basic profiling informations
+        """Build a JSON which contains some basic profiling informations
         Args:
             maxvaluecounts (int, optional): Limits the number of value_counts() return. Defaults to 10.
         Returns:
-            _type_: _description_
+            json: data profile in a JSON format
         """
         profile = {}
-        # Get stats per columns
+        # Get stats per columns/fields
         profileColumns = []
         for col in self.__content.columns:
             profileCol = {}
@@ -191,9 +235,18 @@ class plDataset:
             profileCol['null'] = int(self.__content[col].isnull().sum())
             profileCol['stats'] = self.__content[col].describe().to_dict()
             profileCol['value counts'] = dict(Counter(counts.to_dict()).most_common(maxvaluecounts))
+            # Get pattern for that column
+            dfProfPattern = pd.DataFrame()
+            dfProfPattern['profile'] = self.__content[col].apply(lambda x:self.getStringPattern(str(x)))
+            profileCol['pattern'] = dict(Counter(dfProfPattern['profile'].value_counts().to_dict()).most_common(maxvaluecounts))
+            # get types for that columns
+            dfProfType = pd.DataFrame()
+            dfProfType['types'] = self.__content[col].apply(lambda x:self.getType(x))
+            profileCol['types'] = dict(Counter(dfProfType['types'].value_counts().to_dict()).most_common(maxvaluecounts))
             profileColumns.append(profileCol)
         profile["rows count"] = self.count
         profile["columns count"] = len(self.__content.columns)
+        profile["columns names"] = [ name for name in self.__content.columns ]
         profile["columns"] = profileColumns
         return profile
 
