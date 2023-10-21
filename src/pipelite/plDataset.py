@@ -229,12 +229,12 @@ class plDataset:
             counts = self.__content[col].value_counts()
             profileCol['name'] = col
             profileCol['type'] = str(self.__content[col].dtypes)
-            profileCol['inferred type'] = str(self.__content[col].infer_objects().dtypes)
-            profileCol['distincts'] = int(len(counts))
+            profileCol['inferred'] = str(self.__content[col].infer_objects().dtypes)
+            profileCol['distinct'] = int(len(counts))
             profileCol['nan'] = int(self.__content[col].isna().sum())
             profileCol['null'] = int(self.__content[col].isnull().sum())
             profileCol['stats'] = self.__content[col].describe().to_dict()
-            profileCol['value counts'] = dict(Counter(counts.to_dict()).most_common(maxvaluecounts))
+            profileCol['top values'] = dict(Counter(counts.to_dict()).most_common(maxvaluecounts))
             # Get pattern for that column
             dfProfPattern = pd.DataFrame()
             dfProfPattern['profile'] = self.__content[col].apply(lambda x:self.getStringPattern(str(x)))

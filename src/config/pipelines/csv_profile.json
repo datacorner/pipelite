@@ -15,7 +15,6 @@
         "id": "T",
         "classname": "pipelite.transformers.profileTR",
         "inputs" : [ "S" ],
-        "outputs" : [ ],
         "parameters": {
             "filename" : "tests/data/out/testtp.profile",
             "maxvaluecounts": 20
@@ -26,7 +25,7 @@
             "level": "DEBUG",
             "format" : "%(asctime)s|%(name)s|%(levelname)s|%(message)s",
             "path": "logs/",
-            "filename" : "pipe_csv2csv.log",
+            "filename" : "pipe_csv_profile.log",
             "maxbytes" : 1000000
         }
     }

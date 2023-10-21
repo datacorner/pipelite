@@ -49,9 +49,12 @@ class profileTR(BOTransformer):
             etlDatasets: same as input
         """
         try :
-            for input in dsTransformerInputs:
+            for index, input in enumerate(dsTransformerInputs):
                 profile = input.profile(maxvaluecounts=self.maxvaluecounts)
-                with open(self.profileFile, "w") as outfile: 
+                filename = self.profileFile
+                if (index != 0):
+                    filename = self.profileFile.split(".")[0] + str(index) + "." + self.profileFile.split(".")[1]
+                with open(filename, "w") as outfile: 
                     json.dump(profile, outfile)
                 self.log.info("The data profile has been successfully generated in the file {}".format(self.profileFile))
             return plDatasets()
