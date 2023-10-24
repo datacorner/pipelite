@@ -11,7 +11,7 @@ The way this solution is built is also totally extensible and enables all develo
 ✅  [ODBC Data Sources (checked with SQL Server, SQLite) by using an configurable SQL query (Read Only)](https://github.com/datacorner/pipelite/wiki/odbcDS)  
 ✅  SAP Read Table via SAP RFC (Read Only)  
 
-##🚀 And provides those transformers
+##🚀 And provides those transformers  
 ✅ Change the Data Sources names (input/output) !  
 ✅ Concat 2 Data sources  
 ✅ Lookup with 2 data sources  
