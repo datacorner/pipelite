@@ -8,6 +8,7 @@ from collections import Counter
 import re
 import datetime
 import math
+from dateutil.parser import parse
 
 REGEX_CARS = r'[a-zA-Z]'
 REGEX_NUMS = r'\d'
@@ -208,7 +209,11 @@ class plDataset:
             else:
                 return "number"
         elif isinstance(value, str):
-            return "string"
+            try:
+                parse(value, fuzzy=False)
+                return "date"
+            except ValueError:
+                return "string"
         elif isinstance(value, datetime.datetime):
             return "date"
         else:
