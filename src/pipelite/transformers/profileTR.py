@@ -49,14 +49,19 @@ class profileTR(BOTransformer):
             etlDatasets: same as input
         """
         try :
+            globalprofile = []
             for index, input in enumerate(dsTransformerInputs):
+                self.log.info("Profiling Data Source {} ...".format(input.id))
+                subprofile = {}
                 profile = input.profile(maxvaluecounts=self.maxvaluecounts)
-                filename = self.profileFile
-                if (index != 0):
-                    filename = self.profileFile.split(".")[0] + str(index) + "." + self.profileFile.split(".")[1]
-                with open(filename, "w") as outfile: 
-                    json.dump(profile, outfile)
-                self.log.info("The data profile has been successfully generated in the file {}".format(self.profileFile))
+                subprofile['source'] = input.id
+                subprofile['profile'] = profile
+                globalprofile.append(subprofile) 
+            finalProfile = {}
+            finalProfile["sources"] = globalprofile
+            with open(self.profileFile, "w") as outfile: 
+                json.dump(finalProfile, outfile)
+            self.log.info("The data profile has been successfully generated in the file {}".format(self.profileFile))
             return plDatasets()
         except Exception as e:
             self.log.error("{}".format(str(e)))
