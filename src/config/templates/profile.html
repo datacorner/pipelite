@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <style>
+    body {
+      overflow-x: hidden;
+    }
+    #sidebar {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #fff;
+      padding-top: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    #content {
+      margin-left: 250px;
+      padding: 16px;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      color: #333;
+      text-decoration: none;
+      margin-bottom: 10px;
+	    margin-left: 10px;
+    }
+    .sidebar-link i {
+      margin-right: 10px;
+    }
+    .borderrow { 
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+      margin-right: 0px;
+	  }
+    /* Ajoutez du style personnalisé pour le tooltip ici */
+    .custom-tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .custom-tooltip .tooltip-content {
+      visibility: hidden;
+      width: 400px;
+      background-color: #333;
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 100;
+      bottom: 125%; /* Placez le tooltip au-dessus de l'élément parent */
+      left: 50%;
+      margin-left: -80px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .custom-tooltip:hover .tooltip-content {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+  <title>Pilelite Profiling</title>
+</head>
+<body>
+
+<div id="sidebar">
+
+  <div class="row sidebar-link">
+    <div class="col">
+      <H4><i class="fas fa-home"></i><A href="#" onclick="changeContent('home')">&nbsp;Datasets</A></i></H4>
+    </div>
+  </div>
+  {% for ds in profiles.sources -%}
+  <div class="row sidebar-link borderrow">
+    <div class="col-1 my-auto">
+      <i class="fas fa-info-circle"></i>
+    </div>
+    <div class="col-10 my-auto">
+      <div class="fw-bold"><A href="#" onclick="changeContent('{{ ds.id }}')">{{ ds.id }}</A></div>
+      <span class="badge badge-primary rounded-pill my-auto">{{ ds.profile["columns count"] }} cols</span>
+      <span class="badge badge-secondary rounded-pill my-auto">{{ ds.profile["rows count"] }} rows</span>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div id="content">
+  <div id="home" class="rightcontent">
+    <h2>Pipelite Profiling Result</h2>
+    <p></p>
+  </div>
+  {% for ds in profiles.sources -%}
+  <div id="{{ ds.id }}" class="rightcontent" style="display: none">
+    <h2><i class="fas fa-info-circle"></i>&nbsp;{{ ds.id }}</h2>
+    <div class="row">
+        <div class="col">
+          <OL>
+            <LI><B>Row Count:</B>&nbsp;{{ ds.profile["rows count"] }}</LI>
+            <LI><B>Columns Count:</B>&nbsp;{{ ds.profile["columns count"] }}</LI>
+          </OL>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <TABLE class="table table-sm table-hover">
+                <thead>
+                <TR>
+                    <TH data-sortable="true">Column Name</TH>
+                    <TH data-sortable="true">Type</TH>
+                    <TH data-sortable="true">Distinct</TH>
+                    <TH data-sortable="true">NaN</TH>
+                    <TH data-sortable="true">Null</TH>
+                    <TH data-sortable="true">Pattern</TH>
+                    <TH data-sortable="true">Types</TH>
+                    <TH data-sortable="true">Top Values</TH>
+                </TR>
+              </thead>
+              <tboby>
+              {% for col in ds.profile["columns"] -%}
+              <TR>
+                  <TD><B>{{ col["name"] }}</B></TD>
+                  <TD>{{ col["type"] }}</TD>
+                  <TD>{{ col["distinct"] }}</TD>
+                  <TD>{{ col["nan"] }}</TD>
+                  <TD>{{ col["null"] }}</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">{{ col["pattern"] | length}} patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          {% for pat in col["pattern"] -%}
+                              <LI>{{ pat }}</LI>
+                          {% endfor %}
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">{{ col["types"] | length}} types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          {% for pat in col["types"] -%}
+                              <LI>{{ pat }}</LI>
+                          {% endfor %}
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">{{ col["top values"] | length}} values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          {% for pat in col["top values"] -%}
+                              <LI>{{ pat }}</LI>
+                          {% endfor %}
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              {% endfor %}
+              </tboby>
+          </TABLE>
+        </div>
+      </div>
+      
+  </div>
+  {% endfor %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+
+<script>
+  function changeContent(divId) {
+    var allDivs = document.getElementsByClassName("rightcontent");
+    for (var i = 0; i < allDivs.length; i++) {
+      allDivs[i].style.display = "none";
+    }
+    var targetDiv = document.getElementById(divId);
+    targetDiv.style.display = "block";
+  }
+</script>
+
+</body>
+</html>

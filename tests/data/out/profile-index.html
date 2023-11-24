@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <style>
+    body {
+      overflow-x: hidden;
+    }
+    #sidebar {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #fff;
+      padding-top: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    #content {
+      margin-left: 250px;
+      padding: 16px;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      color: #333;
+      text-decoration: none;
+      margin-bottom: 10px;
+	    margin-left: 10px;
+    }
+    .sidebar-link i {
+      margin-right: 10px;
+    }
+    .borderrow { 
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+      margin-right: 0px;
+	  }
+    /* Ajoutez du style personnalisé pour le tooltip ici */
+    .custom-tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .custom-tooltip .tooltip-content {
+      visibility: hidden;
+      width: 400px;
+      background-color: #333;
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 100;
+      bottom: 125%; /* Placez le tooltip au-dessus de l'élément parent */
+      left: 50%;
+      margin-left: -80px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .custom-tooltip:hover .tooltip-content {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+  <title>Pilelite Profiling</title>
+</head>
+<body>
+
+<div id="sidebar">
+
+  <div class="row sidebar-link">
+    <div class="col">
+      <H4><i class="fas fa-home"></i><A href="#" onclick="changeContent('home')">&nbsp;Datasets</A></i></H4>
+    </div>
+  </div>
+  <div class="row sidebar-link borderrow">
+    <div class="col-1 my-auto">
+      <i class="fas fa-info-circle"></i>
+    </div>
+    <div class="col-10 my-auto">
+      <div class="fw-bold"><A href="#" onclick="changeContent('Source1')">Source1</A></div>
+      <span class="badge badge-primary rounded-pill my-auto">3 cols</span>
+      <span class="badge badge-secondary rounded-pill my-auto">3 rows</span>
+    </div>
+  </div>
+  <div class="row sidebar-link borderrow">
+    <div class="col-1 my-auto">
+      <i class="fas fa-info-circle"></i>
+    </div>
+    <div class="col-10 my-auto">
+      <div class="fw-bold"><A href="#" onclick="changeContent('TestExcel')">TestExcel</A></div>
+      <span class="badge badge-primary rounded-pill my-auto">16 cols</span>
+      <span class="badge badge-secondary rounded-pill my-auto">14 rows</span>
+    </div>
+  </div>
+  
+</div>
+
+<div id="content">
+  <div id="home" class="rightcontent">
+    <h2>Pipelite Profiling Result</h2>
+    <p></p>
+  </div>
+  <div id="Source1" class="rightcontent" style="display: none">
+    <h2><i class="fas fa-info-circle"></i>&nbsp;Source1</h2>
+    <div class="row">
+        <div class="col">
+          <OL>
+            <LI><B>Row Count:</B>&nbsp;3</LI>
+            <LI><B>Columns Count:</B>&nbsp;3</LI>
+          </OL>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <TABLE class="table table-sm table-hover">
+                <thead>
+                <TR>
+                    <TH data-sortable="true">Column Name</TH>
+                    <TH data-sortable="true">Type</TH>
+                    <TH data-sortable="true">Distinct</TH>
+                    <TH data-sortable="true">NaN</TH>
+                    <TH data-sortable="true">Null</TH>
+                    <TH data-sortable="true">Pattern</TH>
+                    <TH data-sortable="true">Types</TH>
+                    <TH data-sortable="true">Top Values</TH>
+                </TR>
+              </thead>
+              <tboby>
+              <TR>
+                  <TD><B>col1</B></TD>
+                  <TD>object</TD>
+                  <TD>3</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>C</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">3 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>a</LI>
+                          <LI>d</LI>
+                          <LI>g</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>col2</B></TD>
+                  <TD>object</TD>
+                  <TD>3</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>C</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">3 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>b</LI>
+                          <LI>e</LI>
+                          <LI>h</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>col3</B></TD>
+                  <TD>object</TD>
+                  <TD>3</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>C</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">3 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>c</LI>
+                          <LI>f</LI>
+                          <LI>i</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              
+              </tboby>
+          </TABLE>
+        </div>
+      </div>
+  </div>
+  <div id="TestExcel" class="rightcontent" style="display: none">
+    <h2><i class="fas fa-info-circle"></i>&nbsp;TestExcel</h2>
+    <div class="row">
+        <div class="col">
+          <OL>
+            <LI><B>Row Count:</B>&nbsp;14</LI>
+            <LI><B>Columns Count:</B>&nbsp;16</LI>
+          </OL>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <TABLE class="table table-sm table-hover">
+                <thead>
+                <TR>
+                    <TH data-sortable="true">Column Name</TH>
+                    <TH data-sortable="true">Type</TH>
+                    <TH data-sortable="true">Distinct</TH>
+                    <TH data-sortable="true">NaN</TH>
+                    <TH data-sortable="true">Null</TH>
+                    <TH data-sortable="true">Pattern</TH>
+                    <TH data-sortable="true">Types</TH>
+                    <TH data-sortable="true">Top Values</TH>
+                </TR>
+              </thead>
+              <tboby>
+              <TR>
+                  <TD><B>id</B></TD>
+                  <TD>float64</TD>
+                  <TD>12</TD>
+                  <TD>2</TD>
+                  <TD>2</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">3 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>N.N</LI>
+                          <LI>NN.N</LI>
+                          <LI>NULL</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>number</LI>
+                          <LI>null</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">12 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>0.0</LI>
+                          <LI>1.0</LI>
+                          <LI>2.0</LI>
+                          <LI>3.0</LI>
+                          <LI>4.0</LI>
+                          <LI>5.0</LI>
+                          <LI>7.0</LI>
+                          <LI>8.0</LI>
+                          <LI>9.0</LI>
+                          <LI>10.0</LI>
+                          <LI>12.0</LI>
+                          <LI>13.0</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>concept:name</B></TD>
+                  <TD>object</TD>
+                  <TD>6</TD>
+                  <TD>3</TD>
+                  <TD>3</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">7 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>CCCC CCCCCCC</LI>
+                          <LI>NULL</LI>
+                          <LI>CCCCCCCC CCCCCCCCCCCCCC</LI>
+                          <LI>CCC CC CCCCC</LI>
+                          <LI>CCC CC CCCCCCC CCCCCCC</LI>
+                          <LI>CCCCCCCC?CC CCCCCCCCCCCCC</LI>
+                          <LI>CCCCCCCCCC CCCCCCCCCCCCC</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          <LI>null</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">6 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>Hand washing</LI>
+                          <LI>Anatomic identification</LI>
+                          <LI>Gel in probe</LI>
+                          <LI>Get in sterile clothes</LI>
+                          <LI>Ultrasou&nd configuration</LI>
+                          <LI>Ultrasound configuration</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>lifecycle:transition</B></TD>
+                  <TD>object</TD>
+                  <TD>2</TD>
+                  <TD>2</TD>
+                  <TD>2</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">3 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>CCCCC</LI>
+                          <LI>CCCCCCCC</LI>
+                          <LI>NULL</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          <LI>null</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>start</LI>
+                          <LI>complete</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>org:resource</B></TD>
+                  <TD>object</TD>
+                  <TD>1</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>C_NN_NC</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>R_13_1C</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>time:timestamp</B></TD>
+                  <TD>object</TD>
+                  <TD>5</TD>
+                  <TD>1</TD>
+                  <TD>1</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>NNNN-NN-NN NN:NN:NN+NN:NN</LI>
+                          <LI>NULL</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>date</LI>
+                          <LI>null</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">5 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>2018-10-11 12:02:00+00:00</LI>
+                          <LI>2018-10-11 12:03:00+00:00</LI>
+                          <LI>2018-10-11 12:01:00+00:00</LI>
+                          <LI>2018-10-11 12:04:00+00:00</LI>
+                          <LI>2018-10-11 12:00:00+00:00</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>RESOURCE</B></TD>
+                  <TD>object</TD>
+                  <TD>1</TD>
+                  <TD>1</TD>
+                  <TD>1</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>C_NN_NC</LI>
+                          <LI>NULL</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          <LI>null</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>R_13_1C</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>ROUND</B></TD>
+                  <TD>object</TD>
+                  <TD>1</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>CCC</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>Pre</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>EVENTID</B></TD>
+                  <TD>int64</TD>
+                  <TD>7</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>NNNNNNNNNNNNN</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>number</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">7 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>1539301115461</LI>
+                          <LI>1539301145312</LI>
+                          <LI>1539301204591</LI>
+                          <LI>1539301214887</LI>
+                          <LI>1539301252286</LI>
+                          <LI>1539301297253</LI>
+                          <LI>1539301310093</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>ACTIVITY</B></TD>
+                  <TD>object</TD>
+                  <TD>5</TD>
+                  <TD>2</TD>
+                  <TD>2</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">6 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>CCCC CCCCCCC</LI>
+                          <LI>CCCCCCCCCC CCCCCCCCCCCCC</LI>
+                          <LI>NULL</LI>
+                          <LI>CCCCCCCCCCC CCCCCCCCCCCCCC</LI>
+                          <LI>CCC CC CCCCC</LI>
+                          <LI>CCC CC CCCCCCC CCCCCCC</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          <LI>null</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">5 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>Hand washing</LI>
+                          <LI>Ultrasound configuration</LI>
+                          <LI>Compression identification</LI>
+                          <LI>Gel in probe</LI>
+                          <LI>Get in sterile clothes</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>STAGE</B></TD>
+                  <TD>object</TD>
+                  <TD>3</TD>
+                  <TD>1</TD>
+                  <TD>1</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">4 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>CCCCCCCC CCC CCCCCCC CCCCCCCCCCC</LI>
+                          <LI>CCCCCCCCCC CCCCCCCCCCC</LI>
+                          <LI>CCCCCC CCCCCCCCCC</LI>
+                          <LI>NULL</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          <LI>null</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">3 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>Operator and Patient Preparation</LI>
+                          <LI>Ultrasound Preparation</LI>
+                          <LI>Locate Structures</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>VIDEOSTART</B></TD>
+                  <TD>int64</TD>
+                  <TD>7</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>NNN</LI>
+                          <LI>NN</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>number</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">7 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>55</LI>
+                          <LI>84</LI>
+                          <LI>143</LI>
+                          <LI>154</LI>
+                          <LI>191</LI>
+                          <LI>236</LI>
+                          <LI>249</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>VIDEOEND</B></TD>
+                  <TD>int64</TD>
+                  <TD>7</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">2 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>NNN</LI>
+                          <LI>NN</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>number</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">7 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>67</LI>
+                          <LI>137</LI>
+                          <LI>143</LI>
+                          <LI>154</LI>
+                          <LI>198</LI>
+                          <LI>244</LI>
+                          <LI>254</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>case:concept:name</B></TD>
+                  <TD>object</TD>
+                  <TD>1</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>NNNNNNNNNNNNN-CCCCC_N.N_CCC</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>1539302414925-video_1.3_CVC</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>case:variant</B></TD>
+                  <TD>object</TD>
+                  <TD>1</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>CCCCCCC N</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>Variant 1</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>case:variant-index</B></TD>
+                  <TD>int64</TD>
+                  <TD>1</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>N</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>number</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>1</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              <TR>
+                  <TD><B>case:creator</B></TD>
+                  <TD>object</TD>
+                  <TD>1</TD>
+                  <TD>0</TD>
+                  <TD>0</TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 patterns</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>CCCCCCCC CCCCC</LI>
+                          
+                          </UL>
+                      </div>
+                    </div>            
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 types</span>
+                      <div class="tooltip-content">
+                        Patterns:
+                        <UL>
+                          <LI>string</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+                  <TD>
+                    <div class="custom-tooltip">
+                      <span class="badge badge-primary rounded-pill my-auto">1 values</span>
+                      <div class="tooltip-content">
+                        Values:
+                        <UL>
+                          <LI>Fluxicon Disco</LI>
+                          
+                          </UL>
+                      </div>
+                    </div> 
+                  </TD>
+              </TR>
+              
+              </tboby>
+          </TABLE>
+        </div>
+      </div>
+  </div>
+  
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+
+<script>
+  function changeContent(divId) {
+    var allDivs = document.getElementsByClassName("rightcontent");
+    for (var i = 0; i < allDivs.length; i++) {
+      allDivs[i].style.display = "none";
+    }
+    var targetDiv = document.getElementById(divId);
+    targetDiv.style.display = "block";
+  }
+</script>
+
+</body>
+</html>

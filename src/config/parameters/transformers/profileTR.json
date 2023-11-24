@@ -4,8 +4,10 @@
     "title": "profile column Transformer Parameters",
       "type" : "object",
        "properties" : { 
+            "directory": {"type" : "string"},
             "filename": {"type" : "string"},
-            "maxvaluecounts": {"type" : "number"}
+            "maxvaluecounts": {"type" : "number"},
+            "output": {"type" : "string"}
         },
-       "required": []
+       "required": ["output"]
   }

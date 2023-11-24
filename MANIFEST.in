@@ -1,3 +1,4 @@
 include src/config/parameters/datasources/*.json
 include src/config/parameters/transformers/*.json
 include src/config/parameters/*.json
+include src/config/templates/*
