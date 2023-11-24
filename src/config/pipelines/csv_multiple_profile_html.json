@@ -15,9 +15,9 @@
         "id": "TestExcel",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
-            "separator": ",",
-            "filename": "testtp.csv",
-            "path": "tests/data/",
+            "separator": ";",
+            "filename": "Data_poc_process_activite (1) (1).csv",
+            "path": "tests/data/private/",
             "encoding": "utf-8"
         }   
     }  

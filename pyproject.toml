@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pipelite"
-version = "0.1.7.2"
+version = "0.1.7.4"
 authors = [
   { name="datacorner", email="admin@datacorner.fr" },
 ]

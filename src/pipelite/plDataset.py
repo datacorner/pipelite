@@ -113,6 +113,8 @@ class plDataset:
         """
         return self.__content.to_csv(header=True, 
                                      encoding=encoding, 
+                                     dtype=str,
+                                     low_memory=False,
                                      index=False)
 
     def concatWith(self, etlDatasetB, keys=None):
@@ -201,24 +203,27 @@ class plDataset:
         Returns:
             str: type namen can be [ null, number, date, string, unknown]
         """
-        if value is None:
-            return "null"
-        if isinstance(value, (int, float)):
-            if math.isnan(value):
+        try: 
+            if value is None:
                 return "null"
-            else:
-                return "number"
-        elif isinstance(value, str):
-            try:
-                parse(value, fuzzy=False)
+            if isinstance(value, (int, float)):
+                if math.isnan(value):
+                    return "null"
+                else:
+                    return "number"
+            elif isinstance(value, str):
+                try:
+                    parse(value, fuzzy=False)
+                    return "date"
+                except ValueError:
+                    return "string"
+            elif isinstance(value, datetime.datetime):
                 return "date"
-            except ValueError:
-                return "string"
-        elif isinstance(value, datetime.datetime):
-            return "date"
-        else:
+            else:
+                return "unknown"
+        except:
             return "unknown"
-
+        
     def profile(self, maxvaluecounts=10) -> dict:
         """Build a JSON which contains some basic profiling informations
         Args:
