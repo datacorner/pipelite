@@ -6,3 +6,5 @@ exe/*
 logs/*
 logs/pipe_csv2csv.log.1
 tests/data/testtp.profile
+MYNOTES
+src/pipelite.egg-info/*
