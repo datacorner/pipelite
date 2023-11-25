@@ -5,21 +5,12 @@ __license__ = "MIT"
 import pipelite.constants as C
 from pipelite.baseobjs.BOPipeline import BOPipeline
 from pipelite.utils.log import log
-from pipelite.etlBaseObject import etlBaseObject
+from pipelite.plBaseObject import plBaseObject
 from pipelite.utils.plReports import plReports
+from pipelite.plObject import plObject
 
-class pipelineProcess:
-	def __init__(self, config, log):
-		self.__config = config
-		self.__log = log
+class pipelineProcess(plObject):
 
-	@property
-	def config(self):
-		return self.__config
-	@property
-	def log(self) -> log:
-		return self.__log
-	
 	@staticmethod
 	def getLogger(config) -> log:
 		if (config != None):
@@ -70,7 +61,7 @@ class pipelineProcess:
 		try:
 			# Get the pipeline class to instantiate from the config
 			fullClassPath = self.config.getParameter(C.PLJSONCFG_PL_CLASSNAME, C.EMPTY)
-			pipelineObject = etlBaseObject.instantiate(fullClassPath, self.config, self.log)
+			pipelineObject = plBaseObject.instantiate(fullClassPath, self.config, self.log)
 			return pipelineObject
 		except Exception as e:
 			self.log.error("Error when loading the Data Source Factory: {}".format(str(e)))

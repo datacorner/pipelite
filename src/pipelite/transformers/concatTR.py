@@ -25,7 +25,7 @@ class concatTR(BOTransformer):
             int: Number of rows transformed
         """
         try:
-            output = plDataset()
+            output = plDataset(self.config, self.log)
             self.log.info("There are {} datasets to concatenate".format(dsTransformerInputs.count))
             for obj in dsTransformerInputs:
                 self.log.debug("Adding {} rows from the dataset {}".format(obj.count, obj.id))

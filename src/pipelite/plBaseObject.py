@@ -7,12 +7,12 @@ import pipelite.constants as C
 from jsonschema import validate
 import json
 import importlib.resources
+from pipelite.plObject import plObject
 
-class etlBaseObject:
+class plBaseObject(plObject):
     def __init__(self, config, log):
-        self.log = log
-        self.config = config    
-        self.id = C.EMPTY          # id of the object
+        super().__init__(config, log) 
+        self.id = C.EMPTY       # id of the object
         self.objtype = None     # E, T or L object
         self.executed = False   # the object has beedn executed
         self.order = 0          # Order of execution in the flow

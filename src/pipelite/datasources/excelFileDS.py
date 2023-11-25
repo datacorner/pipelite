@@ -54,7 +54,7 @@ class excelFileDS(BODataSource):
         """
         try:
             self.log.info("Extract the Dataset from the file: {}".format(self.filename))
-            dsExtract = plDataset()
+            dsExtract = plDataset(self.config, self.log)
             dsExtract.read_excel(self.filename, sheet=self.sheet)
             return dsExtract
         except Exception as e:

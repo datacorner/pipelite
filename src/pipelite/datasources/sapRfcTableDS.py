@@ -119,13 +119,13 @@ class sapRfcTableDS(BODataSource):
                     field_value = str(entry["WA"][idx:idx+length])
                     record[field_name] = field_value
                 records.append(record)
-            res = plDataset()
+            res = plDataset(self.config, self.log)
             res.set(records, defaultype=str)
             return res
 
         except Exception as e:
             self.log.error("{}".format(e))
-            return plDataset()
+            return plDataset(self.config, self.log)
 
     def read(self) -> plDataset:
         """ flaten the XES (XML format) and returns all the data in a etlDataset format
@@ -133,11 +133,11 @@ class sapRfcTableDS(BODataSource):
             etlDataset: data set
         """
         try:
-            dsExtract = plDataset()
+            dsExtract = plDataset(self.config, self.log)
             sapConn = self.__connectToSAP__()
             if (sapConn != None):
                 dsExtract = self.__callRFCReadTable(sapConn)
             return dsExtract
         except Exception as e:
             self.log.error("sapRfcDS.extract() Error while accessing the SAP RFC Table: ".format(e))
-            return plDataset()
+            return plDataset(self.config, self.log)

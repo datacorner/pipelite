@@ -4,9 +4,9 @@ __license__ = "MIT"
 
 from abc import abstractmethod
 from pipelite.plDatasets import plDatasets
-from pipelite.etlBaseObject import etlBaseObject
+from pipelite.plBaseObject import plBaseObject
 
-class BOTransformer(etlBaseObject):
+class BOTransformer(plBaseObject):
     """ The First transformer can manage several extractors but not the next. Transformers works in stack.
         Dataframe is after the 1st the way to manage the dataset in transformation.
     Args:

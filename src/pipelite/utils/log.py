@@ -6,6 +6,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import pipelite.constants as C
 import inspect
+import datetime
 
 class log:
 
@@ -37,7 +38,7 @@ class log:
         Args:
             message (str): message
         """
-        print(message)
+        print(str(datetime.datetime.now()) + " " + message)
     
     def buildMessage(self, callerInfo, msg): 
         """Build the message to log

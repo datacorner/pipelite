@@ -5,7 +5,7 @@ __license__ = "MIT"
 from pipelite.baseobjs.BODataSource import BODataSource 
 import pipelite.constants as C
 import pyodbc
-from pipelite.utils.SqlTemplate import SqlTemplate
+from pipelite.utils.sqlTemplate import sqlTemplate
 from pipelite.plDataset import plDataset
 
 # json validation Configuration 
@@ -50,7 +50,7 @@ class odbcDS(BODataSource):
         """
         try:
             self.connectionString = str(cfg.getParameter(CFGPARAMS_ODBC_CN, C.EMPTY))
-            template = SqlTemplate(self.log)
+            template = sqlTemplate(self.log)
             self.query = template.getQuery(cfg.getParameter(CFGPARAMS_ODBC_QUERY, C.EMPTY), 
                                            cfg.getParameter(CFGPARAMS_QUERY_PARAMETERS, {}))
             # checks
@@ -70,7 +70,7 @@ class odbcDS(BODataSource):
             pd.DataFrame(): dataset read
         """
         try:
-            dsExtract = plDataset()
+            dsExtract = plDataset(self.config, self.log)
             self.log.info("Connect to the ODBC Datasource ...")
             odbcConnection = pyodbc.connect(self.connectionString)
             self.log.info("Connected to ODBC Data source")
@@ -84,14 +84,14 @@ class odbcDS(BODataSource):
         
         except pyodbc.Error as e:
             self.log.error("Error while reading ODBC Data Source: Code: {} - Message: {}".format(e.args[0], e.args[1]))
-            return plDataset()
+            return plDataset(self.config, self.log)
         except Exception as e:
             self.log.error("Exception while reading ODBC Data Source: ".format(e))
             try:
                 odbcConnection.close()
             except:
                 pass
-            return plDataset()
+            return plDataset(self.config, self.log)
 
     def read(self) -> plDataset:
         """ Returns all the data in a DataFrame format

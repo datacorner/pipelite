@@ -2,12 +2,11 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
+from pipelite.plObject import plObject
 
-class plQueue():
+class plQueue(plObject):
     def __init__(self, config, log):
-        self.__config = config
-        self.__log = log
+        super().__init__()
         self.objects = [] # array of dpObject
-
 
     

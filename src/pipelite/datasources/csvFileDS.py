@@ -63,7 +63,7 @@ class csvFileDS(BODataSource):
         """
         try:
             self.log.info("Extract the Dataset from the file: {}".format(self.filename))
-            dsExtract = plDataset()
+            dsExtract = plDataset(self.config, self.log)
             dsExtract.read_csv(filename=self.filename, 
                                  encoding=self.encoding, 
                                  separator=self.separator)

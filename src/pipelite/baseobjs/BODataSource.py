@@ -2,11 +2,11 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.etlBaseObject import etlBaseObject
+from pipelite.plBaseObject import plBaseObject
 from pipelite.plDataset import plDataset
 from abc import abstractmethod
 
-class BODataSource(etlBaseObject):
+class BODataSource(plBaseObject):
 
     @abstractmethod
     def initialize(self, cfg) -> bool:
@@ -26,7 +26,7 @@ class BODataSource(etlBaseObject):
             etlDataset: Number of data read
         """
         self.log.error("This Data sources does not support reading/extracting")
-        return plDataset()
+        return plDataset(self.config, self.log)
 
     @abstractmethod
     def write(self, dataset) -> bool:

@@ -57,7 +57,7 @@ class folderDS(BODataSource):
             bool: False is any trouble when reading
             Only support xlsx, csv and xes files
         """
-        globaldf = plDataset()
+        globaldf = plDataset(self.config, self.log)
         try:
             # Get the whole list of files to read
             fileList = [f for f in Path(self.folder).glob(self.files)]
@@ -89,4 +89,4 @@ class folderDS(BODataSource):
         
         except Exception as e:
             self.log.error("{}".format(e))
-            return plDataset()
+            return plDataset(self.config, self.log)

@@ -4,23 +4,15 @@ __license__ = "MIT"
 
 import pandas as pd
 import pipelite.constants as C
-from collections import Counter
-import re
-import datetime
-import math
-from dateutil.parser import parse
+from pipelite.utils.datasetProfiler import datasetProfiler
+from pipelite.plObject import plObject
 
-REGEX_CARS = r'[a-zA-Z]'
-REGEX_NUMS = r'\d'
-REGEX_NOISE = r'[µ&#@^~]'
-REGEX_SPECCARS = r'[<>µ+=*&\'"#{}()|/\\@][]^~]'
-REGEX_PONCT = r'[,.;:?!]'
-
-class plDataset:
+class plDataset(plObject):
     """ This class encapsulate the data set management (currently Pandas DataFrames) 
         (here it's currently managed by using Pandas DataFrame)
     """
-    def __init__(self):
+    def __init__(self, config, log):
+        super().__init__(config, log) 
         self.id = C.EMPTY
         self.__content = pd.DataFrame() # encapsulate DataFrame
 
@@ -32,7 +24,7 @@ class plDataset:
         """
         return self.__content.columns
 
-    def applyTrans(self, toColumn, function):
+    def columnTransform(self, toColumn, function):
         self.__content[toColumn] = self.__content.apply(function, axis=1)
 
     def set(self, value, defaultype=None):
@@ -55,7 +47,7 @@ class plDataset:
         Returns:
             etlDataset: strict copy of the current dataset
         """
-        newDS = plDataset()
+        newDS = plDataset(self.config, self.log)
         newDS.id = self.id
         newDS.__content = self.__content.copy(deep=True)
         return newDS
@@ -177,87 +169,19 @@ class plDataset:
         Returns:
             _type_: _description_
         """
-        newDatasetBloc = plDataset()
+        newDatasetBloc = plDataset(self.config, self.log)
         newDatasetBloc.__content = self.__content.iloc[rowIndexfrom:rowIndexTo+1:,:]
         return newDatasetBloc
 
-    def getStringPattern(self, string):
-        """Returns the data pattern by replacing strings by S, digits by N and noises (special characters) by ?
-        Args:
-            string (str): data in input
-        Returns:
-            str: pattern
-        """
-        if (string == 'nan'):
-            return "NULL"
-        mystr = re.sub(REGEX_CARS, 'C', string)
-        mystr = re.sub(REGEX_NUMS, 'N', mystr)
-        mystr = re.sub(REGEX_NOISE, '?', mystr)
-        #mystr = re.sub(REGEX_PONCT, 'P', mystr)
-        return mystr
-
-    def getType(self, value):
-        """Returns the data type on the value in input
-        Args:
-            value (object): data
-        Returns:
-            str: type namen can be [ null, number, date, string, unknown]
-        """
-        try: 
-            if value is None:
-                return "null"
-            if isinstance(value, (int, float)):
-                if math.isnan(value):
-                    return "null"
-                else:
-                    return "number"
-            elif isinstance(value, str):
-                try:
-                    parse(value, fuzzy=False)
-                    return "date"
-                except ValueError:
-                    return "string"
-            elif isinstance(value, datetime.datetime):
-                return "date"
-            else:
-                return "unknown"
-        except:
-            return "unknown"
-        
     def profile(self, maxvaluecounts=10) -> dict:
         """Build a JSON which contains some basic profiling informations
         Args:
             maxvaluecounts (int, optional): Limits the number of value_counts() return. Defaults to 10.
         Returns:
-            json: data profile in a JSON format
+            json: data profile result in a JSON format
         """
-        profile = {}
-        # Get stats per columns/fields
-        profileColumns = []
-        for col in self.__content.columns:
-            profileCol = {}
-            counts = self.__content[col].value_counts()
-            profileCol['name'] = col
-            profileCol['type'] = str(self.__content[col].dtypes)
-            profileCol['inferred'] = str(self.__content[col].infer_objects().dtypes)
-            profileCol['distinct'] = int(len(counts))
-            profileCol['nan'] = int(self.__content[col].isna().sum())
-            profileCol['null'] = int(self.__content[col].isnull().sum())
-            profileCol['stats'] = self.__content[col].describe().to_dict()
-            profileCol['top values'] = dict(Counter(counts.to_dict()).most_common(maxvaluecounts))
-            # Get pattern for that column
-            dfProfPattern = pd.DataFrame()
-            dfProfPattern['profile'] = self.__content[col].apply(lambda x:self.getStringPattern(str(x)))
-            profileCol['pattern'] = dict(Counter(dfProfPattern['profile'].value_counts().to_dict()).most_common(maxvaluecounts))
-            # get types for that columns
-            dfProfType = pd.DataFrame()
-            dfProfType['types'] = self.__content[col].apply(lambda x:self.getType(x))
-            profileCol['types'] = dict(Counter(dfProfType['types'].value_counts().to_dict()).most_common(maxvaluecounts))
-            profileColumns.append(profileCol)
-        profile["rows count"] = self.count
-        profile["columns count"] = len(self.__content.columns)
-        profile["columns names"] = [ name for name in self.__content.columns ]
-        profile["columns"] = profileColumns
+        pf = datasetProfiler(self.__content, self.log)
+        profile = pf.run(self.id, maxvaluecounts)
         return profile
 
     def __getitem__(self, item):

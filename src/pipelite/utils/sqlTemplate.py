@@ -7,7 +7,7 @@ import pathlib
 from string import Template
 import os
 
-class SqlTemplate():
+class sqlTemplate():
     def __init__(self, log):
         self.__log__ = log
     

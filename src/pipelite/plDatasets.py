@@ -2,10 +2,10 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from .etlBaseObject import etlBaseObject
+from .plBaseObject import plBaseObject
 from .plDataset import plDataset
 
-class plDatasets(etlBaseObject):
+class plDatasets(plBaseObject):
     """ Manages a collection of etlDatasets
     Args:
         etlObject (app Object type): must be a Datasource object

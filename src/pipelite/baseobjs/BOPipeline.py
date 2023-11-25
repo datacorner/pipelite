@@ -3,11 +3,11 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.etlBaseObject import etlBaseObject
+from pipelite.plBaseObject import plBaseObject
 from abc import abstractmethod
 from pipelite.plConfig import plConfig
 from pipelite.utils.plReports import plReports
-from pipelite.etlBaseObject import etlBaseObject
+from pipelite.plBaseObject import plBaseObject
 
 ALL_OBJECTS = [C.PLJSONCFG_EXTRACTOR, C.PLJSONCFG_LOADER, C.PLJSONCFG_TRANSFORMER]
 
@@ -18,7 +18,7 @@ ALL_OBJECTS = [C.PLJSONCFG_EXTRACTOR, C.PLJSONCFG_LOADER, C.PLJSONCFG_TRANSFORME
         * Many Transformers
         * Many Loaders
 """
-class BOPipeline(etlBaseObject):
+class BOPipeline(plBaseObject):
     def __init__(self, config, log):
         super().__init__(config, log)
         # Note: ETL objects does not contain any data, just the pipeline specifications 
@@ -51,7 +51,7 @@ class BOPipeline(etlBaseObject):
     def extractorsNames(self):
         return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
     
-    def getObjectFromId(self, id) -> etlBaseObject:
+    def getObjectFromId(self, id) -> plBaseObject:
         """Returns the object with the id in parameter
         Args:
             id (str): object id(in the config file)
@@ -67,7 +67,7 @@ class BOPipeline(etlBaseObject):
     def report(self):
         return self.__report
 
-    def __instantiateETLObject(self, paramJSONPath, ObjItem) -> etlBaseObject:
+    def __instantiateETLObject(self, paramJSONPath, ObjItem) -> plBaseObject:
         """ Initialize an set one etl object one by one considering the configuration (can be a extractor, 
             loader or transformer)
         Args:
@@ -85,7 +85,7 @@ class BOPipeline(etlBaseObject):
                 raise Exception("Impossible to initialize the object")
             # instantiate & Init the object
             self.log.info("Instantiate Object: {}".format(dpConfig.className))
-            dsObj = etlBaseObject.instantiate(dpConfig.className, self.config, self.log)
+            dsObj = plBaseObject.instantiate(dpConfig.className, self.config, self.log)
             dsObj.id = dpConfig.id
             dsObj.objtype = paramJSONPath
             self.log.debug("Initialize Object: {}".format(dpConfig.className))

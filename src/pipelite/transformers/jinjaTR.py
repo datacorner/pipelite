@@ -55,8 +55,8 @@ class jinjaTR(BOTransformer):
             jinjaTemplate = Template(self.template)
             outputs = plDatasets()
             out = dsTransformerInputs[0].copy()
-            out.applyTrans(self.columnName, 
-                           lambda r: jinjaTemplate.render(r.to_dict() | self.constants))
+            out.columnTransform(self.columnName, 
+                                lambda r: jinjaTemplate.render(r.to_dict() | self.constants))
             out.id = self.dsOutputs[0]
             outputs.add(out)
             return outputs

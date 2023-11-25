@@ -59,7 +59,7 @@ class xesFileDS(BODataSource):
             etlDataset: data set
         """
         try:
-            dsExtract = plDataset()
+            dsExtract = plDataset(self.config, self.log)
             # Get the XES content (XML format)
             xmldata = open(self.filename, mode='r').read()
             # Extract/flatten XES data
@@ -69,7 +69,7 @@ class xesFileDS(BODataSource):
             return dsExtract
         except Exception as e:
             self.log.error("{}".format(e))
-            return plDataset()
+            return plDataset(self.config, self.log)
          
     def __getEventDetails(self, event, id):
         """ returns all columns for one event (in a list)
