@@ -1,0 +1,145 @@
+{
+    "classname" : "pipelite.pipelines.sequentialPL",
+    "extractors" : [ 
+        {
+        "id": "Claim Auto Current",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ",",
+            "filename": "Data_poc_process_ClaimAutoCurrent 2.csv",
+            "path": "tests/data/private",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "process activite",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_activite 2.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "Agregat",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_AGREGAT 1.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "VFV",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_ClaimVFV 1.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "Claim",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_Claim 2.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "Group Region Dim",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_GroupRegionDim 1.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "Indice Client",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_IndiceClient 2.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "Mission",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_Mission 2.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "Organization BU RegionDim",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_OrganizationBURegionDim 1.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "Transaction",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_transaction 2.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "UG Dim",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ";",
+            "filename": "Data_poc_process_UGDim 1.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    },
+    {
+        "id": "UG Transfer",
+        "classname": "pipelite.datasources.csvFileDS",
+        "parameters": {
+            "separator": ",",
+            "filename": "Data_poc_process_UgTransfert 2.csv",
+            "path": "tests/data/private/",
+            "encoding": "utf-8"
+        }   
+    } 
+    ],
+    "transformers":  [     
+    { 
+        "id": "T",
+        "classname": "pipelite.transformers.profileTR",
+        "inputs" : [ "Claim Auto Current", "Agregat", "process activite", "VFV", "Group Region Dim", "Indice Client", "Mission", "Organization BU RegionDim", "Transaction", "UG Dim", "UG Transfer" ],
+        "parameters": {
+            "directory" : "tests/data/out",
+            "maxvaluecounts": 10,
+            "output": "html"
+        }
+    }],
+    "config": {
+        "logger" : {
+            "level": "DEBUG",
+            "format" : "%(asctime)s|%(name)s|%(levelname)s|%(message)s",
+            "path": "logs/",
+            "filename" : "pipe_multiple_profile_html.log",
+            "maxbytes" : 1000000
+        }
+    }
+} 

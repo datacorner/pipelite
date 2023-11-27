@@ -20,6 +20,7 @@
       background-color: #fff;
       padding-top: 20px;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
     }
     #content {
       margin-left: 250px;
@@ -54,7 +55,7 @@
 
   <div class="row sidebar-link">
     <div class="col">
-      <H4><i class="fas fa-home"></i><A href="#" onclick="changeContent('home')">&nbsp;Datasets</A></i></H4>
+      <H5><i class="fas fa-home"></i><A href="#" onclick="changeContent('home')">&nbsp;Pipelite Profiling</A></i></H5>
     </div>
   </div>
   {% for ds in profiles.sources -%}
@@ -86,110 +87,109 @@
             <LI><B>Columns Count:</B>&nbsp;{{ ds.profile["columns count"] }}</LI>
           </OL>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-9">
-          <TABLE class="table table-sm table-hover" id="maintable">
-                <thead>
-                <TR">
-                    <TH data-sortable="true">Column Name</TH>
-                    <TH data-sortable="true">Type</TH>
-                    <TH data-sortable="true">Distinct</TH>
-                    <TH data-sortable="true">NaN</TH>
-                    <TH data-sortable="true">Null</TH>
-                    <TH data-sortable="true">Pattern</TH>
-                    <TH data-sortable="true">Types</TH>
-                    <TH data-sortable="true">Top Values</TH>
-                </TR>
-              </thead>
-              <tboby>
-              {% for col in ds.profile["columns"] -%}
-              <TR onclick="changeColumnDetail('{{ col.name }}'); highlightRow(this);">
-                  <TD><B>{{ col["name"] }}</B></TD>
-                  <TD>{{ col["type"] }}</TD>
-                  <TD>{{ col["distinct"] }}</TD>
-                  <TD>{{ col["nan"] }}</TD>
-                  <TD>{{ col["null"] }}</TD>
-                  <TD>
-                    <div>
-                      <span class="badge text-bg-primary">{{ col["pattern"] | length}} patterns</span>
-                    </div>            
-                  </TD>
-                  <TD>
-                    <div>
-                      <span class="badge text-bg-primary">{{ col["types"] | length}} types</span>
-                    </div> 
-                  </TD>
-                  <TD>
-                    <div>
-                      <span class="badge text-bg-primary">{{ col["top values"] | length}} values</span>
-                    </div> 
-                  </TD>
+    </div>
+    <div class="row">
+      <div class="col-9">
+        <TABLE class="table table-sm table-hover" id="maintable">
+              <thead>
+              <TR>
+                  <TH>Column Name</TH>
+                  <TH>Type</TH>
+                  <TH>Distinct</TH>
+                  <TH>NaN</TH>
+                  <TH>Null</TH>
+                  <TH>Pattern</TH>
+                  <TH>Types</TH>
+                  <TH>Top Values</TH>
               </TR>
-              {% endfor %}
-              </tboby>
-          </TABLE>
-        </div>
-        <div class="col-3">
-          {% for col in ds.profile["columns"] -%}
-          <div class="detailprofiling" id="{{ col.name }}" style="display: none">
-            <h5 id="colTitle"><i class="fas fa-search"></i>&nbsp;{{ col.name }}</h5>
-            <div class="accordion" id="profDetails">
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                    <B>Patterns</B>
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#profDetails" style="">
-                  <div class="accordion-body">
-                      <UL>
-                        {% for pat in col["pattern"] -%}
-                            <LI>{{ pat }} ({{ col["pattern"][pat] }}) </LI>
-                        {% endfor %}
-                      </UL>
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    <B>Data Types</B>
-                  </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#profDetails" style="">
-                  <div class="accordion-body">
+            </thead>
+            <tbody>
+            {% for col in ds.profile["columns"] -%}
+            <TR onclick="changeColumnDetail('{{ col.name }}'); highlightRow(this);">
+                <TD><B>{{ col["name"] }}</B></TD>
+                <TD>{{ col["type"] }}</TD>
+                <TD>{{ col["distinct"] }}</TD>
+                <TD>{{ col["nan"] }}</TD>
+                <TD>{{ col["null"] }}</TD>
+                <TD>
+                  <div>
+                    <span class="badge text-bg-primary">{{ col["pattern"] | length}} patterns</span>
+                  </div>            
+                </TD>
+                <TD>
+                  <div>
+                    <span class="badge text-bg-primary">{{ col["types"] | length}} types</span>
+                  </div> 
+                </TD>
+                <TD>
+                  <div>
+                    <span class="badge text-bg-primary">{{ col["top values"] | length}} values</span>
+                  </div> 
+                </TD>
+            </TR>
+            {% endfor %}
+            </tbody>
+        </TABLE>
+      </div>
+      <div class="col-3">
+        {% for col in ds.profile["columns"] -%}
+        <div class="detailprofiling" id="{{ col.name }}" style="display: none">
+          <h5 id="colTitle"><i class="fas fa-search"></i>&nbsp;{{ col.name }}</h5>
+          <div class="accordion" id="profDetails">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  <B>Patterns</B>
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#profDetails" style="">
+                <div class="accordion-body">
                     <UL>
-                      {% for pat in col["types"] -%}
-                          <LI>{{ pat }} ({{ col["types"][pat] }}) </LI>
+                      {% for pat in col["pattern"] -%}
+                          <LI>{{ pat }} ({{ col["pattern"][pat] }}) </LI>
                       {% endfor %}
-                    </UL> 
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  <B>Top Values</B>
-                  </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#profDetails" style="">
-                  <div class="accordion-body">
-                    <UL>
-                      {% for pat in col["top values"] -%}
-                          <LI>{{ pat }} ({{ col["top values"][pat] }}) </LI>
-                      {% endfor %}
-                    </UL> 
-                  </div>
+                    </UL>
                 </div>
               </div>
             </div>
-
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <B>Data Types</B>
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#profDetails" style="">
+                <div class="accordion-body">
+                  <UL>
+                    {% for pat in col["types"] -%}
+                        <LI>{{ pat }} ({{ col["types"][pat] }}) </LI>
+                    {% endfor %}
+                  </UL> 
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <B>Top Values</B>
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#profDetails" style="">
+                <div class="accordion-body">
+                  <UL>
+                    {% for pat in col["top values"] -%}
+                        <LI>{{ pat }} ({{ col["top values"][pat] }}) </LI>
+                    {% endfor %}
+                  </UL> 
+                </div>
+              </div>
+            </div>
           </div>
-          {% endfor %}
+
         </div>
+        {% endfor %}
       </div>
+    </div>
       
   </div>
   {% endfor %}
