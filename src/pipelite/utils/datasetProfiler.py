@@ -92,10 +92,11 @@ class datasetProfiler:
         # Get stats per columns/fields
         self.log.info("Profile Data Source {} ...".format(datasourceid))
         profileColumns = []
-        for col in df.columns:
+        for idx, col in enumerate(df.columns):
             self.log.debug("Profile Column {} ...".format(col))
             profileCol = {}
             counts = df[col].value_counts()
+            profileCol['id'] = str(idx)
             profileCol['name'] = col
             profileCol['type'] = str(df[col].dtypes)
             profileCol['inferred'] = str(df[col].infer_objects().dtypes)

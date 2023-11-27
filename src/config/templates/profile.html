@@ -133,60 +133,48 @@
       </div>
       <div class="col-3">
         {% for col in ds.profile["columns"] -%}
-        <div class="detailprofiling" id="{{ col.name }}" style="display: none">
-          <h5 id="colTitle"><i class="fas fa-search"></i>&nbsp;{{ col.name }}</h5>
-          <div class="accordion" id="profDetails">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                  <B>Patterns</B>
-                </button>
-              </h2>
-              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#profDetails" style="">
-                <div class="accordion-body">
+          <div class="detailprofiling" id="{{ col.name }}" style="display: none">
+            <h5 id="colTitle"><i class="fas fa-search"></i>&nbsp;{{ col.name }}</h5>
+            <div class="m-4">
+              <ul class="nav nav-tabs" id="myTab">
+                  <li class="nav-item">
+                      <a href="#pattern-{{ col.id }}" class="nav-link active" data-bs-toggle="tab">Patterns</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#types-{{ col.id }}" class="nav-link" data-bs-toggle="tab">Types</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#top-{{ col.id }}" class="nav-link" data-bs-toggle="tab">Top Values</a>
+                  </li>
+              </ul>
+              <div class="tab-content">
+                  <div class="tab-pane fade show active" id="pattern-{{ col.id }}">
+                    <br/>
                     <UL>
                       {% for pat in col["pattern"] -%}
                           <LI>{{ pat }} ({{ col["pattern"][pat] }}) </LI>
                       {% endfor %}
                     </UL>
-                </div>
+                  </div>
+                  <div class="tab-pane fade" id="types-{{ col.id }}">
+                    <br/>
+                    <UL>
+                      {% for pat in col["types"] -%}
+                          <LI>{{ pat }} ({{ col["types"][pat] }}) </LI>
+                      {% endfor %}
+                    </UL> 
+                  </div>
+                  <div class="tab-pane fade" id="top-{{ col.id }}">
+                    <br/>
+                    <UL>
+                      {% for pat in col["top values"] -%}
+                          <LI>{{ pat }} ({{ col["top values"][pat] }}) </LI>
+                      {% endfor %}
+                    </UL> 
+                  </div>
               </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  <B>Data Types</B>
-                </button>
-              </h2>
-              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#profDetails" style="">
-                <div class="accordion-body">
-                  <UL>
-                    {% for pat in col["types"] -%}
-                        <LI>{{ pat }} ({{ col["types"][pat] }}) </LI>
-                    {% endfor %}
-                  </UL> 
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                <B>Top Values</B>
-                </button>
-              </h2>
-              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#profDetails" style="">
-                <div class="accordion-body">
-                  <UL>
-                    {% for pat in col["top values"] -%}
-                        <LI>{{ pat }} ({{ col["top values"][pat] }}) </LI>
-                    {% endfor %}
-                  </UL> 
-                </div>
-              </div>
-            </div>
           </div>
-
-        </div>
+          </div>
         {% endfor %}
       </div>
     </div>
