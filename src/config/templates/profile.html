@@ -113,17 +113,17 @@
                 <TD>{{ col["null"] }}</TD>
                 <TD>
                   <div>
-                    <span class="badge text-bg-primary">{{ col["pattern"] | length}} patterns</span>
+                    <span class="badge text-bg-secondary">{{ col["pattern"] | length}} patterns</span>
                   </div>            
                 </TD>
                 <TD>
                   <div>
-                    <span class="badge text-bg-primary">{{ col["types"] | length}} types</span>
+                    <span class="badge text-bg-secondary">{{ col["types"] | length}} types</span>
                   </div> 
                 </TD>
                 <TD>
                   <div>
-                    <span class="badge text-bg-primary">{{ col["top values"] | length}} values</span>
+                    <span class="badge text-bg-secondary">{{ col["top values"] | length}} values</span>
                   </div> 
                 </TD>
             </TR>
@@ -138,39 +138,51 @@
             <div class="m-4">
               <ul class="nav nav-tabs" id="myTab">
                   <li class="nav-item">
-                      <a href="#pattern-{{ col.id }}" class="nav-link active" data-bs-toggle="tab">Patterns</a>
+                      <a href="#pattern-{{ ds.id + "-" + col.id }}" class="nav-link active" data-bs-toggle="tab">Patterns</a>
                   </li>
                   <li class="nav-item">
-                      <a href="#types-{{ col.id }}" class="nav-link" data-bs-toggle="tab">Types</a>
+                      <a href="#types-{{ ds.id + "-" + col.id }}" class="nav-link" data-bs-toggle="tab">Types</a>
                   </li>
                   <li class="nav-item">
-                      <a href="#top-{{ col.id }}" class="nav-link" data-bs-toggle="tab">Top Values</a>
+                      <a href="#top-{{ ds.id + "-" + col.id }}" class="nav-link" data-bs-toggle="tab">Top Values</a>
                   </li>
               </ul>
               <div class="tab-content">
-                  <div class="tab-pane fade show active" id="pattern-{{ col.id }}">
-                    <br/>
-                    <UL>
+                  <div class="tab-pane fade show active" id="pattern-{{ ds.id + "-" + col.id }}">
+                    <UL class="list-group">
                       {% for pat in col["pattern"] -%}
-                          <LI>{{ pat }} ({{ col["pattern"][pat] }}) </LI>
+                        <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">{{ pat }}</div>
+                          </div>
+                          <span class="badge text-bg-primary">{{ col["pattern"][pat] }}</span> 
+                        </li>                   
                       {% endfor %}
                     </UL>
                   </div>
-                  <div class="tab-pane fade" id="types-{{ col.id }}">
-                    <br/>
-                    <UL>
+                  <div class="tab-pane fade" id="types-{{ ds.id + "-" + col.id }}">
+                    <UL class="list-group">
                       {% for pat in col["types"] -%}
-                          <LI>{{ pat }} ({{ col["types"][pat] }}) </LI>
+                        <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">{{ pat }}</div>
+                          </div>
+                          <span class="badge text-bg-primary">{{ col["types"][pat] }}</span> 
+                        </li>                   
                       {% endfor %}
-                    </UL> 
+                    </UL>
                   </div>
-                  <div class="tab-pane fade" id="top-{{ col.id }}">
-                    <br/>
-                    <UL>
+                  <div class="tab-pane fade" id="top-{{ ds.id + "-" + col.id }}">
+                    <UL class="list-group">
                       {% for pat in col["top values"] -%}
-                          <LI>{{ pat }} ({{ col["top values"][pat] }}) </LI>
+                        <li class="list-group-item d-flex justify-content-between align-items-start border-0">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">{{ pat }}</div>
+                          </div>
+                          <span class="badge text-bg-primary">{{ col["top values"][pat] }}</span> 
+                        </li>                   
                       {% endfor %}
-                    </UL> 
+                    </UL>
                   </div>
               </div>
           </div>
