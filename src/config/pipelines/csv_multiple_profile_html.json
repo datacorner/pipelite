@@ -12,11 +12,11 @@
         }   
     },
     {
-        "id": "Data poc process activite",
+        "id": "process activite",
         "classname": "pipelite.datasources.csvFileDS",
         "parameters": {
             "separator": ";",
-            "filename": "Data_poc_process_activite (1) (1).csv",
+            "filename": "Data_poc_process_activite (1) (1 LIGHT).csv",
             "path": "tests/data/private/",
             "encoding": "utf-8"
         }   
@@ -26,10 +26,10 @@
     { 
         "id": "T",
         "classname": "pipelite.transformers.profileTR",
-        "inputs" : [ "Source A", "Data poc process activite" ],
+        "inputs" : [ "Source A", "process activite" ],
         "parameters": {
             "directory" : "tests/data/out",
-            "maxvaluecounts": 5,
+            "maxvaluecounts": 10,
             "output": "html"
         }
     }],

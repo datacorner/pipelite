@@ -20,6 +20,7 @@ DEFAULT_PROFILEFILE = "pipelite.profile"
 OUTPUT_JSON = "json"
 OUTPUT_HTML = "html"
 DEFAULT_OUTPUT = OUTPUT_JSON
+DEFAULT_PROFILE_FILENAME = "profile-index.html"
 OUTPUT_ACCEPTED = [ OUTPUT_JSON, OUTPUT_HTML ]
 
 class profileTR(BOTransformer):
@@ -41,7 +42,7 @@ class profileTR(BOTransformer):
             bool: False if error
         """
         try:
-            self.profileFile = params.getParameter(PARAM_PROFILEFILE)
+            self.profileFile = params.getParameter(PARAM_PROFILEFILE, DEFAULT_PROFILE_FILENAME)
             self.maxvaluecounts = params.getParameter(PARAM_MAXVALUECOUNTS)
             self.output = params.getParameter(PARAM_OUTPUT, DEFAULT_OUTPUT)
             self.directory = params.getParameter(PARAM_PROFILEDIR, C.EMPTY)
@@ -79,10 +80,10 @@ class profileTR(BOTransformer):
             if (not os.path.isdir(self.directory)):
                 self.log.info("Create the directory {}".format(self.directory))
                 os.makedirs(self.directory)
-            # Export the result in a JSON file
+            fullFilename = os.path.join(self.directory, self.profileFile)
             if (self.output == OUTPUT_JSON):
+                # Export the result in a JSON file
                 self.log.info("Export the profile as a JSON file ...")
-                fullFilename = os.path.join(self.directory, self.profileFile)
                 with open(fullFilename, "w") as outfile: 
                     json.dump(finalProfile, outfile)
                 self.log.info("The JSON data profile has been successfully generated in the file {}".format(self.profileFile))
@@ -94,7 +95,6 @@ class profileTR(BOTransformer):
                 j2_template = Template(templateContent)
                 htmlContent = j2_template.render(profiles=finalProfile, 
                                                  sample=input.head(10)) # profiles = Jinja2 variable inside the template file
-                fullFilename = os.path.join(self.directory, "profile-index.html")
                 with open(fullFilename, "w") as fileIndex:
                     fileIndex.write(htmlContent)
                     self.log.info("The HTML data profile {} has been successfully generated in the directory {}".format(fullFilename, self.directory))
