@@ -128,7 +128,7 @@
         "classname": "pipelite.transformers.profileTR",
         "inputs" : [ "Claim Auto Current", "Agregat", "process activite", "VFV", "Group Region Dim", "Indice Client", "Mission", "Organization BU RegionDim", "Transaction", "UG Dim", "UG Transfer" ],
         "parameters": {
-            "directory" : "tests/data/out",
+            "directory" : "tests/data/private/",
             "maxvaluecounts": 10,
             "output": "html"
         }
