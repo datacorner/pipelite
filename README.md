@@ -9,11 +9,11 @@ The way this solution is built is also totally extensible and enables all develo
 ✅  [External Excel Spreadsheet (xls, xlsx, xlsm, xlsb, odf, ods and odt) (read only)](https://github.com/datacorner/pipelite/wiki/excelFileDS)  
 ✅  [External XES File (read only)](https://github.com/datacorner/pipelite/wiki/xesFileDS)  
 ✅  [ODBC Data Sources (checked with SQL Server, SQLite) by using an configurable SQL query (Read Only)](https://github.com/datacorner/pipelite/wiki/odbcDS)  
-✅  SAP Read Table via SAP RFC (Read Only)  
-✅  ABBYY Timeline PI (write only in Repository)  
+✅  [SAP Read Table via SAP RFC (Read Only)](https://github.com/datacorner/pipelite/wiki/sapDS)  
+✅  [ABBYY Timeline PI (write only in Repository)](https://github.com/datacorner/pipelite/wiki/piDS)  
 
 ## And provides those transformers  
-✅ [Pass Through (Ex. just to change the Data Sources names IN-OUT)](passthroughTR)  
+✅ [Pass Through (Ex. just to change the Data Sources names IN-OUT)](https://github.com/datacorner/pipelite/wiki/passthroughTR)  
 ✅ Concat 2 Data sources  
 ✅ Lookup with 2 data sources  
 ✅ Joins (left, right, outer or inner) joins    
