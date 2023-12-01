@@ -6,6 +6,7 @@ import pandas as pd
 import pipelite.constants as C
 from pipelite.utils.datasetProfiler import datasetProfiler
 from pipelite.plObject import plObject
+import csv
 
 class plDataset(plObject):
     """ This class encapsulate the data set management (currently Pandas DataFrames) 
@@ -97,16 +98,14 @@ class plDataset(plObject):
     
     def get_csv(self, encoding=C.ENCODING):
         """return the csv content
-
         Args:
             encoding (_type_, optional): encoding content. Defaults to C.ENCODING UTF-8
         Returns:
             str: csv content
         """
         return self.__content.to_csv(header=True, 
+                                     quoting=csv.QUOTE_ALL,
                                      encoding=encoding, 
-                                     dtype=str,
-                                     low_memory=False,
                                      index=False)
 
     def concatWith(self, etlDatasetB, keys=None):

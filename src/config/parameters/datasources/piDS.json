@@ -1,0 +1,15 @@
+{
+  "$id": "https://example.com/person.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ABBYY Timeline DataSource Parameters",
+  "type" : "object",
+    "properties" : { 
+          "server": {"type" : "string"},
+          "token": {"type" : "string"},
+          "table": {"type" : "string"},
+          "todos": {"type" : "array"}
+      },
+    "required": ["server", 
+                "token", 
+                "table"]
+}

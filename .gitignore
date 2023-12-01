@@ -9,3 +9,4 @@ tests/data/testtp.profile
 MYNOTES
 src/pipelite.egg-info/*
 tests/data/private/*
+src/config/pipelines/private/*
