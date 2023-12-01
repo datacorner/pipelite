@@ -30,3 +30,6 @@ just use pip by typing
 ```
     pip install pipelite
 ```
+# ... and use it !
+
+[See here](https://github.com/datacorner/pipelite/wiki/run)
