@@ -14,3 +14,4 @@ def main() -> None:
 	log = pipelineProcess.getLogger(config)
 	# Execute the pipeline 
 	pipelineProcess(config, log).process()
+	return log.errorCounts

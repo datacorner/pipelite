@@ -181,5 +181,7 @@ class sequentialPL(BOPipeline):
     def terminate(self) -> bool:
         # Display report
         self.log.info("Pipeline Report \n\n{}\n ".format(self.report.getFullSTRReport()))
+        self.log.info("Warnings: {}".format(self.log.warningCounts))
+        self.log.info("Errors: {}\n".format(self.log.errorCounts))
         self.log.info("*** End of Job treatment ***")
         return True

@@ -32,7 +32,22 @@ class log:
             loglevel = logging.ERROR
         self.__logger.setLevel(loglevel)
         self.__logger.addHandler(logHandler)
+        self.__warnings = []
+        self.__errors = []
 
+    @property
+    def warnings(self) -> list:
+        return self.__warnings
+    @property
+    def errors(self) -> list:
+        return self.__errors
+    @property
+    def warningCounts(self) -> int:
+        return len(self.__warnings)
+    @property
+    def errorCounts(self) -> int:
+        return len(self.__errors)
+    
     def consoleOutput(self, message):
         """Just display the message in the console output
         Args:
@@ -80,6 +95,7 @@ class log:
         final_message = self.buildMessage(self.getCallerInfo(), message)
         self.consoleOutput("ERROR|" + final_message)
         self.__logger.error(final_message)
+        self.__errors.append(final_message)
 
     def debug(self, *message):
         final_message = self.buildMessage(self.getCallerInfo(), message)
@@ -90,3 +106,4 @@ class log:
         final_message = self.buildMessage(self.getCallerInfo(), message)
         self.consoleOutput("WARNING|" + final_message)
         self.__logger.warning(final_message)
+        self.__warnings.append(final_message)
