@@ -1,8 +1,21 @@
 ![](logo_transp_med.png)
 # The pipelite Project
-The purpose of this solution is to build and execute Data Pipelines. Nothing new under the sun of course, however it aims to make this task very simple and by just using the configuration to build those pipelines.  
-**So in short ... pipelite is a Data Pipeline solution by design !**  
-The way this solution is built is also totally extensible and enables all developers to extend its capabilities by addin new Data connectors and/or data pipelite.transformers.  
+Empower your data workflows effortlessly with **pipelite**, a lightweight Python program designed for seamless **data pipeline creation and execution**. Using a simple JSON configuration, users can build complex pipelines without writing code. What sets pipelite apart is its total extensibility—anyone can easily create and integrate new connectors or transformations, enhancing the program's capabilities. 
+
+It's also possible to add new way to manage the flow of the transformations if needed. With a MIT license fostering collaboration, this flexible tool is perfect for users of all levels. Craft, execute, and extend your data pipelines with **pipelite**, your go-to solution for adaptable and scalable data processing.
+
+**Some characteristics:**
+* Simple JSON configuration
+* Lightweight and code-free (MIT license for flexibility)
+* Python Code (leverage the basics libraries instead addind many heavy and complex libs) 
+* Effortless pipeline creation and high integrability thanks to the json configuration
+* Streamlined execution process
+* Total extensibility (connectivity, transformation, pipeline management)
+* Boost data processing efficiency
+* Quick learning curve
+* Empower your data workflows in a simple way
+
+So in one word ... pipelite is your extensible solution for dynamic data pipelines.
 
 ## Currently this solution provides data access and load from these data sources :  
 ✅  [External file (csv)](https://github.com/datacorner/pipelite/wiki/csvFileDS)  
@@ -29,6 +42,6 @@ just use pip by typing
 ```
     pip install pipelite
 ```
-# ... and use it !
+# ... and just use it !
 
 [See here](https://github.com/datacorner/pipelite/wiki/run)
