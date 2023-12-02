@@ -15,12 +15,11 @@ The way this solution is built is also totally extensible and enables all develo
 ## And provides those transformers  
 ✅ [Pass Through (Ex. just to change the Data Sources names IN-OUT)](https://github.com/datacorner/pipelite/wiki/passthroughTR)  
 ✅ [Dataset Profiling](https://github.com/datacorner/pipelite/wiki/profileTR)  
-✅ Concat 2 Data sources  
-✅ Lookup with 2 data sources  
-✅ Joins (left, right, outer or inner) joins    
-✅ Substring from a column  
-✅ Changing column names  
-✅ Managing column transformation (by using jinja)  
+✅ [Concat 2 Data sources](https://github.com/datacorner/pipelite/wiki/concatTR)  
+✅ [Join data sources](https://github.com/datacorner/pipelite/wiki/joinTR)  
+✅ [SubString](https://github.com/datacorner/pipelite/wiki/extractstrTR)  
+✅ [Rename Column Name](https://github.com/datacorner/pipelite/wiki/renamecolTR)  
+✅ [Column Transformation](https://github.com/datacorner/pipelite/wiki/jinjaTR)  
 
 [Jump to the wiki from here](https://github.com/datacorner/pipelite/wiki)
 
