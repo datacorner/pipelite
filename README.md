@@ -45,3 +45,15 @@ just use pip by typing
 # ... and just use it !
 
 [See here](https://github.com/datacorner/pipelite/wiki/run)
+
+# External modules
+
+* **[jinja2](https://pypi.org/project/Jinja2/)** BSD-3-Clause license
+* **[jsonschema](https://pypi.org/project/jsonschema/)** MIT License (MIT)
+* **[jsonpath-ng](https://pypi.org/project/jsonpath-ng/)** Apache Software License (Apache 2.0)
+* **[xmltodict](https://pypi.org/project/xmltodict/)** MIT License (MIT)
+* **[requests](https://pypi.org/project/requests/)** Apache Software License (Apache 2.0)
+* **[pyrfc](https://pypi.org/project/pyrfc/)** Apache Software License (Apache 2.0)
+* **[pyodbc](https://pypi.org/project/pyodbc/)** MIT License (MIT)
+* **[openpyxl](https://pypi.org/project/openpyxl/)** MIT License (MIT)
+* **[pandas](https://pypi.org/project/pandas/)** BSD 3-Clause License
