@@ -21,7 +21,7 @@ The way this solution is built is also totally extensible and enables all develo
 ✅ [Rename Column Name](https://github.com/datacorner/pipelite/wiki/renamecolTR)  
 ✅ [Column Transformation](https://github.com/datacorner/pipelite/wiki/jinjaTR)  
 
-[Jump to the wiki from here](https://github.com/datacorner/pipelite/wiki)
+❓ [Jump to the wiki from here](https://github.com/datacorner/pipelite/wiki)❓
 
 # Installation
 
