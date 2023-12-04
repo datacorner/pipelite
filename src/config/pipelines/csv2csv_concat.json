@@ -33,12 +33,14 @@
     "transformers":  [ { 
         "id": "T1",
         "inputs" : [ "E1", "E2" ],
-        "outputs" : [ "L1" ],
+        "outputs" : [ "O1" ],
         "classname": "pipelite.transformers.concatTR"
     },
     { 
         "id": "T2",
-        "classname": "pipelite.transformers.passthroughTR"
+        "classname": "pipelite.transformers.passthroughTR",
+        "inputs" : [ "O1" ],
+        "outputs" : [ "L1" ]
     } ],
     "parameters":{
         "mode": "full"
