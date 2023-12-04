@@ -30,11 +30,12 @@ So in one word ... pipelite is your extensible solution for dynamic data pipelin
 ✅ [Dataset Profiling](https://github.com/datacorner/pipelite/wiki/profileTR)  
 ✅ [Concat 2 Data sources](https://github.com/datacorner/pipelite/wiki/concatTR)  
 ✅ [Join data sources](https://github.com/datacorner/pipelite/wiki/joinTR)  
+✅ [Lookup](https://github.com/datacorner/pipelite/wiki/lookupTR)  
 ✅ [SubString](https://github.com/datacorner/pipelite/wiki/extractstrTR)  
 ✅ [Rename Column Name](https://github.com/datacorner/pipelite/wiki/renamecolTR)  
 ✅ [Column Transformation](https://github.com/datacorner/pipelite/wiki/jinjaTR)  
 
-❓ [Jump to the wiki from here](https://github.com/datacorner/pipelite/wiki)❓
+👉 **[Jump to the wiki from here](https://github.com/datacorner/pipelite/wiki)**
 
 # Installation
 
