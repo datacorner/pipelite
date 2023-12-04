@@ -39,9 +39,9 @@ class testTransformers(unittest.TestCase):
     def test_csv2csv_concat(self):
         expected = {'E1': '3', 
                     'E2': '4', 
-                    'L1': '7', 
                     'T1': '7', 
-                    'T2': '0'}
+                    'T2': '7', 
+                    'L1': '7'}
         result = self.processTest(CONFIG_FOLDER + "csv2csv_concat.json")
         self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 

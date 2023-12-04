@@ -5,7 +5,7 @@ __license__ = "MIT"
 from pipelite.baseobjs.BODataSource import BODataSource 
 import pipelite.constants as C
 import pyodbc
-from pipelite.utils.sqlTemplate import sqlTemplate
+from pipelite.datasources.sql.sqlTemplate import sqlTemplate
 from pipelite.plDataset import plDataset
 
 # json validation Configuration 

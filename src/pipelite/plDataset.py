@@ -4,7 +4,7 @@ __license__ = "MIT"
 
 import pandas as pd
 import pipelite.constants as C
-from pipelite.utils.datasetProfiler import datasetProfiler
+from pipelite.transformers.profile.datasetProfiler import datasetProfiler
 from pipelite.plObject import plObject
 import csv
 
