@@ -37,15 +37,19 @@ class piDS(BODataSource):
             self.log.error("{}".format(e))
             return False
 
-    def write(self, dataset) -> int:
-        # Initialize repository
-        piRepo = piRepository(log=self.log)
-        piRepo.initialize(server=self.server, 
-                          token=self.token)
-        # load data files
-        if (piRepo.load(dataset, self.table)):
-            # Execute To DO if needed
-            if (len(self.todos) > 0 ):
-                piRepo.executeToDo(todos=self.todos,
-                                   table=self.table)
-        return 0
+    def write(self, dataset) -> bool:
+        try:
+            # Initialize repository
+            piRepo = piRepository(log=self.log)
+            piRepo.initialize(server=self.server, 
+                            token=self.token)
+            # load data files
+            if (piRepo.load(dataset, self.table)):
+                # Execute To DO if needed
+                if (len(self.todos) > 0 ):
+                    piRepo.executeToDo(todos=self.todos,
+                                    table=self.table)
+            return True
+        except Exception as e:
+            self.log.error("{}".format(e))
+            return False
