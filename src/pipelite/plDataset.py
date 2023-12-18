@@ -12,7 +12,9 @@ class plDataset(plObject):
     """ This class encapsulate the data set management (currently Pandas DataFrames) 
         (here it's currently managed by using Pandas DataFrame)
     """
-    def __init__(self, config, log):
+    def __init__(self, 
+                 config = None, 
+                 log = None):
         super().__init__(config, log) 
         self.id = C.EMPTY
         self.__content = pd.DataFrame() # encapsulate DataFrame
@@ -25,10 +27,21 @@ class plDataset(plObject):
         """
         return self.__content.columns
 
-    def columnTransform(self, toColumn, function):
-        self.__content[toColumn] = self.__content.apply(function, axis=1)
+    def columnTransform(self, 
+                        toColumn, 
+                        function, 
+                        axis=1):
+        """ Apply a transformation (function) to a column / --> DataFrame.apply()
 
-    def set(self, value, defaultype=None):
+        Args:
+            toColumn (str): Columnn to apply
+            function (function): function to apply
+        """
+        self.__content[toColumn] = self.__content.apply(function, axis=axis)
+
+    def set(self, 
+            value, 
+            defaultype=None):
         """ initialize a dataset from a list ofr another Dataframe
 
         Args:
@@ -61,7 +74,9 @@ class plDataset(plObject):
         """
         return self.__content.shape[0]
 
-    def read_sql(self, odbcConnection, query):
+    def read_sql(self, 
+                 odbcConnection, 
+                 query):
         """ Launch a SQL statement and get the resultset
         Args:
             odbcConnection (ODBC connection): ODBC connection via pyodbc
@@ -69,7 +84,10 @@ class plDataset(plObject):
         """
         self.__content = pd.read_sql(query, odbcConnection)
 
-    def read_csv(self, filename, separator, encoding):
+    def read_csv(self, 
+                 filename, 
+                 separator, 
+                 encoding):
         """ Read the Data from a CSV file by using Pandas
         Args:
             filename (str): filename and path
@@ -80,11 +98,16 @@ class plDataset(plObject):
                                     encoding=encoding, 
                                     delimiter=separator)
 
-    def read_excel(self, filename, sheet=0):
+    def read_excel(self, 
+                   filename, 
+                   sheet=0):
         # Read the Excel file and provides a DataFrame
         self.__content = pd.read_excel(filename, sheet_name=sheet) #, engine='openpyxl')
 
-    def write_csv(self, filename, separator, encoding):
+    def write_csv(self, 
+                  filename, 
+                  separator, 
+                  encoding):
         """ Write the Data into a CSV file by using Pandas
         Args:
             filename (str): filename and path
@@ -96,7 +119,8 @@ class plDataset(plObject):
                             index=False, 
                             sep=separator)
     
-    def get_csv(self, encoding=C.ENCODING):
+    def get_csv(self, 
+                encoding=C.ENCODING):
         """return the csv content
         Args:
             encoding (_type_, optional): encoding content. Defaults to C.ENCODING UTF-8
@@ -108,7 +132,9 @@ class plDataset(plObject):
                                      encoding=encoding, 
                                      index=False)
 
-    def concatWith(self, etlDatasetB, keys=None):
+    def concatWith(self, 
+                   etlDatasetB, 
+                   keys=None):
         """Concatenate the current dataset with the one in arg
         Args:
             etlDatasetB (etlDataset): other dataset to concat
@@ -116,31 +142,39 @@ class plDataset(plObject):
         """
         self.__content = pd.concat([self.__content, etlDatasetB], keys=keys)
     
-    def joinWith(self, ds, on, how ="inner"):
+    def joinWith(self, 
+                 ds, 
+                 on, 
+                 how ="inner"):
         """ Makes a inner join from the current dataset and the given one. 
         the join is made on the mapColName which must exists in both sides
         Args:
-            dsLookup (etlDataset): lookup dataset
-            mapColName (str): column name on both side
+            ds (etlDataset): lookup dataset
+            on (str): column name on both side
             how (str) : join type -> inner (default), left, right or outer
         """
         self.__content = pd.merge(self.__content, ds, on=on, how=how)
 
-    def dropLineNaN(self, column):
+    def dropLineNaN(self, 
+                    column):
         """ Drops all rows if the column value is NaN
         Args:
             column (str): column name
         """
         self.__content = self.__content.dropna(subset=[column])
 
-    def dropColumn(self, column):
+    def dropColumn(self, 
+                   column):
         """Drop a column
         Args:
             column (str): column name
         """
         del self.__content[column]
 
-    def subString(self, columnName, start, length):
+    def subString(self, 
+                  columnName, 
+                  start, 
+                  length):
         """extract a substring
         Args:
             columnName (str): column name
@@ -149,7 +183,9 @@ class plDataset(plObject):
         """
         self.__content[columnName] = self.__content[columnName].str[start:start+length]
 
-    def renameColumn(self, oldName, newName):
+    def renameColumn(self, 
+                     oldName, 
+                     newName):
         """rename a column inside the dataset
         Args:
             oldName (str): Old column name
@@ -157,7 +193,9 @@ class plDataset(plObject):
         """
         self.__content.rename(columns={oldName:newName}, inplace=True)
 
-    def getRowBloc(self, rowIndexfrom, rowIndexTo):
+    def getRowBloc(self, 
+                   rowIndexfrom, 
+                   rowIndexTo):
         """ split the current content (by row) and returns the dataset which starts at row index rowIndexfrom and
             end at row index rowIndexTo
             indexes starts at 0
@@ -172,7 +210,8 @@ class plDataset(plObject):
         newDatasetBloc.__content = self.__content.iloc[rowIndexfrom:rowIndexTo+1:,:]
         return newDatasetBloc
 
-    def profile(self, maxvaluecounts=10) -> dict:
+    def profile(self, 
+                maxvaluecounts=10) -> dict:
         """Build a JSON which contains some basic profiling informations
         Args:
             maxvaluecounts (int, optional): Limits the number of value_counts() return. Defaults to 10.
@@ -183,7 +222,8 @@ class plDataset(plObject):
         profile = pf.run(self.id, maxvaluecounts)
         return profile
 
-    def __getitem__(self, item):
+    def __getitem__(self, 
+                    item):
         """ Makes the Data column accessible via [] array
             example: df['colName']
         Args:
@@ -193,7 +233,8 @@ class plDataset(plObject):
         """
         return self.__content.__getitem__(item)
 
-    def __getattr__(self, name):
+    def __getattr__(self,
+                    name):
         """ Makes the Data accessible via attribute name
             example: df.colName
         Args:
