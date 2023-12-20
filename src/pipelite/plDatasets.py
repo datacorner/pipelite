@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from .plBaseObject import plBaseObject
+from .baseobjs.plBaseObject import plBaseObject
 from .plDataset import plDataset
 
 class plDatasets(plBaseObject):

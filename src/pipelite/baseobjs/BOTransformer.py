@@ -4,7 +4,7 @@ __license__ = "MIT"
 
 from abc import abstractmethod
 from pipelite.plDatasets import plDatasets
-from pipelite.plBaseObject import plBaseObject
+from pipelite.baseobjs.plBaseObject import plBaseObject
 
 class BOTransformer(plBaseObject):
     """ The First transformer can manage several extractors but not the next. Transformers works in stack.

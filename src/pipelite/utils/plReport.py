@@ -15,7 +15,6 @@ class plReport:
         self.__type = C.EMPTY
         self.__processedRowsCount = 0
         self.status = "NOT STARTED"
-        self.order = 0
 
     @property
     def type(self):
@@ -31,8 +30,7 @@ class plReport:
         else:
             self.__type = "Other"
 
-    def start(self, order=0, description=C.EMPTY):
-        self.order = order
+    def start(self, description=C.EMPTY):
         self.description = description
         if (self.__timestampStart == None):
             self.__timestampStart = datetime.datetime.now()
@@ -81,7 +79,3 @@ class plReport:
     @property
     def isFinished(self) -> bool:
         return self.__timestampEnd != None
-    
-
-
-    

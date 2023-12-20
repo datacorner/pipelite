@@ -3,13 +3,15 @@ __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
 import pipelite.constants as C
-from pipelite.plBaseObject import plBaseObject
+from pipelite.baseobjs.plBaseObject import plBaseObject
 from abc import abstractmethod
 from pipelite.plConfig import plConfig
 from pipelite.utils.plReports import plReports
-from pipelite.plBaseObject import plBaseObject
+from pipelite.baseobjs.plBaseObject import plBaseObject
 
-ALL_OBJECTS = [C.PLJSONCFG_EXTRACTOR, C.PLJSONCFG_LOADER, C.PLJSONCFG_TRANSFORMER]
+ALL_OBJECTS = [C.PLJSONCFG_EXTRACTOR, 
+               C.PLJSONCFG_LOADER, 
+               C.PLJSONCFG_TRANSFORMER]
 
 """ Pipeline Management rules:
     This Base Object MUST be inherited to create a pipeline
@@ -22,33 +24,27 @@ class BOPipeline(plBaseObject):
     def __init__(self, config, log):
         super().__init__(config, log)
         # Note: ETL objects does not contain any data, just the pipeline specifications 
-        self.etlObjects = []   # all etlBaseObject (ETL)
+        self.etlObjects = []   # array of plBaseObject
         # reports / processing
         self.__report =  plReports()
 
     @property
-    def transformers(self):
+    def transformers(self) -> []:
         return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
     @property
-    def transformersNotSorted(self):
-        return [ item for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and item.order == 0) ] 
-    @property
-    def loaders(self):
+    def loaders(self) -> []:
         return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER ] 
     @property
-    def extractors(self):
+    def extractors(self) -> []:
         return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
     @property
-    def transformersNames(self):
+    def transformersNames(self) -> []:
         return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
     @property
-    def transformersNamesNotSorted(self):
-        return [ item.id for item in self.etlObjects if (item.objtype == C.PLJSONCFG_TRANSFORMER and item.order == 0) ] 
-    @property
-    def loadersNames(self):
+    def loadersNames(self) -> []:
         return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER ] 
     @property
-    def extractorsNames(self):
+    def extractorsNames(self) -> []:
         return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
     
     def getObjectFromId(self, id) -> plBaseObject:

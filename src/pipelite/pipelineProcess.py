@@ -5,7 +5,7 @@ __license__ = "MIT"
 import pipelite.constants as C
 from pipelite.baseobjs.BOPipeline import BOPipeline
 from pipelite.utils.log import log
-from pipelite.plBaseObject import plBaseObject
+from pipelite.baseobjs.plBaseObject import plBaseObject
 from pipelite.utils.plReports import plReports
 from pipelite.plObject import plObject
 

@@ -1,0 +1,2 @@
+2023-12-20 13:58:25,900|pipelite.pipelineProcess|ERROR|Error when loading the Class: The  parameter is mandatory and cannot be empty
+2023-12-20 13:58:25,900|pipelite.pipelineProcess|ERROR|pipelite cannot be initialized: The Data pipeline has not been created successfully

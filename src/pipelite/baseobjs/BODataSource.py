@@ -2,7 +2,7 @@ __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from pipelite.plBaseObject import plBaseObject
+from pipelite.baseobjs.plBaseObject import plBaseObject
 from pipelite.plDataset import plDataset
 from abc import abstractmethod
 

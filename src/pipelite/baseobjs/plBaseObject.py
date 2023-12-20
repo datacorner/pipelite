@@ -15,7 +15,6 @@ class plBaseObject(plObject):
         self.id = C.EMPTY       # id of the object
         self.objtype = None     # E, T or L object
         self.executed = False   # the object has beedn executed
-        self.order = 0          # Order of execution in the flow
 
     def getResourceFile(self, package, file) -> str:
         """ returns the filename needed to access to the data resource file stored in a package

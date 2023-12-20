@@ -17,7 +17,7 @@ class plDataset(plObject):
                  log = None):
         super().__init__(config, log) 
         self.id = C.EMPTY
-        self.__content = pd.DataFrame() # encapsulate DataFrame
+        self.reset() # encapsulate DataFrame
 
     @property
     def columns(self) -> []:
@@ -38,6 +38,13 @@ class plDataset(plObject):
             function (function): function to apply
         """
         self.__content[toColumn] = self.__content.apply(function, axis=axis)
+
+    def reset(self):
+        try:
+            del(self.__content)
+        except:
+            pass
+        self.__content = pd.DataFrame()
 
     def set(self, 
             value, 
@@ -183,6 +190,24 @@ class plDataset(plObject):
         """
         self.__content[columnName] = self.__content[columnName].str[start:start+length]
 
+    def to_buffer(self, 
+                  bufferpath) -> bool:
+        try:
+            self.__content.to_parquet(path=bufferpath + "/" + self.id + ".parquet")
+            self.reset()
+            return True
+        except:
+            return False
+
+    def from_buffer(self, 
+                     bufferpath) -> bool:
+        try:
+            self.reset()
+            self.__content = pd.read_parquet(bufferpath + "/" + self.id + ".parquet")
+            return True
+        except:
+            return False
+        
     def renameColumn(self, 
                      oldName, 
                      newName):

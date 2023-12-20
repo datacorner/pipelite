@@ -40,7 +40,6 @@ class plReports:
                     "End" : rep.endTimeFMT,
                     "Duration" : str(rep.duration),
                     "Rows Processed" : str(rep.processedRows),
-                    "Order" : str(rep.order),
                     "id" : rep.id}
             dfEntry = pd.DataFrame([entry])
             dfEntry = dfEntry.set_index("id")
@@ -48,7 +47,7 @@ class plReports:
                 dfRep = pd.concat([dfRep, dfEntry])
             else:
                 dfRep = dfEntry
-            dfRep = dfRep.sort_values(by = 'Order')
+            dfRep = dfRep.sort_values(by = 'Start')
         return dfRep
     
     def getFullJSONReport(self) -> json:
