@@ -4,7 +4,7 @@
         "id": "S1",
         "classname": "pipelite.datasources.odbcDS",
         "parameters": {
-            "connectionstring": "DRIVER={SQLite3};Database=tests/data/dbsample.sqlite",
+            "connectionstring": "DRIVER={SQLite3 ODBC Driver};Database=tests/data/dbsample.sqlite",
             "query": "SELECT customer_id, first_name, birthdate FROM Customers;"
         } 
     } ],
