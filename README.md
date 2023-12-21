@@ -2,6 +2,7 @@
 # The pipelite Project
 Empower your data workflows effortlessly with **pipelite**, a lightweight Python program designed for seamless **data pipeline creation and execution**. Using a simple JSON configuration, users can build complex pipelines without writing code. What sets pipelite apart is its total extensibility—anyone can easily create and integrate new connectors or transformations, enhancing the program's capabilities. 
 
+
 It's also possible to add new way to manage the flow of the transformations if needed. With a MIT license fostering collaboration, this flexible tool is perfect for users of all levels. Craft, execute, and extend your data pipelines with **pipelite**, your go-to solution for adaptable and scalable data processing.
 
 **Some characteristics:**
