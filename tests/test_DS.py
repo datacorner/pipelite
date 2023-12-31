@@ -64,5 +64,12 @@ class testDatasources(unittest.TestCase):
         result = self.processTest(CONFIG_FOLDER + "xes2csv_direct.json")
         self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
 
+    def test_csv2parquet_direct(self):
+        expected = {'S1': '3', 
+                    'S2': '3', 
+                    'T': '3'}
+        result = self.processTest(CONFIG_FOLDER + "csv2csv_direct.json")
+        self.checkResults(expected, result.getFullJSONReport()["Rows Processed"])
+
 if __name__ == '__main__':
     unittest.main()

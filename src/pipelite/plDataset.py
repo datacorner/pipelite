@@ -126,6 +126,12 @@ class plDataset(plObject):
                             index=False, 
                             sep=separator)
     
+    def write_parquet(self, 
+                      filename,
+                      compression='gzip'):
+        self.__content.to_parquet(path_or_buf=filename, 
+                                  compression=compression)
+    
     def get_csv(self, 
                 encoding=C.ENCODING):
         """return the csv content
@@ -246,6 +252,10 @@ class plDataset(plObject):
         pf = datasetProfiler(self.__content, self.log)
         profile = pf.run(self.id, maxvaluecounts)
         return profile
+
+    """ 
+        Python Primitives
+    """
 
     def __getitem__(self, 
                     item):

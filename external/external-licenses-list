@@ -10,3 +10,4 @@ pyrfc           Apache Software License (Apache 2.0)
 pyodbc          MIT License (MIT)
 openpyxl        MIT License (MIT)
 pandas          BSD 3-Clause License
+pyarrow         Apache Software License (Apache 2.0)
