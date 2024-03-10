@@ -59,3 +59,4 @@ just use pip by typing
 * **[pyodbc](https://pypi.org/project/pyodbc/)** MIT License (MIT)
 * **[openpyxl](https://pypi.org/project/openpyxl/)** MIT License (MIT)
 * **[pandas](https://pypi.org/project/pandas/)** BSD 3-Clause License
+* **[pyarrow](https://pypi.org/project/pyarrow/)** Apache Software License (Apache 2.0)
