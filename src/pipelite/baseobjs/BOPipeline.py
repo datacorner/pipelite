@@ -1,13 +1,20 @@
+from __future__ import annotations
+
 __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
+
+from typing import TYPE_CHECKING, Optional
 
 import pipelite.constants as C
 from pipelite.baseobjs.plBaseObject import plBaseObject
 from abc import abstractmethod
 from pipelite.plConfig import plConfig
 from pipelite.utils.plReports import plReports
-from pipelite.baseobjs.plBaseObject import plBaseObject
+
+if TYPE_CHECKING:
+    from pipelite.baseobjs.BODataSource import BODataSource
+    from pipelite.baseobjs.BOTransformer import BOTransformer
 
 ALL_OBJECTS = [C.PLJSONCFG_EXTRACTOR, 
                C.PLJSONCFG_LOADER, 
@@ -29,33 +36,46 @@ class BOPipeline(plBaseObject):
         self.__report =  plReports()
 
     @property
-    def transformers(self) -> []:
-        return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
-    @property
-    def loaders(self) -> []:
-        return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER ] 
-    @property
-    def extractors(self) -> []:
-        return [ item for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
-    @property
-    def transformersNames(self) -> []:
-        return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER ]
-    @property
-    def loadersNames(self) -> []:
-        return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER ] 
-    @property
-    def extractorsNames(self) -> []:
-        return [ item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR ] 
+    def transformers(self) -> list[plBaseObject]:
+        """Returns all transformer objects in the pipeline."""
+        return [item for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER]
     
-    def getObjectFromId(self, id) -> plBaseObject:
-        """Returns the object with the id in parameter
+    @property
+    def loaders(self) -> list[plBaseObject]:
+        """Returns all loader objects in the pipeline."""
+        return [item for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER]
+    
+    @property
+    def extractors(self) -> list[plBaseObject]:
+        """Returns all extractor objects in the pipeline."""
+        return [item for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR]
+    
+    @property
+    def transformersNames(self) -> list[str]:
+        """Returns the IDs of all transformer objects."""
+        return [item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_TRANSFORMER]
+    
+    @property
+    def loadersNames(self) -> list[str]:
+        """Returns the IDs of all loader objects."""
+        return [item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_LOADER]
+    
+    @property
+    def extractorsNames(self) -> list[str]:
+        """Returns the IDs of all extractor objects."""
+        return [item.id for item in self.etlObjects if item.objtype == C.PLJSONCFG_EXTRACTOR] 
+    
+    def getObjectFromId(self, id: str) -> Optional[plBaseObject]:
+        """Returns the object with the id in parameter.
+        
         Args:
-            id (str): object id(in the config file)
+            id: object id (in the config file)
+            
         Returns:
-            etlBaseObject: etl Object
+            The matching ETL object or None if not found
         """
         for item in self.etlObjects:
-            if (item.id == id):
+            if item.id == id:
                 return item
         return None
     
@@ -82,13 +102,15 @@ class BOPipeline(plBaseObject):
             # instantiate & Init the object
             self.log.info("Instantiate Object: {}".format(dpConfig.className))
             dsObj = plBaseObject.instantiate(dpConfig.className, self.config, self.log)
+            if dsObj is None:
+                raise Exception("Failed to instantiate object: {}".format(dpConfig.className))
             dsObj.id = dpConfig.id
             dsObj.objtype = paramJSONPath
             self.log.debug("Initialize Object: {}".format(dpConfig.className))
             # Check the parameter (json) structure against the json scheme provided (if any, otherwise try to get the one by default)
-            valFileCfg = dpConfig.validation if dpConfig.validation != None else dsObj.parametersValidationFile
-            if (not self.validateParametersCfg(valFileCfg, dpConfig.parameters)):
-                raise Exception("The {} parameters are not configured properly, check out the configuration file.".format(dsObj['id']))
+            valFileCfg = dpConfig.validation if dpConfig.validation is not None else dsObj.parametersValidationFile
+            if not self.validateParametersCfg(valFileCfg, dpConfig.parameters):
+                raise Exception("The {} parameters are not configured properly, check out the configuration file.".format(dsObj.id))
             # some init considering the object
             if (paramJSONPath == C.PLJSONCFG_TRANSFORMER): # Only for transformers ...
                 dsObj.dsInputs = dpConfig.inputs
@@ -122,7 +144,7 @@ class BOPipeline(plBaseObject):
             # Initialize the Extractors/Transformers/Loaders
             for ObjItem in etlObjParams:
                 etlobj = self.__instantiateETLObject(paramJSONPath, ObjItem)
-                if (etlobj == None):
+                if etlobj is None:
                     raise Exception("At least one pipeline object could not be initialized.")
                 self.etlObjects.append(etlobj)
             return True

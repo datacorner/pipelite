@@ -13,7 +13,7 @@ class pipelineProcess(plObject):
 
 	@staticmethod
 	def getLogger(config) -> log:
-		if (config != None):
+		if config is not None:
 			# Init logger
 			logfilename = config.getParameter(C.PLJSONCFG_LOGGER_PATH, C.EMPTY) + config.getParameter(C.PLJSONCFG_LOGGER_FILENAME, C.TRACE_DEFAULT_FILENAME)
 			print("Log file: {}".format(logfilename))
@@ -21,7 +21,7 @@ class pipelineProcess(plObject):
 			format = config.getParameter(C.PLJSONCFG_LOGGER_FORMAT, C.TRACE_DEFAULT_FORMAT)
 			return log(__name__, logfilename, level, format)
 		else:
-			raise Exception ("Configuration failed, impossible to create the logger.")
+			raise Exception("Configuration failed, impossible to create the logger.")
 
 	def process(self) -> plReports:
 		""" Initialize the process and execute the pipeline
@@ -34,12 +34,12 @@ class pipelineProcess(plObject):
 		try:
 			self.log.info("pipelite initialisation ...")
 			pl = self.create()		# instantiate the pipeline
-			if (pl == None):
-				raise Exception ("The Data pipeline has not been created successfully")
+			if pl is None:
+				raise Exception("The Data pipeline has not been created successfully")
 			if not pl.initialize():	# check & initialize all the pipeline objects
-				raise Exception ("The Data pipeline could not be initialized properly")
+				raise Exception("The Data pipeline could not be initialized properly")
 			if pl.prepare():		# prepare the pipeline for execution (like the flow)
-				if (pl.beforeProcess()):
+				if pl.beforeProcess():
 					reports = pl.execute()	# process the pipeline
 				pl.afterProcess()
 			pl.terminate()

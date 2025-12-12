@@ -1,38 +1,47 @@
+from __future__ import annotations
+
 __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
+from typing import Any, Optional
+
 import pipelite.constants as C
-import json, jsonpath_ng
+import json
+import jsonpath_ng
 
 SECTION_PARAM_SEP = "."
 
-class plConfig():
-    """This class contains all the configuration needed and loaded mainly from the INI file
+
+class plConfig:
+    """Configuration manager for pipeline settings.
+    
+    Loads and manages configuration from JSON files with JSONPath support
+    for accessing nested configuration values.
     """
     
     def __init__(self):
-        self.__parameters = {}
-        self.__pipelineConfig = None
-        self.rootPath = C.EMPTY
+        self.__parameters: dict[str, Any] = {}
+        self.__pipelineConfig: Optional[dict] = None
+        self.rootPath: str = C.EMPTY
 
-    def addParameter(self, name, value):
-        """Add a new parameter in the list
+    def addParameter(self, name: str, value: Any) -> None:
+        """Add a new parameter to the dynamic parameter list.
+        
         Args:
-            name (str): paramter name
-            value (str): parameter value
+            name: Parameter name
+            value: Parameter value
         """
-        try:
-            self.__parameters[name] = value
-        except Exception as e:
-            print("addParameter() -> " + str(e))
+        self.__parameters[name] = value
 
-    def load(self, filename) -> bool:
-        """ Load the configuration from the INI file in parameter
+    def load(self, filename: str) -> bool:
+        """Load configuration from a JSON file.
+        
         Args:
-            filename (str): INI file name
+            filename: Path to the JSON configuration file
+            
         Returns:
-            bool: False if error
+            True if loaded successfully, False otherwise
         """
         try:
             with open(filename, 'r') as f:
@@ -42,35 +51,29 @@ class plConfig():
             print("pipelineConfig.load() -> {}".format(e))
             return False
 
-    def getParameter(self, paramPath, default=C.EMPTY) -> str:
-        """ Returns the Parameter value based on the JSON Section & parameter name.
-            If the parameter comes from the JSON Config file we use the SECTION_PARAM_SEP to separate the section with the parameter
+    def getParameter(self, paramPath: str, default: Any = C.EMPTY) -> Any:
+        """Get a parameter value using JSONPath notation.
+        
+        First searches in the loaded configuration file using JSONPath,
+        then falls back to the dynamic parameter list.
+        
         Args:
-            parameter (str): INI parameter name (section.parameter)
-            default (str): default value if not found (by default empty string)
+            paramPath: JSONPath expression (e.g., '$.config.logger.level')
+            default: Default value if parameter not found
+            
         Returns:
-            str: parameter value, empty if not found
+            Parameter value or default if not found
         """
         try:
             # First search in the Configuration data file
-            jsonpath_expr = jsonpath_ng.parse(paramPath) # example: $.config.logger.level
-            extracted_data = jsonpath_expr.find(self.__pipelineConfig)
-            if (len(extracted_data) == 1):
-                return extracted_data[0].value
+            if self.__pipelineConfig is not None:
+                jsonpath_expr = jsonpath_ng.parse(paramPath)
+                extracted_data = jsonpath_expr.find(self.__pipelineConfig)
+                if len(extracted_data) == 1:
+                    return extracted_data[0].value
             
             # Secondly search into the parameter (dynamic) list
-            return  self.__parameters[paramPath]
+            return self.__parameters[paramPath]
         
-        except Exception as e:
+        except (KeyError, Exception):
             return default
-
-    def addParameter(self, parameter, value):
-        """ Add a new dynamic parameter
-        Args:
-            parameter (str): parameter name
-            value (str): new value
-        """
-        try:
-            self.__parameters[parameter] = str(value)
-        except Exception as e:
-            pass

@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
+
+from typing import Any, Callable, Iterator, Optional
 
 import pandas as pd
 import pipelite.constants as C
@@ -20,10 +24,11 @@ class plDataset(plObject):
         self.reset() # encapsulate DataFrame
 
     @property
-    def columns(self) -> []:
-        """ Returns all the dataset columns names
+    def columns(self) -> pd.Index:
+        """Returns all the dataset column names.
+        
         Returns:
-            list: columns names
+            Pandas Index containing column names
         """
         return self.__content.columns
 
@@ -40,10 +45,9 @@ class plDataset(plObject):
         self.__content[toColumn] = self.__content.apply(function, axis=axis)
 
     def reset(self):
-        try:
-            del(self.__content)
-        except:
-            pass
+        """Reset the dataset to an empty DataFrame."""
+        if hasattr(self, '_plDataset__content'):
+            del self.__content
         self.__content = pd.DataFrame()
 
     def set(self, 
@@ -148,25 +152,42 @@ class plDataset(plObject):
     def concatWith(self, 
                    etlDatasetB, 
                    keys=None):
-        """Concatenate the current dataset with the one in arg
+        """Concatenate the current dataset with the one in arg.
+        
         Args:
-            etlDatasetB (etlDataset): other dataset to concat
-            keys (str, optional): key to concat. Defaults to None.
+            etlDatasetB: Other dataset to concat (plDataset or DataFrame)
+            keys: Key to concat. Defaults to None.
         """
-        self.__content = pd.concat([self.__content, etlDatasetB], keys=keys)
+        # Handle both plDataset and DataFrame inputs
+        if isinstance(etlDatasetB, plDataset):
+            other_df = etlDatasetB.get()
+        elif isinstance(etlDatasetB, pd.DataFrame):
+            other_df = etlDatasetB
+        else:
+            other_df = etlDatasetB
+        self.__content = pd.concat([self.__content, other_df], keys=keys)
     
     def joinWith(self, 
                  ds, 
                  on, 
-                 how ="inner"):
-        """ Makes a inner join from the current dataset and the given one. 
-        the join is made on the mapColName which must exists in both sides
+                 how="inner"):
+        """Makes an inner join from the current dataset and the given one.
+        
+        The join is made on the mapColName which must exist in both sides.
+        
         Args:
-            ds (etlDataset): lookup dataset
-            on (str): column name on both side
-            how (str) : join type -> inner (default), left, right or outer
+            ds: Lookup dataset (plDataset or DataFrame)
+            on: Column name on both sides
+            how: Join type -> inner (default), left, right or outer
         """
-        self.__content = pd.merge(self.__content, ds, on=on, how=how)
+        # Handle both plDataset and DataFrame inputs
+        if isinstance(ds, plDataset):
+            other_df = ds.get()
+        elif isinstance(ds, pd.DataFrame):
+            other_df = ds
+        else:
+            other_df = ds
+        self.__content = pd.merge(self.__content, other_df, on=on, how=how)
 
     def dropLineNaN(self, 
                     column):
@@ -196,22 +217,40 @@ class plDataset(plObject):
         """
         self.__content[columnName] = self.__content[columnName].str[start:start+length]
 
-    def to_buffer(self, 
-                  bufferpath) -> bool:
+    def to_buffer(self, bufferpath: str) -> bool:
+        """Save dataset to a parquet buffer file.
+        
+        Args:
+            bufferpath: Directory path for the buffer file
+            
+        Returns:
+            True if successful, False otherwise
+        """
         try:
             self.__content.to_parquet(path=bufferpath + "/" + self.id + ".parquet")
             self.reset()
             return True
-        except:
+        except Exception as e:
+            if self.log:
+                self.log.error("Failed to write buffer: {}".format(e))
             return False
 
-    def from_buffer(self, 
-                     bufferpath) -> bool:
+    def from_buffer(self, bufferpath: str) -> bool:
+        """Load dataset from a parquet buffer file.
+        
+        Args:
+            bufferpath: Directory path for the buffer file
+            
+        Returns:
+            True if successful, False otherwise
+        """
         try:
             self.reset()
             self.__content = pd.read_parquet(bufferpath + "/" + self.id + ".parquet")
             return True
-        except:
+        except Exception as e:
+            if self.log:
+                self.log.error("Failed to read buffer: {}".format(e))
             return False
         
     def renameColumn(self, 
@@ -268,16 +307,23 @@ class plDataset(plObject):
         """
         return self.__content.__getitem__(item)
 
-    def __getattr__(self,
-                    name):
-        """ Makes the Data accessible via attribute name
-            example: df.colName
+    def __getattr__(self, name):
+        """Makes the Data accessible via attribute name.
+        
+        Example: df.colName
+        
         Args:
-            item (str): attribute/column name
+            name: attribute/column name
+            
         Returns:
-            object: data
+            Attribute value from the underlying DataFrame
         """
-        return self.__content.__getattr__(name)
+        # Guard against infinite recursion during initialization
+        if name.startswith('_'):
+            raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
+        # Access the mangled name directly to avoid recursion
+        content = object.__getattribute__(self, '_plDataset__content')
+        return getattr(content, name)
     
     def __str__(self):
         return self.__content.__str__()

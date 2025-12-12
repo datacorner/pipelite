@@ -1,17 +1,22 @@
+from __future__ import annotations
+
 __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-from .baseobjs.plBaseObject import plBaseObject
-from .plDataset import plDataset
+from typing import TYPE_CHECKING, Iterator, Optional
 
-class plDatasets(plBaseObject):
-    """ Manages a collection of etlDatasets
-    Args:
-        etlObject (app Object type): must be a Datasource object
+if TYPE_CHECKING:
+    from .plDataset import plDataset
+
+class plDatasets:
+    """Manages a collection of plDataset objects.
+    
+    This class provides a container for multiple datasets with methods
+    for adding, retrieving, and iterating over them.
     """
     def __init__(self):
-        self.dataset = [] # Array of etlDataset
+        self.dataset: list[plDataset] = []  # Array of plDataset
 
     @property
     def count(self) -> int:
@@ -40,8 +45,14 @@ class plDatasets(plBaseObject):
         """
         return (len(self.dataset) == 0)
 
-    def add(self, dataset):
-        self.dataset.append(dataset)
+    def add(self, dataset) -> None:
+        """Add a dataset to the collection.
+        
+        Args:
+            dataset: The plDataset to add (None values are ignored)
+        """
+        if dataset is not None:
+            self.dataset.append(dataset)
 
     @property
     def names(self):
@@ -73,15 +84,17 @@ class plDatasets(plBaseObject):
                 return True
         return False
 
-    def getFromId(self, id) -> plDataset:
-        """ Returns the dataset by searching it by id
+    def getFromId(self, id: str) -> Optional[plDataset]:
+        """Returns the dataset by searching it by id.
+        
         Args:
-            id (str): dataset id/id
+            id: dataset id/name
+            
         Returns:
-            etlDataset: dataset
+            The matching plDataset or None if not found
         """
         for ds in self.dataset:
-            if (ds.id == id):
+            if ds.id == id:
                 return ds
         return None
 
@@ -95,5 +108,5 @@ class plDatasets(plBaseObject):
         """
         return self.dataset.__getitem__(item)
     
-    def __iter__(self):
+    def __iter__(self) -> Iterator[plDataset]:
         return iter(self.dataset)

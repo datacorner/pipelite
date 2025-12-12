@@ -34,7 +34,7 @@ dependencies = [
 "jsonpath-ng==1.6.0",
 "jsonschema==4.19.1",
 "Jinja2==3.1.2",
-"pyarrow-14.0.2"
+"pyarrow==14.0.2"
 ]
 
 [project.urls]

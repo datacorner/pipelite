@@ -140,7 +140,34 @@ class sequentialPL(BOPipeline):
         report.end(dsToLoad.count)
         self.log.info("[ LOAD {} - Rows: {} - Columns: {} ]".format(dsToLoad.id, dsToLoad.count, dsToLoad.columns))
 
+    def beforeProcess(self) -> bool:
+        """Called before processing the pipeline.
+        
+        Override this method to add custom pre-processing logic.
+        
+        Returns:
+            True to continue processing, False to abort
+        """
+        self.log.debug("Before process hook executed")
+        return True
+    
+    def afterProcess(self) -> bool:
+        """Called after processing the pipeline.
+        
+        Override this method to add custom post-processing logic.
+        
+        Returns:
+            True if successful
+        """
+        self.log.debug("After process hook executed")
+        return True
+
     def terminate(self) -> bool:
+        """Clean up and display final report.
+        
+        Returns:
+            True if successful
+        """
         # Display report
         self.log.info("Pipeline Report \n\n{}\n ".format(self.report.getFullSTRReport()))
         self.log.info("Warnings: {}".format(self.log.warningCounts))

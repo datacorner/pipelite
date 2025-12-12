@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 __author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
+
+from typing import Any, Optional
 
 import importlib
 import pipelite.constants as C
@@ -34,19 +38,22 @@ class plBaseObject(plObject):
     def parametersValidationFile(self):
         return C.EMPTY
 
-    def validateParametersCfg(self, inputValidationSchemeFile, jsonParameters) -> bool:
-        """ Validate the JSON configuration (from parameters). This configuration stuff is specific to the object instantiated only.
-            Use json-schema
+    def validateParametersCfg(self, inputValidationSchemeFile: Optional[str], jsonParameters: dict) -> bool:
+        """Validate the JSON configuration (from parameters).
+        
+        This configuration validation is specific to the object instantiated only.
+        Uses json-schema for validation.
+        
         Args:
-            validationSchemeFile (string): filename and path is a validation is needed, None else
-            jsonParameters (json): parameters to check
-
+            inputValidationSchemeFile: Filename and path for validation schema, or None/empty
+            jsonParameters: Parameters to check
+            
         Returns:
-            bool: _description_
+            True if validation passes, False otherwise
         """
         try:
             # Check the parameter (json) structure against the json scheme provided (if any)
-            if (inputValidationSchemeFile != C.EMPTY):
+            if inputValidationSchemeFile and inputValidationSchemeFile != C.EMPTY:
                 with open(inputValidationSchemeFile, 'r') as f:
                     valScheme = json.load(f)
                 # If no exception is raised by validate(), the instance is valid.
@@ -67,21 +74,28 @@ class plBaseObject(plObject):
     
     @staticmethod
     def instantiate(fullClassPath, config, log):
-        """ This function dynamically instanciate the right data Class to create a pipeline object. Note: the class must inherit from the dpInstantiableObj class.
-            This to avoid in loading all the connectors (if any of them failed for example) when making a global import, 
-            by this way only the needed import is done on the fly
-            Args:
-                classname (str): full classname (must inherit from the dpInstantiableObj Class)
-            Returns:
-                Object (dpInstantiableObj): Object
+        """Dynamically instantiate a class from its full module path.
+        
+        This function dynamically instantiates the right data Class to create 
+        a pipeline object. Note: the class must inherit from plBaseObject.
+        This avoids loading all connectors (if any of them failed) when making 
+        a global import - only the needed import is done on the fly.
+        
+        Args:
+            fullClassPath: Full classname (must inherit from plBaseObject)
+            config: Configuration object
+            log: Logger instance
+            
+        Returns:
+            Instantiated object or None if error
         """
         try:
             # Get the class to instantiate
-            if (fullClassPath == C.EMPTY):
-                raise Exception("The {} parameter is mandatory and cannot be empty".format(fullClassPath))
-            else:
-                # Get the latest element : the class name without the path
-                pipelineClass = fullClassPath.split(".")[-1]
+            if fullClassPath == C.EMPTY:
+                raise Exception("The fullClassPath parameter is mandatory and cannot be empty")
+            
+            # Get the latest element: the class name without the path
+            pipelineClass = fullClassPath.split(".")[-1]
 
             # Instantiate the object
             log.debug("Import module -> {}".format(fullClassPath))
@@ -93,4 +107,4 @@ class plBaseObject(plObject):
             return objectInst
         except Exception as e:
             log.error("Error when loading the Class: {}".format(str(e)))
-        return None
+            return None

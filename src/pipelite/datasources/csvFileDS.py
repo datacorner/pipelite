@@ -70,7 +70,7 @@ class csvFileDS(BODataSource):
             return dsExtract
         except Exception as e:
             self.log.error("Error while reading the file: {}".format(e))
-            return super().extract()
+            return super().read()
 
     def write(self, dataset) -> bool:
         """ write the dataset in the datasource

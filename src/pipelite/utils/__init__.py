@@ -1,19 +1,38 @@
-__ = "datacorner.fr"
+__author__ = "datacorner.fr"
 __email__ = "admin@datacorner.fr"
 __license__ = "MIT"
 
-class cursorByField(object):
-    """ This class aims to use the cursor by using the fields directly
+from .log import log
+from .plReport import plReport
+from .plReports import plReports
+
+
+class cursorByField:
+    """Use cursor results by accessing fields directly as attributes.
+    
     Args:
-        cursor (_type_): SQL cursor
-        row (_type_): resultset
+        cursor: SQL cursor
+        row: Result set row
     """
     def __init__(self, cursor, row):
-        for (attr, val) in zip((d[0] for d in cursor.description), row) :
+        for (attr, val) in zip((d[0] for d in cursor.description), row):
             setattr(self, attr, val)
 
     def get(self, attribute):
-        try:
-            return getattr(self, attribute)
-        except:
-            return None
+        """Get attribute value safely.
+        
+        Args:
+            attribute: Attribute name to retrieve
+            
+        Returns:
+            Attribute value or None if not found
+        """
+        return getattr(self, attribute, None)
+
+
+__all__ = [
+    "log",
+    "plReport",
+    "plReports",
+    "cursorByField",
+]
